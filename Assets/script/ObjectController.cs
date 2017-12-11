@@ -13,6 +13,8 @@ public class ObjectController : MonoBehaviour {
 		subject.AddObserver (score);
 	}
 
+
+	//Invoked when the object is clicked
 	public void OnClick() {
 		Animator anim = GetComponent<Animator> ();
 		anim.Play ("Pressed");

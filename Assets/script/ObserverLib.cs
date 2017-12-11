@@ -4,8 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-
-public abstract class Observer {
+public abstract class Observer{
 	public abstract void OnNotify ();
 }
 
@@ -29,39 +28,68 @@ public class Subject {
 
 public class ScoreObserver : Observer {
 
-	int Score;
-	int Margin;
-	int ScoreMultiplier;
-	Text ScoreTableText;
+	const int MULTI = 5;
+	const int CLICK = 1;
 
+	int score;
+	int margin;
+	int scoreMultiplier;
+	Text scoreTableText;
+	float timeBefore, timeAfter;
+	float deltaTime;
+
+
+	//Initialize
 	public ScoreObserver (GameObject ScoreTable, int Score, int Margin, int ScoreMultiplier) {
-		this.Score = Score;
-		this.Margin = Margin;
-		this.ScoreMultiplier = ScoreMultiplier;
-		this.ScoreTableText = ScoreTable.GetComponent<Text> ();
-		ScoreTableText.text = "";
+		this.score = Score;
+		this.margin = Margin;
+		this.scoreMultiplier = ScoreMultiplier;
+		this.scoreTableText = ScoreTable.GetComponent<Text> ();
+		scoreTableText.text = "";
+		timeBefore = timeAfter = Time.time;
 	}
 
+
+	//Invoked when observer is triggered
 	public override void OnNotify () {
+
+		//Timey-wimey magic
+		timeBefore = timeAfter;
+		timeAfter = Time.time;
+		deltaTime = timeAfter - timeBefore;
+
 		CalcScore ();
 		PrintScore ();
 		SaveScore ();
+
+		Debug.Log ("Delta time: " + deltaTime);
 	}
 
+
+	//Calculates current score basedon different parameters
 	void CalcScore () {
-		if ((Score >= Margin) && (ScoreMultiplier <= 10)) {
-			Margin = Score * (10 - ScoreMultiplier);
-			ScoreMultiplier += 1;
+		//Currently depends on how much points you have and how fast are you clicking
+		if ((score >= margin) && (scoreMultiplier < MULTI)) {
+			margin = score * (MULTI - scoreMultiplier);
+			scoreMultiplier += 1;
 		}
-		Score += ScoreMultiplier;
+		if ((deltaTime > (1 / scoreMultiplier)) && (scoreMultiplier > 1)) {
+			margin = score * (MULTI - scoreMultiplier);
+			scoreMultiplier -= 1;
+		}
+		score += (int)Mathf.Ceil (scoreMultiplier / deltaTime);
 	}
 
+
+	//Updates the score parameter of the UI
 	void PrintScore () {
-		string s = "Score: " + Score + ", x " + ScoreMultiplier;
+		string s = "Score: " + score + ", x " + scoreMultiplier + ", margin " + margin;
 		Debug.Log (s);
-		ScoreTableText.text = s;
+		scoreTableText.text = s;
 	}
 
+
+	//Writes Your score into a file and saves it
 	void SaveScore () {
 		
 	}

@@ -18,6 +18,8 @@ public class Engine : MonoBehaviour {
 		}
 	}
 
+
+	//Raycast detector
 	GameObject ClickSelect() {
 		Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
 		RaycastHit hit;
