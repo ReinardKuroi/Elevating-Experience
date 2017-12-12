@@ -70,11 +70,11 @@ public class ScoreObserver : Observer {
 	void CalcScore () {
 		//Currently depends on how much points you have and how fast are you clicking
 		if ((score >= margin) && (scoreMultiplier < MULTI)) {
-			margin = score * (MULTI - scoreMultiplier);
+			margin = score + score * (MULTI - scoreMultiplier);
 			scoreMultiplier += 1;
 		}
-		if ((deltaTime > (1 / scoreMultiplier)) && (scoreMultiplier > 1)) {
-			margin = score * (MULTI - scoreMultiplier);
+		if ((deltaTime > (MULTI / scoreMultiplier)) && (scoreMultiplier > 1)) {
+			margin =  score + score * (MULTI / scoreMultiplier);
 			scoreMultiplier -= 1;
 		}
 		score += (int)Mathf.Ceil (scoreMultiplier / deltaTime);
