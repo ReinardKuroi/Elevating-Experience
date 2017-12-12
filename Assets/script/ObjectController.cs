@@ -8,7 +8,7 @@ public class ObjectController : MonoBehaviour {
 	public GameObject ScoreTable;
 
 	void Start () {
-		ScoreObserver score = new ScoreObserver (ScoreTable, 0, 10, 1);
+		ScoreObserver score = new ScoreObserver ();
 
 		subject.AddObserver (score);
 	}

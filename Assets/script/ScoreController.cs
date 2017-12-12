@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class ScoreController : MonoBehaviour {
+public class ScoreController {
 
 	const int MULTI = 5;
 	const int CLICK = 1;
@@ -17,6 +17,7 @@ public class ScoreController : MonoBehaviour {
 	float deltaTime;
 
 	void start () {
+		//if 
 		score = 0;
 		margin = MULTI;
 		scoreMultiplier = 1;
