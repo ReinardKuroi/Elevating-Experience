@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public abstract class Observer{
+public abstract class Observer {
 	public abstract void OnNotify ();
 }
 
