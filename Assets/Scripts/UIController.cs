@@ -15,7 +15,7 @@ public class UIController : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	public void Update () {
 		scoreTableText.text = "Score: " + GlobalData.Instance.score.ToString ();
 		highscoreText.text = "Highscore: " + GlobalData.Instance.highscore.ToString ();
 	}

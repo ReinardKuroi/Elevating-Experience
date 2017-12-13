@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
-public class ScoreController : MonoBehaviour {
+public class ScoreController {
 
 	const int MULTI = 5;
 	const int CLICK = 1;
@@ -13,9 +12,7 @@ public class ScoreController : MonoBehaviour {
 	static float timeBefore, timeAfter;
 	static float deltaTime;
 
-	void start () {
-		//if
-		GlobalData.Instance.score = 0;
+	void Awake () {
 		margin = MULTI;
 		scoreMultiplier = 1;
 		timeBefore = timeAfter = Time.time;
@@ -40,12 +37,12 @@ public class ScoreController : MonoBehaviour {
 		GlobalData.Instance.score += (int)Mathf.Ceil (scoreMultiplier / deltaTime);
 
 		if (GlobalData.Instance.score > GlobalData.Instance.highscore) {
-			PlayerPrefs.SetInt ("Highscore", GlobalData.Instance.highscore);
 			GlobalData.Instance.highscore = GlobalData.Instance.score;
+			PlayerPrefs.SetInt ("Highscore", GlobalData.Instance.highscore);
 		}
 
 		//Update UI
-		string s = "Score: " + GlobalData.Instance.score.ToString() + ", x " + scoreMultiplier.ToString() + ", margin " + margin.ToString();
+		string s = "Score: " + GlobalData.Instance.score.ToString() + ", Highscore: " + GlobalData.Instance.highscore.ToString() + ", x " + scoreMultiplier.ToString() + ", margin " + margin.ToString();
 		Debug.Log (s);
 	}
 }

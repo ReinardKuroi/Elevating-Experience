@@ -1,12 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-
-
-public abstract class Observer {
-	public abstract void OnNotify ();
-}
 
 public class Subject {
 	List<Observer> observers = new List<Observer> ();
@@ -26,16 +20,6 @@ public class Subject {
 	}
 }
 
-public class ScoreObserver : Observer {
-
-
-	//Initialize
-	public ScoreObserver () {
-	}
-
-
-	//Invoked when observer is triggered
-	public override void OnNotify () {
-		ScoreController.ScoreUpdate ();
-	}
+public abstract class Observer {
+	public abstract void OnNotify ();
 }

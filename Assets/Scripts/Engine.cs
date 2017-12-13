@@ -7,26 +7,21 @@ public class Engine : MonoBehaviour {
 	void Update () {
 		if (Input.GetKeyDown(KeyCode.Mouse0))
 		{
-			GameObject g = ClickSelect();
-
+			GameObject g = Cast();
 			if (g) {
 				ObjectController o = g.GetComponent<ObjectController> ();
-
 				if (o)
 					o.OnClick ();
 			}
 		}
 	}
 
-
-	//Raycast detector
-	GameObject ClickSelect() {
+	GameObject Cast () {
 		Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
 		RaycastHit hit;
-			if (Physics.Raycast (ray, out hit, 100) && hit.collider.gameObject) {
+			if (Physics.Raycast (ray, out hit) && hit.collider.gameObject) {
 				return hit.collider.gameObject;
 			}
 		return null;
      }
-
 }
