@@ -7,6 +7,8 @@ using System.IO;
 public class GlobalData : MonoBehaviour {
 
 	public static GlobalData Instance { get; private set; }
+	public int score = 0, highscore = 0;
+
 	private LevelData[] allLevelData;
 	private string levelDataFilename = "data.json";
 
@@ -19,8 +21,8 @@ public class GlobalData : MonoBehaviour {
 		}
 		LoadGameData ();
 	}
-
-	public LevelData LoadGameData () {
+		
+	public void LoadGameData () {
 		string filePath = Path.Combine (Application.streamingAssetsPath, levelDataFilename);
 
 		if (File.Exists (filePath)) {

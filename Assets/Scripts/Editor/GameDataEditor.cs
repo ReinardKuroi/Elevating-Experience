@@ -16,6 +16,24 @@ public class GameDataEditor: EditorWindow {
 		window.Show ();
 	}
 
+	void OnGUI () {
+		if (gameData != null) {
+			SerializedObject serializedObject = new SerializedObject (this);
+			SerializedProperty serializedProperty = serializedObject.FindProperty ("gameData");
+
+			EditorGUILayout.PropertyField (serializedProperty, true);
+
+			serializedObject.ApplyModifiedProperties ();
+
+			if (GUILayout.Button ("Save Data")) {
+				SaveGameData ();
+			}
+		}
+		if (GUILayout.Button ("Load Data")) {
+			LoadGameData ();
+		}
+	}
+
 	private void LoadGameData () {
 		string filePath = Application.dataPath + gameDataProjectFilepath;
 		if (File.Exists (filePath)) {
@@ -27,7 +45,7 @@ public class GameDataEditor: EditorWindow {
 	}
 
 	private void SaveGameData () {
-		string jsonData = JsonUtility.ToJson (GameData);
+		string jsonData = JsonUtility.ToJson (gameData);
 		string filePath = Application.dataPath + gameDataProjectFilepath;
 		File.WriteAllText (filePath, jsonData);
 	}

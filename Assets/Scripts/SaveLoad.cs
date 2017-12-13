@@ -7,16 +7,16 @@ using System.IO;
 public class SaveLoad {
 	public string filePath;
 
-	public ButtonParams buttonParams;
+//	public ButtonParams buttonParams;
 
 	public void Serialize () {
-		string jsonString = JsonUtility.ToJson (buttonParams, true);
-		File.WriteAllText (filePath, jsonString);
+//		string jsonString = JsonUtility.ToJson (buttonParams, true);
+//		File.WriteAllText (filePath, jsonString);
 	}
 
 	public void Deserialize () {
 		string jsonString = File.ReadAllText (filePath);
-		buttonParams = JsonUtility.FromJson<ButtonParams> (jsonString);
+//		buttonParams = JsonUtility.FromJson<ButtonParams> (jsonString);
 	}
 		
 	public void LoadGameData (string path) {
