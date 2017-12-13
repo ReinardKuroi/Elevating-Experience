@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 
 public class GlobalData : MonoBehaviour {
@@ -31,12 +32,14 @@ public class GlobalData : MonoBehaviour {
 		string filePath = Path.Combine (Application.streamingAssetsPath, levelDataFilename);
 
 		if (File.Exists (filePath)) {
-			string jsonData = File.ReadAllText (filePath);
-			GameData loadedData = JsonUtility.FromJson<GameData> (jsonData);
+			BinaryFormatter bFormatter = new BinaryFormatter ();
+			FileStream fileStream = File.Open (filePath, FileMode.Open);
+			GameData loadedData = (GameData)bFormatter.Deserialize (fileStream);
 			allLevelData = loadedData.allLevelData;
 			allAchievementData = loadedData.allAchievementData;
 			allHighscoreData = loadedData.allHighscoreData;
 			playerSettings = loadedData.playerSettings;
+			fileStream.Close ();
 		} else {
 			Debug.LogError ("Cannot load game data!");
 		}
