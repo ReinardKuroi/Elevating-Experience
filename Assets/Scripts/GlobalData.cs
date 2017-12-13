@@ -12,11 +12,15 @@ public class GlobalData : MonoBehaviour {
 	public static GlobalData Instance { get; private set; }
 	public int score = 0, highscore = 0;
 
-	private LevelData[] allLevelData;
-	private AchievementData[] allAchievementData;
-	private Highscore[] allHighscoreData;
-	private PlayerSettings playerSettings;
-	private string levelDataFilename = "data.json";
+	private List<LevelData> allLevelData;
+	private List<AchievementData> allAchievementData;
+	private List<HighscoreData> allHighscoreData;
+	private PlayerData playerData;
+
+	public static string levelDataFilename = "level.data";
+	public static string achievementDataFilename = "achievement.data";
+	public static string highscoreDataFilename = "highscore.data";
+	public static string playerDataFilename = "player.data";
 
 	void Awake () {
 		if (Instance == null) {
@@ -29,45 +33,48 @@ public class GlobalData : MonoBehaviour {
 	}
 		
 	public void LoadGameData () {
-		string filePath = Path.Combine (Application.streamingAssetsPath, levelDataFilename);
+		
+		string filePath;
 
+		filePath = Path.Combine (Application.streamingAssetsPath, levelDataFilename);
 		if (File.Exists (filePath)) {
 			BinaryFormatter bFormatter = new BinaryFormatter ();
 			FileStream fileStream = File.Open (filePath, FileMode.Open);
-			GameData loadedData = (GameData)bFormatter.Deserialize (fileStream);
-			allLevelData = loadedData.allLevelData;
-			allAchievementData = loadedData.allAchievementData;
-			allHighscoreData = loadedData.allHighscoreData;
-			playerSettings = loadedData.playerSettings;
+			allLevelData = (List<LevelData>)bFormatter.Deserialize (fileStream);
 			fileStream.Close ();
-		} else {
-			Debug.LogError ("Cannot load game data!");
+		}
+		filePath = Path.Combine (Application.streamingAssetsPath, achievementDataFilename);
+		if (File.Exists (filePath)) {
+			BinaryFormatter bFormatter = new BinaryFormatter ();
+			FileStream fileStream = File.Open (filePath, FileMode.Open);
+			allAchievementData = (List<AchievementData>)bFormatter.Deserialize (fileStream);
+			fileStream.Close ();
+		}
+		filePath = Path.Combine (Application.streamingAssetsPath, highscoreDataFilename);
+		if (File.Exists (filePath)) {
+			BinaryFormatter bFormatter = new BinaryFormatter ();
+			FileStream fileStream = File.Open (filePath, FileMode.Open);
+			allHighscoreData = (List<HighscoreData>)bFormatter.Deserialize (fileStream);
+			fileStream.Close ();
+		}
+		filePath = Path.Combine (Application.streamingAssetsPath, playerDataFilename);
+		if (File.Exists (filePath)) {
+			BinaryFormatter bFormatter = new BinaryFormatter ();
+			FileStream fileStream = File.Open (filePath, FileMode.Open);
+			playerData = (PlayerData)bFormatter.Deserialize (fileStream);
+			fileStream.Close ();
 		}
 	}
-
-	public void SaveGameData () {
-		string filePath = Path.Combine (Application.streamingAssetsPath, levelDataFilename);
-
-
-	}
 }
-
+	
 [System.Serializable]
-public class GameData {
-	public LevelData[] allLevelData;
-	public AchievementData[] allAchievementData;
-	public Highscore[] allHighscoreData;
-	public PlayerSettings playerSettings;
-}
-
-[System.Serializable]
-public class Highscore {
+public class HighscoreData {
 	public string level;
 	public int highscore;
 }
 
 [System.Serializable]
-public class PlayerSettings {
+public class PlayerData {
 	public float volume;
 	public string selectedLevel;
 	public string selectedMode;
