@@ -6,10 +6,15 @@ using System.IO;
 
 public class GlobalData : MonoBehaviour {
 
+	public Dictionary<string, int> dictS;
+
 	public static GlobalData Instance { get; private set; }
 	public int score = 0, highscore = 0;
 
 	private LevelData[] allLevelData;
+	private AchievementData[] allAchievementData;
+	private Highscore[] allHighscoreData;
+	private PlayerSettings playerSettings;
 	private string levelDataFilename = "data.json";
 
 	void Awake () {
@@ -29,21 +34,55 @@ public class GlobalData : MonoBehaviour {
 			string jsonData = File.ReadAllText (filePath);
 			GameData loadedData = JsonUtility.FromJson<GameData> (jsonData);
 			allLevelData = loadedData.allLevelData;
+			allAchievementData = loadedData.allAchievementData;
+			allHighscoreData = loadedData.allHighscoreData;
+			playerSettings = loadedData.playerSettings;
 		} else {
 			Debug.LogError ("Cannot load game data!");
 		}
 	}
+
+	public void SaveGameData () {
+		string filePath = Path.Combine (Application.streamingAssetsPath, levelDataFilename);
+
+
+	}
 }
 
+[System.Serializable]
 public class GameData {
 	public LevelData[] allLevelData;
+	public AchievementData[] allAchievementData;
+	public Highscore[] allHighscoreData;
+	public PlayerSettings playerSettings;
 }
 
+[System.Serializable]
+public class Highscore {
+	public string level;
+	public int highscore;
+}
+
+[System.Serializable]
+public class PlayerSettings {
+	public float volume;
+	public string selectedLevel;
+	public string selectedMode;
+}
+
+[System.Serializable]
+public class AchievementData {
+	public string achievementName;
+	public string levelRestriction;
+	public string triggerName;
+	public int triggerValue;
+}
+
+[System.Serializable]
 public class LevelData {
-	//general
 	public string levelName;
-	public string transitionSpeed;
-	//button
+	public int transitionSpeed;
+
 	public int multiplierLimit;
 	public int multiplierDynamic;
 	public int clickDecay;

@@ -1,10 +1,1 @@
-{"X" : [{
-	"levelName" : "x", 
-	"levelName" : "x",
-	"transitionSpeed" : "x",
-	"multiplierLimit" : "x",
-	"multiplierDynamic" : "x",
-	"clickDecay" : "x",
-	"clickWeight" : "x",
-	"critChance" : "x"
-}]}
+{"allLevelData":[{"levelName":"Grey Elevator","transitionSpeed":1,"multiplierLimit":10,"multiplierDynamic":1,"clickDecay":1,"clickWeight":1,"critChance":0},{"levelName":"White Elevator","transitionSpeed":12,"multiplierLimit":8,"multiplierDynamic":1,"clickDecay":1,"clickWeight":1,"critChance":0}]}

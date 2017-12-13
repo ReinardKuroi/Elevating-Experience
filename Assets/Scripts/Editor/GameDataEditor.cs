@@ -7,6 +7,7 @@ using System.IO;
 public class GameDataEditor: EditorWindow {
 
 	public GameData gameData;
+	public 
 
 	private string gameDataProjectFilepath = "/StreamingAssets/data.json";
 
@@ -20,7 +21,6 @@ public class GameDataEditor: EditorWindow {
 		if (gameData != null) {
 			SerializedObject serializedObject = new SerializedObject (this);
 			SerializedProperty serializedProperty = serializedObject.FindProperty ("gameData");
-
 			EditorGUILayout.PropertyField (serializedProperty, true);
 
 			serializedObject.ApplyModifiedProperties ();
