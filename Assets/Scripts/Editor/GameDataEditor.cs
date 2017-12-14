@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using System;
+using System.Runtime.Remoting;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
@@ -12,10 +14,10 @@ public class GameDataEditor: EditorWindow {
 	private string highscoreDataFilename = GlobalData.highscoreDataFilename;
 	private string playerDataFilename = GlobalData.playerDataFilename;
 
-	public List<LevelData> allLevelData = null;
-	public List<AchievementData> allAchievementData = null;
-	public List<HighscoreData> allHighscoreData = null;
-	public PlayerData playerData = null;
+	public List<LevelData> allLevelData;
+	public List<AchievementData> allAchievementData;
+	public List<HighscoreData> allHighscoreData;
+	public List<PlayerData> allPlayerData;
 
 	[MenuItem ("Window/Game Data Editor")]
 	static void Init () {
@@ -24,7 +26,7 @@ public class GameDataEditor: EditorWindow {
 	}
 
 	void OnGUI () {
-		if ((allLevelData.Count != 0) && (allAchievementData.Count != 0) && (allHighscoreData.Count != 0) && (playerData != null)) {
+		if ((allLevelData != null) && (allAchievementData != null) && (allHighscoreData != null) && (allPlayerData != null)) {
 			SerializedObject serializedObject = new SerializedObject (this);
 			SerializedProperty serializedProperty;
 			serializedProperty = serializedObject.FindProperty ("allLevelData");
@@ -39,7 +41,7 @@ public class GameDataEditor: EditorWindow {
 			EditorGUILayout.PropertyField (serializedProperty, true);
 			serializedObject.ApplyModifiedProperties ();
 
-			serializedProperty = serializedObject.FindProperty ("playerData");
+			serializedProperty = serializedObject.FindProperty ("allPlayerData");
 			EditorGUILayout.PropertyField (serializedProperty, true);
 			serializedObject.ApplyModifiedProperties ();
 
@@ -52,69 +54,43 @@ public class GameDataEditor: EditorWindow {
 		}
 	}
 
-	private void LoadGameData () {
-		string filePath;
-		BinaryFormatter bFormatter = new BinaryFormatter ();
+	static void AddField<T> (ref T obj){
+		
+	}
 
-		filePath = Path.Combine (Application.streamingAssetsPath, levelDataFilename);
+	static void LoadFile<T> (ref T obj, string fileName) where T : new () {
+		string filePath = Path.Combine (Application.streamingAssetsPath, fileName);
 		if (File.Exists (filePath)) {
+			BinaryFormatter bFormatter = new BinaryFormatter ();
 			FileStream fileStream = File.Open (filePath, FileMode.Open);
-			allLevelData = (List<LevelData>)bFormatter.Deserialize (fileStream);
+			obj = (T)bFormatter.Deserialize (fileStream);
 			fileStream.Close ();
-			Debug.Log ("level load");
-		} else
-			allLevelData = new List<LevelData>();
-		
-		filePath = Path.Combine (Application.streamingAssetsPath, achievementDataFilename);
-		if (File.Exists (filePath)) {
-			FileStream fileStream = File.Open (filePath, FileMode.Open);
-			allAchievementData = (List<AchievementData>)bFormatter.Deserialize (fileStream);
-			fileStream.Close ();
-			Debug.Log ("achievement load");
-		} else
-			allAchievementData = new List<AchievementData>();
-		
-		filePath = Path.Combine (Application.streamingAssetsPath, highscoreDataFilename);
-		if (File.Exists (filePath)) {
-			FileStream fileStream = File.Open (filePath, FileMode.Open);
-			allHighscoreData = (List<HighscoreData>)bFormatter.Deserialize (fileStream);
-			fileStream.Close ();
-			Debug.Log ("highscore load");
-		} else
-			allHighscoreData = new List<HighscoreData> ();
-		
-		filePath = Path.Combine (Application.streamingAssetsPath, playerDataFilename);
-		if (File.Exists (filePath)) {
-			FileStream fileStream = File.Open (filePath, FileMode.Open);
-			playerData = (PlayerData)bFormatter.Deserialize (fileStream);
-			fileStream.Close ();
-			Debug.Log ("player load");
-		} else
-			playerData = new PlayerData ();
+			Debug.Log ("Loaded file " + fileName);
+		} else {
+			obj = new T ();
+			Debug.Log ("Created file");
+		}
+	}
+
+	static void SaveFile<T> (ref T obj, string fileName) where T : class {
+		string filePath = Path.Combine (Application.streamingAssetsPath, fileName);
+		BinaryFormatter bFormatter = new BinaryFormatter ();
+		FileStream fileStream = File.Create (filePath);
+		bFormatter.Serialize (fileStream, obj);
+		fileStream.Close ();
+	}
+
+	private void LoadGameData () {
+		LoadFile (ref allLevelData, levelDataFilename);
+		LoadFile (ref allAchievementData, achievementDataFilename);
+		LoadFile (ref allHighscoreData, highscoreDataFilename);
+		LoadFile (ref allPlayerData, playerDataFilename);
 	}
 
 	private void SaveGameData () {
-		string filePath;
-		BinaryFormatter bFormatter = new BinaryFormatter ();
-
-		filePath = Path.Combine (Application.streamingAssetsPath, levelDataFilename);
-		FileStream fileStream = File.Create (filePath);
-		bFormatter.Serialize (fileStream, allLevelData);
-		fileStream.Close ();
-
-		filePath = Path.Combine (Application.streamingAssetsPath, achievementDataFilename);
-		fileStream = File.Create (filePath);
-		bFormatter.Serialize (fileStream, allAchievementData);
-		fileStream.Close ();
-
-		filePath = Path.Combine (Application.streamingAssetsPath, highscoreDataFilename);
-		fileStream = File.Create (filePath);
-		bFormatter.Serialize (fileStream, allHighscoreData);
-		fileStream.Close ();
-
-		filePath = Path.Combine (Application.streamingAssetsPath, playerDataFilename);
-		fileStream = File.Create (filePath);
-		bFormatter.Serialize (fileStream, playerData);
-		fileStream.Close ();
+		SaveFile (ref allLevelData, levelDataFilename);
+		SaveFile (ref allAchievementData, achievementDataFilename);
+		SaveFile (ref allHighscoreData, highscoreDataFilename);
+		SaveFile (ref allPlayerData, playerDataFilename);
 	}
 }

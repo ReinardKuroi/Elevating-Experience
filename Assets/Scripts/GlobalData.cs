@@ -1,6 +1,7 @@
-﻿using System.Collections;
+﻿using UnityEngine;
+using System;
+using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
@@ -66,18 +67,31 @@ public class GlobalData : MonoBehaviour {
 		}
 	}
 }
-	
+
 [System.Serializable]
 public class HighscoreData {
 	public string level;
 	public int highscore;
+
+	public HighscoreData () {
+		this.level = "";
+		this.highscore = 0;
+	}
 }
 
 [System.Serializable]
 public class PlayerData {
+	public string name;
 	public float volume;
 	public string selectedLevel;
 	public string selectedMode;
+
+	public PlayerData () {
+		this.name = "";
+		this.volume = 1;
+		this.selectedLevel = "";
+		this.selectedMode = "";
+	}
 }
 
 [System.Serializable]
@@ -86,6 +100,13 @@ public class AchievementData {
 	public string levelRestriction;
 	public string triggerName;
 	public int triggerValue;
+
+	AchievementData () {
+		this.achievementName = "";
+		this.levelRestriction = "";
+		this.triggerName = "";
+		this.triggerValue = 0;
+	}
 }
 
 [System.Serializable]
@@ -98,4 +119,14 @@ public class LevelData {
 	public int clickDecay;
 	public int clickWeight;
 	public int critChance;
+
+	public LevelData (){
+		this.levelName = "";
+		this.transitionSpeed = 0;
+		this.multiplierLimit = 0;
+		this.multiplierDynamic = 0;
+		this.clickDecay = 0;
+		this.clickWeight = 0;
+		this.critChance = 0;
+	}
 }
