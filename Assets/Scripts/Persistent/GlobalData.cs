@@ -122,10 +122,11 @@ public class LevelData {
 	public int transitionSpeed;
 
 	public int multiplierLimit;
-	public int multiplierDynamic;
-	public int clickDecay;
-	public int clickWeight;
+	public float multiplierDynamic;
+	public float clickDecay;
+	public float clickWeight;
 	public int critChance;
+	public int critMultiplier;
 
 	public LevelData (){
 		this.levelName = "";
@@ -135,5 +136,6 @@ public class LevelData {
 		this.clickDecay = 0;
 		this.clickWeight = 0;
 		this.critChance = 0;
+		this.critMultiplier = 0;
 	}
 }

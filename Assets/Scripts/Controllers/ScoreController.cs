@@ -1,68 +1,76 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ScoreController {
+public class ScoreController : MonoBehaviour{
 
 	public static LevelData levelData;
 
-	static int margin;
-	static int scoreMultiplier;
-	static float timeBefore, timeAfter;
+	static int score = 0;
+	static int scoreMultiplier = 1;
+	static float multiplierCounter = 0;
+
+	static float timeBefore;
+	static float timeAfter;
 	static float deltaTime;
-	static int score;
+	static System.Random rand;
 
 	public static void Awake () {
+		rand = new System.Random (System.DateTime.Now.Millisecond);
 		levelData = GlobalData.Instance.GetActiveLevel ();
-
 		Debug.Log ("Loaded level " + levelData.levelName);
-
-		margin = levelData.multiplierLimit;
-		scoreMultiplier = 1;
 		timeBefore = timeAfter = Time.time;
 	}
 
 	public static void ScoreUpdate () {
-		CalcScore2 ();
-		if (score > GlobalData.Instance.highscore) {
-			GlobalData.Instance.highscore = score;
-			PlayerPrefs.SetInt ("Highscore", GlobalData.Instance.highscore);
-		}
+		CalcScore ();
 
-		//Update UI
-		string s = "Score: " + score.ToString() + ", Highscore: " + GlobalData.Instance.highscore.ToString() + ", x " + scoreMultiplier.ToString() + ", margin " + margin.ToString();
+		string s = "Score: " + score.ToString() + ", x " + scoreMultiplier.ToString();
 		Debug.Log (s);
 	}
 
-	static void CalcScore2 () {
-		if ((score >= margin) && (scoreMultiplier < levelData.multiplierLimit)) {
-			margin = score * (levelData.multiplierLimit - scoreMultiplier);
+	static void Accumulate () {
+		timeBefore = timeAfter;
+		timeAfter = Time.time;
+		deltaTime = timeAfter - timeBefore;
+		if (deltaTime <= levelData.clickDecay / scoreMultiplier)
+			multiplierCounter += levelData.clickWeight;
+		else
+			multiplierCounter -= levelData.clickWeight;
+		if ((multiplierCounter >= levelData.multiplierDynamic) && (scoreMultiplier < levelData.multiplierLimit)) {
 			scoreMultiplier += 1;
+			multiplierCounter = 0;
 		}
-		score += scoreMultiplier;
+		if ((multiplierCounter < 0) && (scoreMultiplier > 1)) {
+			scoreMultiplier -= 1;
+			multiplierCounter = levelData.multiplierDynamic - 1;
+		}
+	}
+
+	static bool Crit () {
+		if (levelData.critChance > rand.Next (1, 100))
+			return true;
+		else
+			return false;
+	}
+
+	static void CalcScore () {
+		Accumulate ();
+		if (Crit ()) {
+			score += levelData.critMultiplier * scoreMultiplier;
+			Debug.Log ("Crit!");
+		}
+		else
+			score += scoreMultiplier;
 	}
 
 	public static int GetScore () {
 		return score;
 	}
-	/*
-	static void CalcScore () {
-		//Timey-wimey magic
-		timeBefore = timeAfter;
-		timeAfter = Time.time;
-		deltaTime = timeAfter - timeBefore;
-		Debug.Log ("Delta time: " + deltaTime);
-		//Calculate Score
-		//Currently depends on how much points you have and how fast are you clicking
-		if ((score >= margin) && (scoreMultiplier < levelData.multiplierLimit)) {
-			margin = score * (levelData.multiplierLimit - scoreMultiplier);
-			scoreMultiplier += 1;
-		}
-		if ((deltaTime > (1 / scoreMultiplier)) && (scoreMultiplier > 1)) {
-			margin = score * (levelData.multiplierLimit - scoreMultiplier);
-			scoreMultiplier -= 1;
-		}
-		score += (int)Mathf.Ceil (scoreMultiplier / deltaTime);
 
-	}*/
+	//for debugging
+	static void CalcScore2 () {
+		score += scoreMultiplier;
+	}
 }
