@@ -11,6 +11,7 @@ public class GlobalData : MonoBehaviour {
 	public static GlobalData Instance { get; private set; }
 
 	public int highscore = 0;
+	public int score = 0;
 
 	private List<LevelData> allLevelData;
 	private List<AchievementData> allAchievementData;
@@ -20,7 +21,7 @@ public class GlobalData : MonoBehaviour {
 	private Dictionary<string, int> sceneDict = new Dictionary<string, int> ();
 
 	private LevelData activeLevel = new LevelData ();
-	private HighscoreData activeHighscore = new HighscoreData ();
+//	private HighscoreData activeHighscore = new HighscoreData ();
 
 	public static string levelDataFilename = "level.data";
 	public static string achievementDataFilename = "achievement.data";

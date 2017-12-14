@@ -8,7 +8,7 @@ public class UIController : MonoBehaviour {
 	public Text scoreTableText;
 	public Text highscoreText;
 
-	private int score;
+	private int score = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -18,7 +18,7 @@ public class UIController : MonoBehaviour {
 	
 	// Update is called once per frame
 	public void Update () {
-		StartCoroutine(SlowRoll( ScoreController.GetScore ()));
+		StartCoroutine(SlowRoll( GlobalData.Instance.score));
 		scoreTableText.text = "Score: " + score;
 		highscoreText.text = "Highscore: " + GlobalData.Instance.highscore.ToString ();
 	}
