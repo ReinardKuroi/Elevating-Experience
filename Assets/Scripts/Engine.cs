@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class Engine : MonoBehaviour {
 
+	void Awake () {
+		string sceneName = SceneController.GetSceneName ();
+		GlobalData.Instance.SetActivelevel (sceneName);
+		ScoreController.Awake ();
+	}
+
 	void Update () {
 		if (Input.GetKeyDown(KeyCode.Mouse0))
 		{

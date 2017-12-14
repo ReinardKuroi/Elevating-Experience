@@ -1,22 +1,26 @@
-﻿using UnityEngine;
-using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using System.IO;
+using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters.Binary;
+using UnityEngine;
+using UnityEngine.Serialization;
 
 
 public class GlobalData : MonoBehaviour {
 
-	public Dictionary<string, int> dictS;
-
 	public static GlobalData Instance { get; private set; }
-	public int score = 0, highscore = 0;
+
+	public int highscore = 0;
 
 	private List<LevelData> allLevelData;
 	private List<AchievementData> allAchievementData;
 	private List<HighscoreData> allHighscoreData;
-	private PlayerData playerData;
+	private List<PlayerData> allPlayerData;
+
+	private Dictionary<string, int> sceneDict = new Dictionary<string, int> ();
+
+	private LevelData activeLevel = new LevelData ();
+	private HighscoreData activeHighscore = new HighscoreData ();
 
 	public static string levelDataFilename = "level.data";
 	public static string achievementDataFilename = "achievement.data";
@@ -31,40 +35,43 @@ public class GlobalData : MonoBehaviour {
 			Destroy (gameObject);
 		}
 		LoadGameData ();
+		Initialize ();
 	}
 		
-	public void LoadGameData () {
-		
-		string filePath;
+	public void SetActivelevel (string name) {
+		int i;
+		if (sceneDict.TryGetValue (name, out i)) {
+			activeLevel = allLevelData [i];
+			Debug.Log ("Active level " + name + ", index " + i.ToString ());
+		} else
+			Debug.LogError ("No level in database! Loading base.");
+	}
 
-		filePath = Path.Combine (Application.streamingAssetsPath, levelDataFilename);
-		if (File.Exists (filePath)) {
-			BinaryFormatter bFormatter = new BinaryFormatter ();
-			FileStream fileStream = File.Open (filePath, FileMode.Open);
-			allLevelData = (List<LevelData>)bFormatter.Deserialize (fileStream);
-			fileStream.Close ();
+	public LevelData GetActiveLevel () {
+		return activeLevel;
+	}
+
+	public void Initialize () {
+		for (int i = 0; i < allLevelData.Count; i++) {
+			sceneDict.Add (allLevelData [i].levelName, i);
 		}
-		filePath = Path.Combine (Application.streamingAssetsPath, achievementDataFilename);
-		if (File.Exists (filePath)) {
-			BinaryFormatter bFormatter = new BinaryFormatter ();
-			FileStream fileStream = File.Open (filePath, FileMode.Open);
-			allAchievementData = (List<AchievementData>)bFormatter.Deserialize (fileStream);
-			fileStream.Close ();
+		foreach (KeyValuePair<string, int> pair in sceneDict) {
+			Debug.Log ("Key = " + pair.Key + ", Value = " + pair.Value.ToString());
 		}
-		filePath = Path.Combine (Application.streamingAssetsPath, highscoreDataFilename);
-		if (File.Exists (filePath)) {
-			BinaryFormatter bFormatter = new BinaryFormatter ();
-			FileStream fileStream = File.Open (filePath, FileMode.Open);
-			allHighscoreData = (List<HighscoreData>)bFormatter.Deserialize (fileStream);
-			fileStream.Close ();
-		}
-		filePath = Path.Combine (Application.streamingAssetsPath, playerDataFilename);
-		if (File.Exists (filePath)) {
-			BinaryFormatter bFormatter = new BinaryFormatter ();
-			FileStream fileStream = File.Open (filePath, FileMode.Open);
-			playerData = (PlayerData)bFormatter.Deserialize (fileStream);
-			fileStream.Close ();
-		}
+	}
+
+	public void LoadGameData () {
+		SaveLoad.LoadFile (ref allLevelData, levelDataFilename);
+		SaveLoad.LoadFile (ref allAchievementData, achievementDataFilename);
+		SaveLoad.LoadFile (ref allHighscoreData, highscoreDataFilename);
+		SaveLoad.LoadFile (ref allPlayerData, playerDataFilename);
+	}
+
+	private void SaveGameData () {
+		SaveLoad.SaveFile (ref allLevelData, levelDataFilename);
+		SaveLoad.SaveFile (ref allAchievementData, achievementDataFilename);
+		SaveLoad.SaveFile (ref allHighscoreData, highscoreDataFilename);
+		SaveLoad.SaveFile (ref allPlayerData, playerDataFilename);
 	}
 }
 

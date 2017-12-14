@@ -4,22 +4,25 @@ using UnityEngine;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 
-public class SaveLoad {
-	public string filePath;
-
-//	public ButtonParams buttonParams;
-
-	public void Serialize () {
-//		string jsonString = JsonUtility.ToJson (buttonParams, true);
-//		File.WriteAllText (filePath, jsonString);
+public static class SaveLoad {
+	
+	public static void LoadFile<T> (ref T obj, string fileName) where T : new () {
+		string filePath = Path.Combine (Application.streamingAssetsPath, fileName);
+		if (File.Exists (filePath)) {
+			BinaryFormatter bFormatter = new BinaryFormatter ();
+			FileStream fileStream = File.Open (filePath, FileMode.Open);
+			obj = (T)bFormatter.Deserialize (fileStream);
+			fileStream.Close ();
+		} else {
+			obj = new T ();
+		}
 	}
 
-	public void Deserialize () {
-		string jsonString = File.ReadAllText (filePath);
-//		buttonParams = JsonUtility.FromJson<ButtonParams> (jsonString);
-	}
-		
-	public void LoadGameData (string path) {
-		string jsonString = File.ReadAllText (path);
+	public static void SaveFile<T> (ref T obj, string fileName) where T : class {
+		string filePath = Path.Combine (Application.streamingAssetsPath, fileName);
+		BinaryFormatter bFormatter = new BinaryFormatter ();
+		FileStream fileStream = File.Create (filePath);
+		bFormatter.Serialize (fileStream, obj);
+		fileStream.Close ();
 	}
 }
