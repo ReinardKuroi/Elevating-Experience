@@ -7,7 +7,7 @@ PlayerSettings:
   productGUID: bc5d00e8ac1627d4ca265952b05fc946
   AndroidProfiler: 0
   AndroidFilterTouchesWhenObscured: 0
-  defaultScreenOrientation: 4
+  defaultScreenOrientation: 0
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
@@ -602,7 +602,7 @@ PlayerSettings:
   cloudServicesEnabled:
     UNet: 1
   facebookSdkVersion: 7.9.4
-  apiCompatibilityLevel: 3
+  apiCompatibilityLevel: 2
   cloudProjectId: c1da95b7-81c8-489d-8351-514d3c8e1183
   projectName: ClickerGame
   organizationId: reinardkuroi
