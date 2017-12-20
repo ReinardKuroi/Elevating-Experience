@@ -7,8 +7,8 @@ public class ScoreController : MonoBehaviour {
 
 	public static LevelData levelData;
 
-	static int scoreMultiplier = 1;
-	static float multiplierCounter = 0;
+	static int scoreMultiplier;
+	static float multiplierCounter;
 
 	static float timeBefore;
 	static float timeAfter;
@@ -16,6 +16,8 @@ public class ScoreController : MonoBehaviour {
 	static System.Random rand;
 
 	public static void Awake () {
+		scoreMultiplier = 1;
+		multiplierCounter = 0;
 		rand = new System.Random (System.DateTime.Now.Millisecond);
 		levelData = GlobalData.Instance.allLevelData [GlobalData.Instance.activeLevel];
 		Debug.Log ("Loaded level data: " + levelData.levelName);
@@ -25,6 +27,7 @@ public class ScoreController : MonoBehaviour {
 	public static int ScoreUpdate (int score) {
 		score = CalcScore (score);
 		Debug.Log ("Score: " + score.ToString() + ", x " + scoreMultiplier.ToString());
+		GlobalData.Instance.multiplier = scoreMultiplier;
 		return score;
 	}
 

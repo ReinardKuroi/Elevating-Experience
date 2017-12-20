@@ -6,21 +6,22 @@ using UnityEngine.UI;
 public class UIController : MonoBehaviour {
 
 	public Text scoreTableText;
-	public Text highscoreText;
+	public Text multiplierText;
 
-	private int score = 0;
+	private int score;
 
 	// Use this for initialization
 	void Start () {
+		score = 0;
 		scoreTableText.text = "";
-		highscoreText.text = "";
+		multiplierText.text = "";
 	}
 	
 	// Update is called once per frame
 	public void Update () {
 		StartCoroutine(SlowRoll( GlobalData.Instance.score));
-		scoreTableText.text = "Score: " + score;
-		highscoreText.text = "Highscore: " + GlobalData.Instance.highscore.ToString ();
+		scoreTableText.text = score.ToString ();
+		multiplierText.text = "X" + GlobalData.Instance.multiplier.ToString ();
 	}
 
 	IEnumerator SlowRoll (int target) {

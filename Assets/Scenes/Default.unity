@@ -232,7 +232,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 79641129}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 492.00488, z: 0}
+  m_LocalPosition: {x: 0, y: 492.00726, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1276824590}
@@ -461,8 +461,8 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 256501966}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 283, y: 453, z: 0}
-  m_LocalScale: {x: 1.1555978, y: 1.1555978, z: 1.1555978}
+  m_LocalPosition: {x: 275.5, y: 441, z: 0}
+  m_LocalScale: {x: 1.1249791, y: 1.1249791, z: 1.1249791}
   m_Children:
   - {fileID: 1006382108}
   - {fileID: 657849070}
@@ -1027,7 +1027,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 657849069}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -184.8949, y: -332.0049, z: 0}
+  m_LocalPosition: {x: -184.89343, y: -332.0073, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 256501967}
@@ -1377,7 +1377,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1006382104}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 184.8949, y: -332.0049, z: 0}
+  m_LocalPosition: {x: 184.89343, y: -332.0073, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 256501967}
@@ -1811,8 +1811,8 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1484781005}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 283, y: 453, z: 0}
-  m_LocalScale: {x: 1.1555978, y: 1.1555978, z: 1.1555978}
+  m_LocalPosition: {x: 275.5, y: 441, z: 0}
+  m_LocalScale: {x: 1.1249791, y: 1.1249791, z: 1.1249791}
   m_Children:
   - {fileID: 1276824590}
   - {fileID: 1593397510}
@@ -1956,7 +1956,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreTableText: {fileID: 2054029430}
-  highscoreText: {fileID: 1765136876}
+  multiplierText: {fileID: 1765136876}
 --- !u!114 &1520074434
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2165,7 +2165,7 @@ GameObject:
   - component: {fileID: 1765136877}
   - component: {fileID: 1765136876}
   m_Layer: 5
-  m_Name: Highscore
+  m_Name: Multiplier
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2178,7 +2178,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1765136874}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -137.94489, y: 338.5299, z: 0}
+  m_LocalPosition: {x: -137.94342, y: 338.5323, z: 0}
   m_LocalScale: {x: 1.0695003, y: 1.0695003, z: 1.0695003}
   m_Children: []
   m_Father: {fileID: 256501967}
@@ -2221,7 +2221,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'Highscore: XX'
+  m_Text: XX
 --- !u!222 &1765136877
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2252,7 +2252,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2054029428}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 137.94485, y: 338.5299, z: 0}
+  m_LocalPosition: {x: 137.94339, y: 338.5323, z: 0}
   m_LocalScale: {x: 1.0695003, y: 1.0695003, z: 1.0695003}
   m_Children: []
   m_Father: {fileID: 256501967}

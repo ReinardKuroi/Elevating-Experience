@@ -10,8 +10,9 @@ public class GlobalData : MonoBehaviour {
 
 	public static GlobalData Instance { get; private set; }
 
-	public int highscore = 0;
-	public int score = 0;
+	public int highscore;
+	public int multiplier;
+	public int score;
 
 	public List<LevelData> allLevelData;
 	public List<AchievementData> allAchievementData;
@@ -40,6 +41,7 @@ public class GlobalData : MonoBehaviour {
 		LoadGameData ();
 		Initialize ();
 		Debug.Log ("Active player " + allPlayerData [activePlayer].name + ", active level " + allLevelData [activeLevel].levelName);
+		Debug.Log ("Score: " + score + ", multi: " + multiplier + ", loadNext: " + loadNext);
 	}
 
 	public void SetActivePlayer () {
@@ -67,6 +69,9 @@ public class GlobalData : MonoBehaviour {
 
 		SetActivePlayer ();
 		SetActivelevel ();
+		score = 0;
+		highscore = 0;
+		multiplier = 0;
 
 		int k;
 		if (sceneDict.TryGetValue (allPlayerData [activePlayer].selectedLevel, out k)) {

@@ -208,9 +208,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highscore: 0
+  multiplier: 0
   score: 0
-  selectedLevel: 
   allLevelData: []
+  allAchievementData: []
+  allHighscoreData: []
+  allPlayerData: []
+  activeLevel: 0
+  activePlayer: 0
+  loadNext: 
 --- !u!4 &142720189
 Transform:
   m_ObjectHideFlags: 0
@@ -1210,6 +1216,11 @@ Prefab:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1395930381565328, guid: f995f0e39ef1c864e949e99321a54093, type: 2}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 7250588514170254948, guid: 0000000000000000d000000000000000,
+        type: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f995f0e39ef1c864e949e99321a54093, type: 2}
   m_IsPrefabParent: 0
@@ -1506,8 +1517,8 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1237436093}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 259, y: 414.5, z: 0}
-  m_LocalScale: {x: 1.0574906, y: 1.0574906, z: 1.0574906}
+  m_LocalPosition: {x: 276, y: 441.5, z: 0}
+  m_LocalScale: {x: 1.1266377, y: 1.1266377, z: 1.1266377}
   m_Children:
   - {fileID: 693737575}
   - {fileID: 1947251935}
@@ -1855,7 +1866,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 045ee2ed2be50de45b4abb66d5a550be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonPrefab: {fileID: 0}
+  buttonPrefab: {fileID: 1899635514226796, guid: 8b80bb6d013bc89439845de8b48e0c0a,
+    type: 2}
 --- !u!4 &1661502094
 Transform:
   m_ObjectHideFlags: 0
