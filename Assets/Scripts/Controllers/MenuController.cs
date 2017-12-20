@@ -5,27 +5,22 @@ using UnityEngine.UI;
 
 public class MenuController : MonoBehaviour {
 
+	public GameObject pauseCanvas;
 	public GameObject pauseUI;
 	public GameObject settingsUI;
 	public GameObject pauseButton;
 	public GameObject settingsButton;
 
-	private bool isPaused = false;
-	private Text t;
-
-	void Awake () {
-		t = pauseButton.GetComponentInChildren<Text> ();
-	}
-
-	void TogglePause () {
-		if (isPaused) {
-			t.text = "PAUSE";
-			Time.timeScale = 1f;
-		} else {
-			t.text = "PLAY";
+	bool TogglePause () {
+		pauseCanvas.SetActive (!pauseCanvas.activeSelf);
+		if (pauseCanvas.activeSelf) {
 			Time.timeScale = 0f;
+			pauseButton.GetComponentInChildren<Text> ().text = "PLAY";
+		} else {
+			Time.timeScale = 1f;
+			pauseButton.GetComponentInChildren<Text> ().text = "PAUSE";
 		}
-		isPaused = !isPaused;
+		return pauseCanvas.activeSelf;
 	}
 
 	void ToggleUI (GameObject ui) {
@@ -33,14 +28,22 @@ public class MenuController : MonoBehaviour {
 	}
 
 	public void PauseClick () {
-		if (settingsUI.activeSelf)
-			ToggleUI (settingsUI);
-		TogglePause ();
+		if (TogglePause ()) {
+			pauseUI.SetActive (true);
+			settingsUI.SetActive (false);
+		}
 	}
 
 	public void SettingsClick () {
-		if (!isPaused)
+		if (!pauseCanvas.activeSelf) {
 			TogglePause ();
-		ToggleUI (settingsUI);
+		}
+		if (!settingsUI.activeSelf) {
+			pauseUI.SetActive (false);
+			settingsUI.SetActive (true);
+		} else {
+			pauseUI.SetActive (true);
+			settingsUI.SetActive (false);
+		}
 	}
 }
