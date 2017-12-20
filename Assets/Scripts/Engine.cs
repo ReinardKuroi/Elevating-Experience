@@ -1,16 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Engine : MonoBehaviour {
 
 	void Awake () {
-		string sceneName = SceneController.GetSceneName ();
-		GlobalData.Instance.SetActivelevel (sceneName);
+		GlobalData.Instance.SetActivelevel ();
 		ScoreController.Awake ();
 	}
 
 	void Update () {
+		//fix later
+		if (Time.timeScale == 0f)
+			return;
+		
 		if (Input.GetKeyDown(KeyCode.Mouse0))
 		{
 			GameObject g = Cast();

@@ -2,29 +2,34 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
-public class MenuController : MonoBehaviour {
+public class InGameMenuController : MonoBehaviour {
 
 	public GameObject pauseCanvas;
 	public GameObject pauseUI;
 	public GameObject settingsUI;
 	public GameObject pauseButton;
-	public GameObject settingsButton;
+	public Sprite pauseSprite;
+	public Sprite playSprite;
+
+	void Awake () {
+		pauseCanvas.SetActive (false);
+		pauseUI.SetActive (false);
+		settingsUI.SetActive (false);
+		pauseButton.GetComponent<Image> ().sprite = pauseSprite;
+	}
 
 	bool TogglePause () {
 		pauseCanvas.SetActive (!pauseCanvas.activeSelf);
 		if (pauseCanvas.activeSelf) {
 			Time.timeScale = 0f;
-			pauseButton.GetComponentInChildren<Text> ().text = "PLAY";
+			pauseButton.GetComponent<Image> ().sprite = playSprite;
 		} else {
 			Time.timeScale = 1f;
-			pauseButton.GetComponentInChildren<Text> ().text = "PAUSE";
+			pauseButton.GetComponent<Image> ().sprite = pauseSprite;
 		}
 		return pauseCanvas.activeSelf;
-	}
-
-	void ToggleUI (GameObject ui) {
-		ui.SetActive (!ui.activeSelf);
 	}
 
 	public void PauseClick () {
@@ -45,5 +50,10 @@ public class MenuController : MonoBehaviour {
 			pauseUI.SetActive (true);
 			settingsUI.SetActive (false);
 		}
+	}
+
+	public void Quit () {
+		GlobalData.Instance.loadNext = "MainMenu";
+		SceneManager.LoadScene ("LoadingScreen");
 	}
 }

@@ -17,7 +17,7 @@ public class ScoreController : MonoBehaviour {
 
 	public static void Awake () {
 		rand = new System.Random (System.DateTime.Now.Millisecond);
-		levelData = GlobalData.Instance.GetActiveLevel ();
+		levelData = GlobalData.Instance.allLevelData [GlobalData.Instance.activeLevel];
 		Debug.Log ("Loaded level data: " + levelData.levelName);
 		timeBefore = timeAfter = Time.time;
 	}

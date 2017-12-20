@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 using UnityEngine.Serialization;
-
+using UnityEngine.SceneManagement;
 
 public class GlobalData : MonoBehaviour {
 
@@ -13,15 +13,17 @@ public class GlobalData : MonoBehaviour {
 	public int highscore = 0;
 	public int score = 0;
 
-	private List<LevelData> allLevelData;
-	private List<AchievementData> allAchievementData;
-	private List<HighscoreData> allHighscoreData;
-	private List<PlayerData> allPlayerData;
+	public List<LevelData> allLevelData;
+	public List<AchievementData> allAchievementData;
+	public List<HighscoreData> allHighscoreData;
+	public List<PlayerData> allPlayerData;
 
-	private Dictionary<string, int> sceneDict = new Dictionary<string, int> ();
+	public Dictionary<string, int> sceneDict = new Dictionary<string, int> ();
+	public Dictionary<string, int> playerDict = new Dictionary<string, int> ();
 
-	private LevelData activeLevel = new LevelData ();
-//	private HighscoreData activeHighscore = new HighscoreData ();
+	public int activeLevel;
+	public int activePlayer;
+	public string loadNext;
 
 	public static string levelDataFilename = "level.data";
 	public static string achievementDataFilename = "achievement.data";
@@ -37,28 +39,46 @@ public class GlobalData : MonoBehaviour {
 		}
 		LoadGameData ();
 		Initialize ();
-	}
-		
-	public void SetActivelevel (string name) {
-		int i;
-		if (sceneDict.TryGetValue (name, out i)) {
-			activeLevel = allLevelData [i];
-			Debug.Log ("Active level " + name + ", index " + i.ToString ());
-		} else
-			Debug.LogError ("No level in database! Loading base.");
+		Debug.Log ("Active player " + allPlayerData [activePlayer].name + ", active level " + allLevelData [activeLevel].levelName);
 	}
 
-	public LevelData GetActiveLevel () {
-		return activeLevel;
+	public void SetActivePlayer () {
+		activePlayer = 0;
+	}
+
+	public void SetActivelevel () {
+		int i;
+		if (sceneDict.TryGetValue (allPlayerData [activePlayer].selectedLevel, out i)) {
+			activeLevel = i;
+			Debug.Log ("Active level " + allPlayerData [activePlayer].selectedLevel + ", index " + i.ToString ());
+		} else {
+			activeLevel = 0;
+			Debug.LogError ("No level in database! Loading base.");
+		}
 	}
 
 	public void Initialize () {
-		for (int i = 0; i < allLevelData.Count; i++) {
-			sceneDict.Add (allLevelData [i].levelName, i);
+		for (int i = 0; i < allLevelData.Count; i++)
+			if (Application.CanStreamedLevelBeLoaded (allLevelData [i].levelName))
+				sceneDict.Add (allLevelData [i].levelName, i);
+		
+		for (int i = 0; i < allPlayerData.Count; i++)
+			playerDict.Add (allPlayerData [i].name, i);
+
+		SetActivePlayer ();
+		SetActivelevel ();
+
+		int k;
+		if (sceneDict.TryGetValue (allPlayerData [activePlayer].selectedLevel, out k)) {
+			if (!allLevelData [k].isUnlocked) {
+				Debug.Log ("Level " + allLevelData [k].levelName + " is locked, reset to default.");
+				allPlayerData [activePlayer].selectedLevel = allLevelData [sceneDict ["Default"]].levelName;
+			}
+		} else {
+			Debug.Log ("Level " + allPlayerData [activePlayer].selectedLevel + " non-existent, reset to default.");
+			allPlayerData [activePlayer].selectedLevel = allLevelData [sceneDict ["Default"]].levelName;
 		}
-		foreach (KeyValuePair<string, int> pair in sceneDict) {
-			Debug.Log ("Key = " + pair.Key + ", Value = " + pair.Value.ToString());
-		}
+		loadNext = allPlayerData [activePlayer].selectedLevel;
 	}
 
 	public void LoadGameData () {
@@ -121,6 +141,8 @@ public class AchievementData {
 public class LevelData {
 	public string levelName;
 	public int transitionSpeed;
+	public string levelShowName;
+	public bool isUnlocked;
 
 	public int multiplierLimit;
 	public float multiplierDynamic;
@@ -132,6 +154,8 @@ public class LevelData {
 	public LevelData (){
 		this.levelName = "";
 		this.transitionSpeed = 0;
+		this.levelShowName = "";
+		this.isUnlocked = false;
 		this.multiplierLimit = 0;
 		this.multiplierDynamic = 0;
 		this.clickDecay = 0;
