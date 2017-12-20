@@ -21,6 +21,7 @@ public class Loader : MonoBehaviour {
 		}
 		Debug.Log ("Loading level " + name);
 		StartCoroutine (LoadNew (name));
+		GlobalData.Instance.Reset ();
 	}
 
 	IEnumerator LoadNew (string name) {

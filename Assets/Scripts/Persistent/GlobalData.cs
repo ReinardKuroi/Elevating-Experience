@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 using UnityEngine.Serialization;
-using UnityEngine.SceneManagement;
 
 public class GlobalData : MonoBehaviour {
 
@@ -67,11 +66,7 @@ public class GlobalData : MonoBehaviour {
 		for (int i = 0; i < allPlayerData.Count; i++)
 			playerDict.Add (allPlayerData [i].name, i);
 
-		SetActivePlayer ();
-		SetActivelevel ();
-		score = 0;
-		highscore = 0;
-		multiplier = 0;
+		Reset ();
 
 		int k;
 		if (sceneDict.TryGetValue (allPlayerData [activePlayer].selectedLevel, out k)) {
@@ -83,6 +78,14 @@ public class GlobalData : MonoBehaviour {
 			Debug.Log ("Level " + allPlayerData [activePlayer].selectedLevel + " non-existent, reset to default.");
 			allPlayerData [activePlayer].selectedLevel = allLevelData [sceneDict ["Default"]].levelName;
 		}
+	}
+
+	public void Reset () {
+		SetActivePlayer ();
+		SetActivelevel ();
+		score = 0;
+		highscore = 0;
+		multiplier = 0;
 		loadNext = allPlayerData [activePlayer].selectedLevel;
 	}
 
