@@ -40,11 +40,13 @@ public class GlobalData : MonoBehaviour {
 		}
 		LoadGameData ();
 		Initialize ();
-		Debug.Log ("Active player " + allPlayerData [activePlayer].name + ", active level " + allLevelData [activeLevel].levelName);
-		Debug.Log ("Score: " + score + ", multi: " + multiplier + ", loadNext: " + loadNext);
 	}
 
-	//set
+	//Active level get;set
+
+	public LevelData GetActiveLevel () {
+		return allLevelData [activeLevel];
+	}
 
 	public void SetActiveLevel () {
 		int i;
@@ -57,54 +59,62 @@ public class GlobalData : MonoBehaviour {
 		}
 	}
 
-	public void SetActivePlayer (PlayerData playerData) {
-		allPlayerData [activePlayer] = playerData;
-		SaveLoad.SaveFile (ref allPlayerData, playerDataFilename);
-	}
-
-	//get
-
-	public LevelData GetActiveLevel () {
-		return allLevelData [activeLevel];
-	}
+	//Active player get;set
 
 	public PlayerData GetActivePlayer () {
 		return allPlayerData [activePlayer];
 	}
 
+	public void SetActivePlayer (PlayerData playerData) {
+		allPlayerData [activePlayer] = playerData;
+		SaveLoad.SaveFile (ref allPlayerData, playerDataFilename);
+	}
+
 	//NewPlayer
 
-	PlayerData NewPlayer (string playerName) {
+	public void NewPlayer (string playerName) {
 		PlayerData playerData = new PlayerData ();
 		playerData.unlockedLevels.Add (true);
 		playerData.name = playerName;
 		for (int i = 1; i < allLevelData.Count; i++) {
 			playerData.unlockedLevels.Add (false);
 		}
-		return playerData;
+		allPlayerData.Insert (0, playerData);
+		ResetLastActivePlayer ();
+		SetLastActivePlayer (0);
+	}
+
+	//LastActivePLayer
+
+	public void GetLastActivePlayer () {
+		if (allPlayerData.Count != 0) {
+			int i = 0;
+			foreach (PlayerData playerData in allPlayerData) {
+				if (playerData.lastActive)
+					activePlayer = i;
+				i++;
+			}
+		}
+	}
+
+	public void SetLastActivePlayer (int i) {
+		allPlayerData [i].lastActive = true;
+	}
+
+	public void ResetLastActivePlayer () {
+		foreach (PlayerData playerData in allPlayerData) {
+			playerData.lastActive = false;
+		}
 	}
 
 	//Init
 
-	public void InitActivePlayer () {
-		activePlayer = 0;
-	}
-
 	public void Initialize () {
 
-		if (allPlayerData.Count == 0) {
-			allPlayerData.Add (NewPlayer ("Player"));
-		}
-
-		for (int i = 0; i < allLevelData.Count; i++)
-			if (Application.CanStreamedLevelBeLoaded (allLevelData [i].levelName))
-				levelDict.Add (allLevelData [i].levelName, i);
-		
-		for (int i = 0; i < allPlayerData.Count; i++)
-			playerDict.Add (allPlayerData [i].name, i);
-
-		Reset ();
-
+		InitPlayerDictionary ();
+		InitLevelDictionary ();
+		GetLastActivePlayer ();
+		/*
 		int k;
 		if (levelDict.TryGetValue (allPlayerData [activePlayer].selectedLevel, out k)) {
 			if (!allPlayerData [activePlayer].unlockedLevels [k]) {
@@ -114,17 +124,34 @@ public class GlobalData : MonoBehaviour {
 		} else {
 			Debug.Log ("Level " + allPlayerData [activePlayer].selectedLevel + " non-existent, reset to default.");
 			allPlayerData [activePlayer].selectedLevel = allLevelData [levelDict ["Default"]].levelName;
-		}
+		}*/
 	}
 
+	public void InitPlayerDictionary () {
+		playerDict = new Dictionary<string, int> ();
+		for (int i = 0; i < allPlayerData.Count; i++)
+			playerDict.Add (allPlayerData [i].name, i);
+	}
+
+	public void InitLevelDictionary () {
+		levelDict = new Dictionary<string, int> ();
+		for (int i = 0; i < allLevelData.Count; i++)
+			if (Application.CanStreamedLevelBeLoaded (allLevelData [i].levelName))
+				levelDict.Add (allLevelData [i].levelName, i);
+	}
+
+	//Reset
+
 	public void Reset () {
-		InitActivePlayer ();
+		GetLastActivePlayer ();
 		SetActiveLevel ();
 		score = 0;
 		highscore = 0;
 		multiplier = 0;
 		loadNext = allPlayerData [activePlayer].selectedLevel;
 	}
+
+	//SaveLoad
 
 	public void LoadGameData () {
 		SaveLoad.LoadFile (ref allLevelData, levelDataFilename);
@@ -155,6 +182,8 @@ public class HighscoreData {
 [System.Serializable]
 public class PlayerData {
 	public string name;
+	public bool lastActive;
+
 	public float musicVolume;
 	public bool musicEnabled;
 	public float sfxVolume;
@@ -166,6 +195,7 @@ public class PlayerData {
 
 	public PlayerData () {
 		this.name = "";
+		this.lastActive = true;
 		this.musicVolume = 0;
 		this.musicEnabled = true;
 		this.sfxVolume = 0;

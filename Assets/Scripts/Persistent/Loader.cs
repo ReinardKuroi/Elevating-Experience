@@ -21,6 +21,7 @@ public class Loader : MonoBehaviour {
 		}
 		Debug.Log ("Loading level " + name);
 		StartCoroutine (LoadNew (name));
+		SoundManager.Instance.Init ();
 		GlobalData.Instance.Reset ();
 	}
 

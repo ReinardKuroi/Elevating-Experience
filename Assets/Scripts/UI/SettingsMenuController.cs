@@ -19,11 +19,9 @@ public class SettingsMenuController : MonoBehaviour {
 	private Slider sfxSlider;
 	private Toggle sfxToggle;
 
-	void Awake () {
+	void Awake () {	
 		music = GameObject.Find ("MusicVolumeControl");
-		Debug.Log ("Grabbed " + music.name);
 		sfx = GameObject.Find ("SFXVolumeControl");
-		Debug.Log ("Grabbed " + sfx.name);
 
 		musicSlider = music.GetComponentInChildren<Slider> ();
 		musicToggle = music.GetComponentInChildren<Toggle> ();
@@ -71,6 +69,9 @@ public class SettingsMenuController : MonoBehaviour {
 	}
 
 	public void Done () {
-		GlobalData.Instance.allPlayerData [GlobalData.Instance.activePlayer] = playerData;
+		if (playerData != null) {
+			GlobalData.Instance.SetActivePlayer (playerData);
+			playerData = null;
+		}
 	}
 }

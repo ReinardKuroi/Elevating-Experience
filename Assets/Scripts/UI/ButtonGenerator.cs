@@ -8,6 +8,7 @@ public class ButtonGenerator : MonoBehaviour {
 	public GameObject buttonPrefab;
 
 	private PlayerData playerData;
+	private List<GameObject> buttons = new List<GameObject> ();
 
 	void Start () {
 		playerData = GlobalData.Instance.GetActivePlayer ();
@@ -22,16 +23,31 @@ public class ButtonGenerator : MonoBehaviour {
 			newButton.GetComponent<Button> ().interactable = playerData.unlockedLevels [i];
 			newButton.GetComponent<Button> ().onClick.AddListener (delegate{OnClick(name);});
 			newButton.GetComponentInChildren<Text> ().text = GlobalData.Instance.allLevelData [i].levelShowName;
+			buttons.Add (newButton);
 		}
+		ResetColors ();
 	}
 
 	void OnClick (string name) {
 		playerData.selectedLevel = name;
 		GlobalData.Instance.loadNext = playerData.selectedLevel;
-		Debug.Log("Set level to " + name);
+		ResetColors ();
+	}
+
+	void ResetColors () {
+		int i = 0;
+		int k;
+		foreach (GameObject b in buttons) {
+			GlobalData.Instance.levelDict.TryGetValue (playerData.selectedLevel, out k);
+			if (k == i)
+				b.GetComponent<Image> ().color = Color.red;
+			else
+				b.GetComponent<Image> ().color = Color.white;
+			i++;
+		}
 	}
 
 	public void Done () {
-		GlobalData.Instance.allPlayerData [GlobalData.Instance.activePlayer] = playerData;
+		GlobalData.Instance.SetActivePlayer (playerData);
 	}
 }

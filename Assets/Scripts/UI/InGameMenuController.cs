@@ -20,7 +20,7 @@ public class InGameMenuController : MonoBehaviour {
 		pauseButton.GetComponent<Image> ().sprite = pauseSprite;
 	}
 
-	bool TogglePause () {
+	void TogglePause () {
 		pauseCanvas.SetActive (!pauseCanvas.activeSelf);
 		if (pauseCanvas.activeSelf) {
 			Time.timeScale = 0f;
@@ -29,14 +29,12 @@ public class InGameMenuController : MonoBehaviour {
 			Time.timeScale = 1f;
 			pauseButton.GetComponent<Image> ().sprite = pauseSprite;
 		}
-		return pauseCanvas.activeSelf;
 	}
 
 	public void PauseClick () {
-		if (TogglePause ()) {
-			pauseUI.SetActive (true);
-			settingsUI.SetActive (false);
-		}
+		TogglePause ();
+		pauseUI.SetActive (true);
+		settingsUI.SetActive (false);
 	}
 
 	public void SettingsClick () {
