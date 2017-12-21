@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class Engine : MonoBehaviour {
 
 	void Awake () {
-		GlobalData.Instance.SetActivelevel ();
+		GlobalData.Instance.SetActiveLevel ();
 		ScoreController.Awake ();
 	}
 

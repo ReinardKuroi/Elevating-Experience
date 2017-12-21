@@ -19,16 +19,14 @@ public class ScoreController : MonoBehaviour {
 		scoreMultiplier = 1;
 		multiplierCounter = 0;
 		rand = new System.Random (System.DateTime.Now.Millisecond);
-		levelData = GlobalData.Instance.allLevelData [GlobalData.Instance.activeLevel];
+		levelData = GlobalData.Instance.GetActiveLevel ();
 		Debug.Log ("Loaded level data: " + levelData.levelName);
 		timeBefore = timeAfter = Time.time;
 	}
 
-	public static int ScoreUpdate (int score) {
-		score = CalcScore (score);
-		Debug.Log ("Score: " + score.ToString() + ", x " + scoreMultiplier.ToString());
+	public static int ScoreUpdate () {
 		GlobalData.Instance.multiplier = scoreMultiplier;
-		return score;
+		return CalcScore ();
 	}
 
 	static void Accumulate () {
@@ -56,20 +54,15 @@ public class ScoreController : MonoBehaviour {
 			return false;
 	}
 
-	static int CalcScore (int score) {
+	static int CalcScore () {
 		Accumulate ();
+		int score = 0;
 		if (Crit ()) {
-			score += levelData.critMultiplier * scoreMultiplier;
+			score = levelData.critMultiplier * scoreMultiplier;
 			Debug.Log ("Crit!");
 		}
 		else
-			score += scoreMultiplier;
-		return score;
-	}
-
-	//for debugging
-	static int CalcScore2 (int score) {
-		score += 1;
+			score = scoreMultiplier;
 		return score;
 	}
 }

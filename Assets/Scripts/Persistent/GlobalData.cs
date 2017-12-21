@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 using UnityEngine.Serialization;
+using UnityEngine.Audio;
 
 public class GlobalData : MonoBehaviour {
 
@@ -18,7 +19,7 @@ public class GlobalData : MonoBehaviour {
 	public List<HighscoreData> allHighscoreData;
 	public List<PlayerData> allPlayerData;
 
-	public Dictionary<string, int> sceneDict = new Dictionary<string, int> ();
+	public Dictionary<string, int> levelDict = new Dictionary<string, int> ();
 	public Dictionary<string, int> playerDict = new Dictionary<string, int> ();
 
 	public int activeLevel;
@@ -43,25 +44,61 @@ public class GlobalData : MonoBehaviour {
 		Debug.Log ("Score: " + score + ", multi: " + multiplier + ", loadNext: " + loadNext);
 	}
 
-	public void SetActivePlayer () {
-		activePlayer = 0;
-	}
+	//set
 
-	public void SetActivelevel () {
+	public void SetActiveLevel () {
 		int i;
-		if (sceneDict.TryGetValue (allPlayerData [activePlayer].selectedLevel, out i)) {
+		if (levelDict.TryGetValue (allPlayerData [activePlayer].selectedLevel, out i)) {
 			activeLevel = i;
 			Debug.Log ("Active level " + allPlayerData [activePlayer].selectedLevel + ", index " + i.ToString ());
 		} else {
 			activeLevel = 0;
-			Debug.LogError ("No level in database! Loading base.");
+			Debug.LogError ("No level in database! Loading default.");
 		}
 	}
 
+	public void SetActivePlayer (PlayerData playerData) {
+		allPlayerData [activePlayer] = playerData;
+		SaveLoad.SaveFile (ref allPlayerData, playerDataFilename);
+	}
+
+	//get
+
+	public LevelData GetActiveLevel () {
+		return allLevelData [activeLevel];
+	}
+
+	public PlayerData GetActivePlayer () {
+		return allPlayerData [activePlayer];
+	}
+
+	//NewPlayer
+
+	PlayerData NewPlayer (string playerName) {
+		PlayerData playerData = new PlayerData ();
+		playerData.unlockedLevels.Add (true);
+		playerData.name = playerName;
+		for (int i = 1; i < allLevelData.Count; i++) {
+			playerData.unlockedLevels.Add (false);
+		}
+		return playerData;
+	}
+
+	//Init
+
+	public void InitActivePlayer () {
+		activePlayer = 0;
+	}
+
 	public void Initialize () {
+
+		if (allPlayerData.Count == 0) {
+			allPlayerData.Add (NewPlayer ("Player"));
+		}
+
 		for (int i = 0; i < allLevelData.Count; i++)
 			if (Application.CanStreamedLevelBeLoaded (allLevelData [i].levelName))
-				sceneDict.Add (allLevelData [i].levelName, i);
+				levelDict.Add (allLevelData [i].levelName, i);
 		
 		for (int i = 0; i < allPlayerData.Count; i++)
 			playerDict.Add (allPlayerData [i].name, i);
@@ -69,20 +106,20 @@ public class GlobalData : MonoBehaviour {
 		Reset ();
 
 		int k;
-		if (sceneDict.TryGetValue (allPlayerData [activePlayer].selectedLevel, out k)) {
-			if (!allLevelData [k].isUnlocked) {
+		if (levelDict.TryGetValue (allPlayerData [activePlayer].selectedLevel, out k)) {
+			if (!allPlayerData [activePlayer].unlockedLevels [k]) {
 				Debug.Log ("Level " + allLevelData [k].levelName + " is locked, reset to default.");
-				allPlayerData [activePlayer].selectedLevel = allLevelData [sceneDict ["Default"]].levelName;
+				allPlayerData [activePlayer].selectedLevel = allLevelData [levelDict ["Default"]].levelName;
 			}
 		} else {
 			Debug.Log ("Level " + allPlayerData [activePlayer].selectedLevel + " non-existent, reset to default.");
-			allPlayerData [activePlayer].selectedLevel = allLevelData [sceneDict ["Default"]].levelName;
+			allPlayerData [activePlayer].selectedLevel = allLevelData [levelDict ["Default"]].levelName;
 		}
 	}
 
 	public void Reset () {
-		SetActivePlayer ();
-		SetActivelevel ();
+		InitActivePlayer ();
+		SetActiveLevel ();
 		score = 0;
 		highscore = 0;
 		multiplier = 0;
@@ -96,7 +133,7 @@ public class GlobalData : MonoBehaviour {
 		SaveLoad.LoadFile (ref allPlayerData, playerDataFilename);
 	}
 
-	private void SaveGameData () {
+	public void SaveGameData () {
 		SaveLoad.SaveFile (ref allLevelData, levelDataFilename);
 		SaveLoad.SaveFile (ref allAchievementData, achievementDataFilename);
 		SaveLoad.SaveFile (ref allHighscoreData, highscoreDataFilename);
@@ -118,15 +155,24 @@ public class HighscoreData {
 [System.Serializable]
 public class PlayerData {
 	public string name;
-	public float volume;
+	public float musicVolume;
+	public bool musicEnabled;
+	public float sfxVolume;
+	public bool sfxEnabled;
+
 	public string selectedLevel;
 	public string selectedMode;
+	public List<bool> unlockedLevels;
 
 	public PlayerData () {
 		this.name = "";
-		this.volume = 1;
+		this.musicVolume = 0;
+		this.musicEnabled = true;
+		this.sfxVolume = 0;
+		this.sfxEnabled = true;
 		this.selectedLevel = "";
 		this.selectedMode = "";
+		this.unlockedLevels = new List<bool> ();
 	}
 }
 
@@ -150,7 +196,6 @@ public class LevelData {
 	public string levelName;
 	public int transitionSpeed;
 	public string levelShowName;
-	public bool isUnlocked;
 
 	public int multiplierLimit;
 	public float multiplierDynamic;
@@ -163,7 +208,6 @@ public class LevelData {
 		this.levelName = "";
 		this.transitionSpeed = 0;
 		this.levelShowName = "";
-		this.isUnlocked = false;
 		this.multiplierLimit = 0;
 		this.multiplierDynamic = 0;
 		this.clickDecay = 0;

@@ -7,8 +7,16 @@ using UnityEngine.SceneManagement;
 public class MainMenuController : MonoBehaviour {
 
 	public GameObject buttonPrefab;
+	public PlayerData activePlayer;
+
+	void Start () {
+		
+	}
 
 	public void Quit () {
+
+		GlobalData.Instance.SaveGameData ();
+
 		#if UNITY_STANDALONE
 		Application.Quit ();
 		#endif

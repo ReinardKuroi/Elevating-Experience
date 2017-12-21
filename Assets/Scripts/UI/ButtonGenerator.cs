@@ -7,24 +7,31 @@ public class ButtonGenerator : MonoBehaviour {
 	
 	public GameObject buttonPrefab;
 
+	private PlayerData playerData;
+
 	void Start () {
-		foreach (KeyValuePair<string, int> pair in GlobalData.Instance.sceneDict) {
+		playerData = GlobalData.Instance.GetActivePlayer ();
+		foreach (KeyValuePair<string, int> pair in GlobalData.Instance.levelDict) {
 			int i = pair.Value;
 			string name = pair.Key;
 			GameObject newButton = (GameObject)GameObject.Instantiate (buttonPrefab);
+
 			newButton.transform.SetParent (gameObject.transform, false);
 			newButton.SetActive (true);
 			newButton.name = name;
-			newButton.GetComponent<Button> ().interactable = GlobalData.Instance.allLevelData [i].isUnlocked;
+			newButton.GetComponent<Button> ().interactable = playerData.unlockedLevels [i];
 			newButton.GetComponent<Button> ().onClick.AddListener (delegate{OnClick(name);});
 			newButton.GetComponentInChildren<Text> ().text = GlobalData.Instance.allLevelData [i].levelShowName;
 		}
 	}
 
 	void OnClick (string name) {
-		GlobalData.Instance.allPlayerData [GlobalData.Instance.activePlayer].selectedLevel = name;
-		SaveLoad.SaveFile (ref GlobalData.Instance.allPlayerData, GlobalData.playerDataFilename);
-		GlobalData.Instance.loadNext = GlobalData.Instance.allPlayerData [GlobalData.Instance.activePlayer].selectedLevel;
+		playerData.selectedLevel = name;
+		GlobalData.Instance.loadNext = playerData.selectedLevel;
 		Debug.Log("Set level to " + name);
+	}
+
+	public void Done () {
+		GlobalData.Instance.allPlayerData [GlobalData.Instance.activePlayer] = playerData;
 	}
 }
