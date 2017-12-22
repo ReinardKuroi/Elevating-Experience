@@ -8,8 +8,6 @@ public class SoundManager : MonoBehaviour {
 	public static SoundManager Instance { get; private set; }
 
 	public AudioMixer aMixer;
-	public string musicVolume;
-	public string sfxVolume;
 
 	private PlayerData playerData;
 
@@ -20,20 +18,29 @@ public class SoundManager : MonoBehaviour {
 		} else {
 			Destroy (gameObject);
 		}
-		musicVolume = "musicVolume";
-		sfxVolume = "sfxVolume";
 	}
 
-	public void Init () {
-		playerData = GlobalData.Instance.allPlayerData [GlobalData.Instance.activePlayer];
+	//Gets active PlayerData and checks audio parameters
+	//applies them to audio mixer
+	public void SetVolume () {
+		playerData = GlobalData.Instance.GetActivePlayerData ();
+		foreach (AudioSettings audio in playerData) {
+			if (audio.enabled) {
+				aMixer.SetFloat (audio.name, audio.volume);
+			} else {
+				aMixer.SetFloat (audio.name, -80f);
+			}
+		}
+	}
 
-		if (playerData.musicEnabled)
-			aMixer.SetFloat (musicVolume, (float)System.Math.Log10 ((double)playerData.musicVolume) * 20);
-		else
-			aMixer.SetFloat (musicVolume, -80f);
-		if (playerData.sfxEnabled)
-			aMixer.SetFloat (sfxVolume, (float)System.Math.Log10 ((double)playerData.sfxVolume) * 20);
-		else
-			aMixer.SetFloat (musicVolume, -80f);
+	//Gets slider values, NOT SLIDERS
+	//sets active PlayerData to it
+	public void GetVolume (float musicVolume, bool musicEnabled, float sfxVolume, bool sfxEnabled) {
+		playerData = GlobalData.Instance.GetActivePlayerData ();
+		playerData.music.volume = Mathf.Log10 (musicVolume) * 20;
+		playerData.music.enabled = musicEnabled;
+		playerData.sfx.volume = Mathf.Log10 (sfxVolume) * 20;
+		playerData.sfx.enabled = sfxEnabled;
+		GlobalData.Instance.SetActivePlayerData (playerData);
 	}
 }

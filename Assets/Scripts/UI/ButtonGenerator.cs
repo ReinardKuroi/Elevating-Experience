@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+/*
 public class ButtonGenerator : MonoBehaviour {
 	
 	public GameObject buttonPrefab;
@@ -11,9 +11,12 @@ public class ButtonGenerator : MonoBehaviour {
 	private List<GameObject> buttons = new List<GameObject> ();
 
 	//THIS IS ALL DISGUSTING FIX IT SUFFER BUTCH
+	//JESUS WHY DOES IT EVEN EXIST
+
+	//remake into generic..?
 
 	void Start () {
-		playerData = GlobalData.Instance.GetActivePlayer ();
+		playerData = GlobalData.Instance.GetActivePlayerData ();
 		foreach (KeyValuePair<string, int> pair in GlobalData.Instance.levelDict) {
 			int i = pair.Value;
 			string name = pair.Key;
@@ -31,8 +34,8 @@ public class ButtonGenerator : MonoBehaviour {
 	}
 
 	void OnClick (string name) {
-		playerData.selectedLevel = name;
-		GlobalData.Instance.loadNext = playerData.selectedLevel;
+		playerData.activeLevel = name;
+		GlobalData.Instance.loadNext = playerData.activeLevel;
 		ResetColors ();
 	}
 
@@ -40,7 +43,7 @@ public class ButtonGenerator : MonoBehaviour {
 		int i = 0;
 		int k;
 		foreach (GameObject b in buttons) {
-			GlobalData.Instance.levelDict.TryGetValue (playerData.selectedLevel, out k);
+			GlobalData.Instance.levelDict.TryGetValue (playerData.activeLevel, out k);
 			if (k == i)
 				b.GetComponent<Image> ().color = Color.red;
 			else
@@ -52,4 +55,4 @@ public class ButtonGenerator : MonoBehaviour {
 	public void Done () {
 		GlobalData.Instance.SetActivePlayer (playerData);
 	}
-}
+}*/

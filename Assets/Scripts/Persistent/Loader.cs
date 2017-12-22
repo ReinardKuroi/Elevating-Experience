@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+//REWRITE THIS SHITTY MESS
+
+/*
 public class Loader : MonoBehaviour {
 	void Awake () {
 		Time.timeScale = 1f;
@@ -11,7 +14,7 @@ public class Loader : MonoBehaviour {
 			Debug.Log ("GlobalData is null");
 			name = "MainMenu";
 		} else {
-			if (GlobalData.Instance.allPlayerData [GlobalData.Instance.activePlayer] == null) {
+			if (GlobalData.Instance.getlast) {
 				Debug.Log ("No active player");
 				name = "MainMenu";
 			}
@@ -34,4 +37,4 @@ public class Loader : MonoBehaviour {
 			yield return null;
 		}
 	}
-}
+}*/

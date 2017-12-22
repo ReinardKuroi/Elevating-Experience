@@ -14,22 +14,20 @@ public class GlobalData : MonoBehaviour {
 	public int multiplier;
 	public int score;
 
-	public Dictionary<string, LevelData> allLevelData;
-	public List<AchievementData> allAchievementData;
-	public List<HighscoreData> allHighscoreData;
-	public List<PlayerData> allPlayerData;
+	private List<LevelData> allLevelData;
+	private List<AchievementData> allAchievementData;
+	private List<HighscoreData> allHighscoreData;
+	private List<PlayerData> allPlayerData;
 
-	public Dictionary<string, int> levelDict = new Dictionary<string, int> ();
-	public Dictionary<string, int> playerDict = new Dictionary<string, int> ();
-
-	public string activeLevel;
-	public int activePlayer;
+	private int activePlayer;
 	public string loadNext;
 
 	public static string levelDataFilename = "level.data";
 	public static string achievementDataFilename = "achievement.data";
 	public static string highscoreDataFilename = "highscore.data";
 	public static string playerDataFilename = "player.data";
+	public static string exposedMusicVolume = "music";
+	public static string exposedSFXVolume = "sfx";
 
 	void Awake () {
 		if (Instance == null) {
@@ -39,116 +37,102 @@ public class GlobalData : MonoBehaviour {
 			Destroy (gameObject);
 		}
 		LoadGameData ();
-		Initialize ();
 	}
 
-	//Active level get;set
+	//Active level get;set and unlock
 
-	public LevelData GetActiveLevel () {
-		return allLevelData [activeLevel];
-	}
-	/*
-	public void SetActiveLevel () {
-		int i;
-		if (levelDict.TryGetValue (allPlayerData [activePlayer].selectedLevel, out i)) {
-			activeLevel = i;
-			Debug.Log ("Active level " + allPlayerData [activePlayer].selectedLevel + ", index " + i.ToString ());
-		} else {
-			activeLevel = 0;
-			Debug.LogError ("No level in database! Loading default.");
-		}
-	}*/
-
-	//Active player get;set
-
-	public PlayerData GetActivePlayer () {
-		return allPlayerData [activePlayer];
+	//Returns a new LevelData from a list of all LevelData by index
+	//int index is got from all PlayerData's activeLevel using index activeplayer
+	public LevelData GetActiveLevelData () {
+		return allLevelData [allPlayerData[activePlayer].activeLevel];
 	}
 
-	public void SetActivePlayer (PlayerData playerData) {
+	//Sets int activeLevel in list of PlayerData by index activePlayer
+	public void SetActiveLevel (int index) {
+		allPlayerData [activePlayer].activeLevel = index;
+	}
+
+	//Sets bool in list unlockedLevels by index
+	//in a list of all PlayerData by index activePlayer
+	public void UnlockLevel (int index) {
+		allPlayerData [activePlayer].unlockedLevels [index] = true;
+	}
+
+	//Active player get;set and save
+
+	//Returns a new PlayerData from a list of all PlayerData by index
+	//int index is activePlayer
+	public PlayerData GetActivePlayerData () {
+		if (activePlayer == -1)
+			return new PlayerData ();
+		else
+				return allPlayerData [activePlayer];
+	}
+
+	//Sets int activePlayer to a new int
+	public void SetActivePlayer (int index) {
+		activePlayer = index;
+	}
+
+	//Sets PlayerData in a list of all PlayerData by index to playerData
+	//int index is activePlayer
+	public void SetActivePlayerData (PlayerData playerData) {
 		allPlayerData [activePlayer] = playerData;
 		SaveLoad.SaveFile (ref allPlayerData, playerDataFilename);
 	}
 
 	//NewPlayer
 
-	public void NewPlayer (string playerName) {
+	public void CreateNewPlayerData (string playerName) {
 		PlayerData playerData = new PlayerData ();
-		playerData.unlockedLevels.Add (true);
-		playerData.name = playerName;
-		for (int i = 1; i < allLevelData.Count; i++) {
+		for (int i = 0; i < allLevelData.Count; i++) {
 			playerData.unlockedLevels.Add (false);
 		}
-		allPlayerData.Insert (0, playerData);
+		playerData.name = playerName;
 		ResetLastActivePlayer ();
-		SetLastActivePlayer (0);
+		playerData.isActive = true;
+		allPlayerData.Add (playerData);
+		SaveLoad.SaveFile (ref allPlayerData, playerDataFilename);
+		SetActivePlayer (GetLastActivePlayer ());
 	}
 
 	//LastActivePLayer
 
-	public void GetLastActivePlayer () {
+	//Returns int index after searching a list of all PlayerdData
+	//index is -1 if no active PlayerData.isActive found
+	//or index of PlayerData in a list
+	public int GetLastActivePlayer () {
 		if (allPlayerData.Count != 0) {
-			int i = 0;
 			foreach (PlayerData playerData in allPlayerData) {
-				if (playerData.lastActive)
-					activePlayer = i;
-				i++;
+				if (playerData.isActive)
+					return allPlayerData.IndexOf (playerData);
 			}
 		}
+		return -1;
 	}
 
-	public void SetLastActivePlayer (int i) {
-		allPlayerData [i].lastActive = true;
+	//Sets PlayerData.isActive to true in a list of all PlayerData by index
+	//after resetting every PlayerData.isActive in list to false
+	public void SetLastActivePlayer (int index) {
+		ResetLastActivePlayer ();
+		allPlayerData [index].isActive = true;
 	}
 
+	//Sets every PlayerData.isActive in a list of all PlayerData to false
 	public void ResetLastActivePlayer () {
-		foreach (PlayerData playerData in allPlayerData) {
-			playerData.lastActive = false;
+		if (allPlayerData.Count != 0) {
+			foreach (PlayerData playerData in allPlayerData) {
+				playerData.isActive = false;
+			}
 		}
 	}
-
-	//Init
-
-	public void Initialize () {
-
-		InitPlayerDictionary ();
-//		InitLevelDictionary ();
-		GetLastActivePlayer ();
-		/*
-		int k;
-		if (levelDict.TryGetValue (allPlayerData [activePlayer].selectedLevel, out k)) {
-			if (!allPlayerData [activePlayer].unlockedLevels [k]) {
-				Debug.Log ("Level " + allLevelData [k].levelName + " is locked, reset to default.");
-				allPlayerData [activePlayer].selectedLevel = allLevelData [levelDict ["Default"]].levelName;
-			}
-		} else {
-			Debug.Log ("Level " + allPlayerData [activePlayer].selectedLevel + " non-existent, reset to default.");
-			allPlayerData [activePlayer].selectedLevel = allLevelData [levelDict ["Default"]].levelName;
-		}*/
-	}
-
-	public void InitPlayerDictionary () {
-		playerDict = new Dictionary<string, int> ();
-		for (int i = 0; i < allPlayerData.Count; i++)
-			playerDict.Add (allPlayerData [i].name, i);
-	}
-	/*
-	public void InitLevelDictionary () {
-		levelDict = new Dictionary<string, int> ();
-		for (int i = 0; i < allLevelData.Count; i++)
-			if (Application.CanStreamedLevelBeLoaded (allLevelData [i].levelName))
-				levelDict.Add (allLevelData [i].levelName, i);
-	}*/
 
 	//Reset
 
 	public void Reset () {
-		GetLastActivePlayer ();
-//		SetActiveLevel ();
 		score = 0;
 		highscore = 0;
 		multiplier = 0;
-		loadNext = allPlayerData [activePlayer].selectedLevel;
 	}
 
 	//SaveLoad
@@ -182,25 +166,21 @@ public class HighscoreData {
 [System.Serializable]
 public class PlayerData {
 	public string name;
-	public bool lastActive;
-
-	public float musicVolume;
-	public bool musicEnabled;
-	public float sfxVolume;
-	public bool sfxEnabled;
-
-	public string selectedLevel; //MUST BE MADE INTEGER I DONT CARE HOW YOU DO IT FUTURE ME FUCK YOU
+	public bool isActive;
+	public int activeLevel;
 	public List<bool> unlockedLevels;
+
+	public AudioSettings music;
+	public AudioSettings sfx;
 
 	public PlayerData () {
 		this.name = "";
-		this.lastActive = true;
-		this.musicVolume = 0;
-		this.musicEnabled = true;
-		this.sfxVolume = 0;
-		this.sfxEnabled = true;
-		this.selectedLevel = "";
+		this.isActive = false;
+		this.activeLevel = 0;
 		this.unlockedLevels = new List<bool> ();
+
+		this.music = new AudioSettings (GlobalData.exposedMusicVolume);
+		this.sfx = new AudioSettings (GlobalData.exposedSFXVolume);
 	}
 }
 
@@ -242,5 +222,17 @@ public class LevelData {
 		this.clickWeight = 0;
 		this.critChance = 0;
 		this.critMultiplier = 0;
+	}
+}
+
+public class AudioSettings {
+	public string name;
+	public float volume;
+	public bool enabled;
+
+	public AudioSettings (string name) {
+		this.name = name;
+		this.volume = 0;
+		this.enabled = true;
 	}
 }

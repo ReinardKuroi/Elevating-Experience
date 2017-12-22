@@ -19,7 +19,7 @@ public class ScoreController : MonoBehaviour {
 		scoreMultiplier = 1;
 		multiplierCounter = 0;
 		rand = new System.Random (System.DateTime.Now.Millisecond);
-		levelData = GlobalData.Instance.GetActiveLevel ();
+		levelData = GlobalData.Instance.GetActiveLevelData ();
 		Debug.Log ("Loaded level data: " + levelData.levelName);
 		timeBefore = timeAfter = Time.time;
 	}

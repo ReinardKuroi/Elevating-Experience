@@ -11,6 +11,9 @@ public class MainMenuController : MonoBehaviour {
 
 	void Start () {
 		//ADD INITIALIZATION I DONT CARE HOW OR WHY FUCK YOU FUTURE ME
+
+		//greeting text or something
+		//like, show player name and stats
 	}
 
 	public void Quit () {

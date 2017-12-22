@@ -6,11 +6,6 @@ using UnityEngine.UI;
 
 public class SettingsMenuController : MonoBehaviour {
 
-	private PlayerData playerData;
-	private string musicVolume;
-	private string sfxVolume;
-	private AudioMixer aMixer;
-
 	private GameObject music;
 	private Slider musicSlider;
 	private Toggle musicToggle;
@@ -19,10 +14,9 @@ public class SettingsMenuController : MonoBehaviour {
 	private Slider sfxSlider;
 	private Toggle sfxToggle;
 
+	private PlayerData playerData;
+
 	void Awake () {	
-		musicVolume = SoundManager.Instance.musicVolume;
-		sfxVolume = SoundManager.Instance.sfxVolume;
-		aMixer = SoundManager.Instance.aMixer;
 		music = GameObject.Find ("MusicVolumeControl");
 		sfx = GameObject.Find ("SFXVolumeControl");
 
@@ -30,54 +24,19 @@ public class SettingsMenuController : MonoBehaviour {
 		musicToggle = music.GetComponentInChildren<Toggle> ();
 		sfxSlider = sfx.GetComponentInChildren<Slider> ();
 		sfxToggle = sfx.GetComponentInChildren<Toggle> ();
+
+		Init ();
 	}
 
-	public void Init () {
-
-		//THIS IS A MESS FIX EVERYTHING CLEAN IT UP
-
-		playerData = GlobalData.Instance.allPlayerData [GlobalData.Instance.activePlayer];
-
-		musicSlider.value = playerData.musicVolume;
+	void Init () {
+		PlayerData playerData = GlobalData.Instance.GetActivePlayerData ();
+		musicSlider.value = Mathf.Pow (10, playerData.musicVolume / 20);
 		musicToggle.isOn = playerData.musicEnabled;
-		sfxSlider.value = playerData.sfxVolume;
+		sfxSlider.value = Mathf.Pow (10, playerData.sfxVolume / 20);
 		sfxToggle.isOn = playerData.sfxEnabled;
+		Debug.Log ("UI Data: music " + musicToggle.isOn.ToString () + musicSlider.value.ToString () + ", sfx " + sfxToggle.isOn.ToString () + sfxSlider.value.ToString ());
+		SoundManager.Instance.SetVolume ();
 	}
 
-	void Update () {
-		if (gameObject.activeSelf) {
-			if (musicSlider.enabled) {
-				SetVolume (musicSlider.value, musicVolume);
-				playerData.musicVolume = musicSlider.value;
-			}
-			if (sfxSlider.enabled) {
-				SetVolume (sfxSlider.value, sfxVolume);
-				playerData.sfxVolume = sfxSlider.value;
-			}
-
-			ToggleVolume (musicToggle.isOn, musicVolume, musicSlider);
-			playerData.musicEnabled = musicToggle.isOn;
-			ToggleVolume (sfxToggle.isOn, sfxVolume, sfxSlider);
-			playerData.sfxEnabled = sfxToggle.isOn;
-		}
-	}
-
-	void SetVolume (float volume, string cName) {
-		aMixer.SetFloat (cName, (float)System.Math.Log10((double)volume)*20);
-	}
-
-	public void ToggleVolume (bool toggle, string cName, Slider slider) {
-		if (!toggle) {
-			aMixer.SetFloat (cName, -80f);
-			slider.enabled = false;
-		} else
-			slider.enabled = true;
-	}
-
-	public void Done () {
-		if (playerData != null) {
-			GlobalData.Instance.SetActivePlayer (playerData);
-			playerData = null;
-		}
-	}
+	public void Trigger () { SoundManager.Instance.GetVolume (musicSlider.value, musicToggle.isOn, sfxSlider.value, sfxToggle.isOn); SoundManager.Instance.SetVolume (); }
 }
