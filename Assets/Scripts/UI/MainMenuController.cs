@@ -10,7 +10,7 @@ public class MainMenuController : MonoBehaviour {
 	public PlayerData activePlayer;
 
 	void Start () {
-		
+		//ADD INITIALIZATION I DONT CARE HOW OR WHY FUCK YOU FUTURE ME
 	}
 
 	public void Quit () {

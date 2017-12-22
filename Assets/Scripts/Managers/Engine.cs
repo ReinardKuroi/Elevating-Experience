@@ -5,8 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class Engine : MonoBehaviour {
 
+	//MAKE A PROPER GAME MANAGER ASSHOLE DONT BE A LAZY CUNT
+
 	void Awake () {
-		GlobalData.Instance.SetActiveLevel ();
+//		GlobalData.Instance.SetActiveLevel ();
 		ScoreController.Awake ();
 	}
 

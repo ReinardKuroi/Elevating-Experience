@@ -7,9 +7,9 @@ using UnityEngine.UI;
 public class SettingsMenuController : MonoBehaviour {
 
 	private PlayerData playerData;
-	private string musicVolume = SoundManager.Instance.musicVolume;
-	private string sfxVolume = SoundManager.Instance.sfxVolume;
-	private AudioMixer aMixer = SoundManager.Instance.aMixer;
+	private string musicVolume;
+	private string sfxVolume;
+	private AudioMixer aMixer;
 
 	private GameObject music;
 	private Slider musicSlider;
@@ -20,6 +20,9 @@ public class SettingsMenuController : MonoBehaviour {
 	private Toggle sfxToggle;
 
 	void Awake () {	
+		musicVolume = SoundManager.Instance.musicVolume;
+		sfxVolume = SoundManager.Instance.sfxVolume;
+		aMixer = SoundManager.Instance.aMixer;
 		music = GameObject.Find ("MusicVolumeControl");
 		sfx = GameObject.Find ("SFXVolumeControl");
 
@@ -30,6 +33,9 @@ public class SettingsMenuController : MonoBehaviour {
 	}
 
 	public void Init () {
+
+		//THIS IS A MESS FIX EVERYTHING CLEAN IT UP
+
 		playerData = GlobalData.Instance.allPlayerData [GlobalData.Instance.activePlayer];
 
 		musicSlider.value = playerData.musicVolume;

@@ -10,6 +10,8 @@ public class ButtonGenerator : MonoBehaviour {
 	private PlayerData playerData;
 	private List<GameObject> buttons = new List<GameObject> ();
 
+	//THIS IS ALL DISGUSTING FIX IT SUFFER BUTCH
+
 	void Start () {
 		playerData = GlobalData.Instance.GetActivePlayer ();
 		foreach (KeyValuePair<string, int> pair in GlobalData.Instance.levelDict) {
@@ -22,7 +24,7 @@ public class ButtonGenerator : MonoBehaviour {
 			newButton.name = name;
 			newButton.GetComponent<Button> ().interactable = playerData.unlockedLevels [i];
 			newButton.GetComponent<Button> ().onClick.AddListener (delegate{OnClick(name);});
-			newButton.GetComponentInChildren<Text> ().text = GlobalData.Instance.allLevelData [i].levelShowName;
+//			newButton.GetComponentInChildren<Text> ().text = GlobalData.Instance.allLevelData [i].levelShowName;
 			buttons.Add (newButton);
 		}
 		ResetColors ();

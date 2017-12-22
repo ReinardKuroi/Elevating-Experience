@@ -14,7 +14,7 @@ public class GlobalData : MonoBehaviour {
 	public int multiplier;
 	public int score;
 
-	public List<LevelData> allLevelData;
+	public Dictionary<string, LevelData> allLevelData;
 	public List<AchievementData> allAchievementData;
 	public List<HighscoreData> allHighscoreData;
 	public List<PlayerData> allPlayerData;
@@ -22,7 +22,7 @@ public class GlobalData : MonoBehaviour {
 	public Dictionary<string, int> levelDict = new Dictionary<string, int> ();
 	public Dictionary<string, int> playerDict = new Dictionary<string, int> ();
 
-	public int activeLevel;
+	public string activeLevel;
 	public int activePlayer;
 	public string loadNext;
 
@@ -47,7 +47,7 @@ public class GlobalData : MonoBehaviour {
 	public LevelData GetActiveLevel () {
 		return allLevelData [activeLevel];
 	}
-
+	/*
 	public void SetActiveLevel () {
 		int i;
 		if (levelDict.TryGetValue (allPlayerData [activePlayer].selectedLevel, out i)) {
@@ -57,7 +57,7 @@ public class GlobalData : MonoBehaviour {
 			activeLevel = 0;
 			Debug.LogError ("No level in database! Loading default.");
 		}
-	}
+	}*/
 
 	//Active player get;set
 
@@ -112,7 +112,7 @@ public class GlobalData : MonoBehaviour {
 	public void Initialize () {
 
 		InitPlayerDictionary ();
-		InitLevelDictionary ();
+//		InitLevelDictionary ();
 		GetLastActivePlayer ();
 		/*
 		int k;
@@ -132,19 +132,19 @@ public class GlobalData : MonoBehaviour {
 		for (int i = 0; i < allPlayerData.Count; i++)
 			playerDict.Add (allPlayerData [i].name, i);
 	}
-
+	/*
 	public void InitLevelDictionary () {
 		levelDict = new Dictionary<string, int> ();
 		for (int i = 0; i < allLevelData.Count; i++)
 			if (Application.CanStreamedLevelBeLoaded (allLevelData [i].levelName))
 				levelDict.Add (allLevelData [i].levelName, i);
-	}
+	}*/
 
 	//Reset
 
 	public void Reset () {
 		GetLastActivePlayer ();
-		SetActiveLevel ();
+//		SetActiveLevel ();
 		score = 0;
 		highscore = 0;
 		multiplier = 0;
@@ -189,8 +189,7 @@ public class PlayerData {
 	public float sfxVolume;
 	public bool sfxEnabled;
 
-	public string selectedLevel;
-	public string selectedMode;
+	public string selectedLevel; //MUST BE MADE INTEGER I DONT CARE HOW YOU DO IT FUTURE ME FUCK YOU
 	public List<bool> unlockedLevels;
 
 	public PlayerData () {
@@ -201,7 +200,6 @@ public class PlayerData {
 		this.sfxVolume = 0;
 		this.sfxEnabled = true;
 		this.selectedLevel = "";
-		this.selectedMode = "";
 		this.unlockedLevels = new List<bool> ();
 	}
 }
@@ -234,7 +232,7 @@ public class LevelData {
 	public int critChance;
 	public int critMultiplier;
 
-	public LevelData (){
+	public LevelData () {
 		this.levelName = "";
 		this.transitionSpeed = 0;
 		this.levelShowName = "";
