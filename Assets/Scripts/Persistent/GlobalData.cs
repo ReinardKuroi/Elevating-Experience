@@ -7,6 +7,11 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.Audio;
 
+//Shit to do:
+//Remake button generator and apply to login screen and level selection
+//remake loader so it actually works
+//make a game engine
+
 public class GlobalData : MonoBehaviour {
 
 	public static GlobalData Instance { get; private set; }
