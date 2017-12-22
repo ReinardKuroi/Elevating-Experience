@@ -6,37 +6,58 @@ using UnityEngine.UI;
 
 public class SettingsMenuController : MonoBehaviour {
 
-	private GameObject music;
 	private Slider musicSlider;
 	private Toggle musicToggle;
 
-	private GameObject sfx;
 	private Slider sfxSlider;
 	private Toggle sfxToggle;
 
 	private PlayerData playerData;
+	private bool dontIgnoreTrigger;
+	private Dictionary<string, AudioControl> audioControls;
 
-	void Awake () {	
-		music = GameObject.Find ("MusicVolumeControl");
-		sfx = GameObject.Find ("SFXVolumeControl");
+	void Awake () {
+		audioControls = new Dictionary<string, AudioControl> ();
+		audioControls.Add (GlobalData.exposedMusicVolume, new AudioControl (GameObject.Find (GlobalData.exposedMusicVolume)));
+		audioControls.Add (GlobalData.exposedSFXVolume, new AudioControl (GameObject.Find (GlobalData.exposedSFXVolume)));
 
-		musicSlider = music.GetComponentInChildren<Slider> ();
-		musicToggle = music.GetComponentInChildren<Toggle> ();
-		sfxSlider = sfx.GetComponentInChildren<Slider> ();
-		sfxToggle = sfx.GetComponentInChildren<Toggle> ();
+		foreach (KeyValuePair<string, AudioControl> control in audioControls) {
+			control.Value.Slider.onValueChanged.AddListener (delegate {
+				Trigger (control.Key);
+			});
+			control.Value.Toggle.onValueChanged.AddListener (delegate {
+				Trigger (control.Key);
+			});
+		}
+		dontIgnoreTrigger = false;
 
 		Init ();
 	}
 
 	void Init () {
 		PlayerData playerData = GlobalData.Instance.GetActivePlayerData ();
-		musicSlider.value = Mathf.Pow (10, playerData.musicVolume / 20);
-		musicToggle.isOn = playerData.musicEnabled;
-		sfxSlider.value = Mathf.Pow (10, playerData.sfxVolume / 20);
-		sfxToggle.isOn = playerData.sfxEnabled;
-		Debug.Log ("UI Data: music " + musicToggle.isOn.ToString () + musicSlider.value.ToString () + ", sfx " + sfxToggle.isOn.ToString () + sfxSlider.value.ToString ());
+		foreach (AudioSettings audio in playerData.audioSettings) {
+			audioControls [audio.name].Slider.value = Mathf.Pow (10, audio.volume / 20);
+			audioControls [audio.name].Toggle.isOn = audio.enabled;
+		}
 		SoundManager.Instance.SetVolume ();
+		dontIgnoreTrigger = true;
 	}
 
-	public void Trigger () { SoundManager.Instance.GetVolume (musicSlider.value, musicToggle.isOn, sfxSlider.value, sfxToggle.isOn); SoundManager.Instance.SetVolume (); }
+	public void Trigger (string name) {
+		if (dontIgnoreTrigger) {
+			SoundManager.Instance.GetVolume (name, audioControls[name].Slider.value, audioControls[name].Toggle.isOn);
+			SoundManager.Instance.SetVolume ();
+		}
+	}
+
+	private class AudioControl {
+		public Slider Slider;
+		public Toggle Toggle;
+
+		public AudioControl (GameObject g) {
+			this.Slider = g.GetComponentInChildren<Slider> ();
+			this.Toggle = g.GetComponentInChildren<Toggle> ();
+		}
+	}
 }

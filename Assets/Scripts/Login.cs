@@ -49,6 +49,7 @@ public class Login : MonoBehaviour {
 		Debug.Log ("Pressed 'New'.");
 		string playerName = input.text;
 		GlobalData.Instance.CreateNewPlayerData (playerName);
+		SoundManager.Instance.SetVolume ();
 		SceneManager.LoadScene ("MainMenu");
 	}
 }

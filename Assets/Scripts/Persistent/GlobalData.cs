@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
@@ -26,8 +27,8 @@ public class GlobalData : MonoBehaviour {
 	public static string achievementDataFilename = "achievement.data";
 	public static string highscoreDataFilename = "highscore.data";
 	public static string playerDataFilename = "player.data";
-	public static string exposedMusicVolume = "music";
-	public static string exposedSFXVolume = "sfx";
+	public static string exposedMusicVolume = "MusicVolumeControl";
+	public static string exposedSFXVolume = "SFXVolumeControl";
 
 	void Awake () {
 		if (Instance == null) {
@@ -170,8 +171,7 @@ public class PlayerData {
 	public int activeLevel;
 	public List<bool> unlockedLevels;
 
-	public AudioSettings music;
-	public AudioSettings sfx;
+	public List<AudioSettings> audioSettings;
 
 	public PlayerData () {
 		this.name = "";
@@ -179,8 +179,10 @@ public class PlayerData {
 		this.activeLevel = 0;
 		this.unlockedLevels = new List<bool> ();
 
-		this.music = new AudioSettings (GlobalData.exposedMusicVolume);
-		this.sfx = new AudioSettings (GlobalData.exposedSFXVolume);
+		this.audioSettings = new List<AudioSettings> ();
+
+		this.audioSettings.Add (new AudioSettings (GlobalData.exposedMusicVolume));
+		this.audioSettings.Add (new AudioSettings (GlobalData.exposedSFXVolume));
 	}
 }
 
@@ -225,6 +227,7 @@ public class LevelData {
 	}
 }
 
+[System.Serializable]
 public class AudioSettings {
 	public string name;
 	public float volume;

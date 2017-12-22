@@ -9,8 +9,6 @@ public class SoundManager : MonoBehaviour {
 
 	public AudioMixer aMixer;
 
-	private PlayerData playerData;
-
 	void Awake () {
 		if (Instance == null) {
 			Instance = this;
@@ -23,8 +21,8 @@ public class SoundManager : MonoBehaviour {
 	//Gets active PlayerData and checks audio parameters
 	//applies them to audio mixer
 	public void SetVolume () {
-		playerData = GlobalData.Instance.GetActivePlayerData ();
-		foreach (AudioSettings audio in playerData) {
+		PlayerData playerData = GlobalData.Instance.GetActivePlayerData ();
+		foreach (AudioSettings audio in playerData.audioSettings) {
 			if (audio.enabled) {
 				aMixer.SetFloat (audio.name, audio.volume);
 			} else {
@@ -35,12 +33,11 @@ public class SoundManager : MonoBehaviour {
 
 	//Gets slider values, NOT SLIDERS
 	//sets active PlayerData to it
-	public void GetVolume (float musicVolume, bool musicEnabled, float sfxVolume, bool sfxEnabled) {
-		playerData = GlobalData.Instance.GetActivePlayerData ();
-		playerData.music.volume = Mathf.Log10 (musicVolume) * 20;
-		playerData.music.enabled = musicEnabled;
-		playerData.sfx.volume = Mathf.Log10 (sfxVolume) * 20;
-		playerData.sfx.enabled = sfxEnabled;
+	public void GetVolume (string name, float volume, bool isOn) {
+		PlayerData playerData = GlobalData.Instance.GetActivePlayerData ();
+		AudioSettings audio = playerData.audioSettings.Find(item => item.name == name);
+		audio.volume = Mathf.Log10 (volume) * 20;
+		audio.enabled = isOn;
 		GlobalData.Instance.SetActivePlayerData (playerData);
 	}
 }
