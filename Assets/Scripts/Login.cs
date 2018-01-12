@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class Login : MonoBehaviour {
 
+	public Text welcomeText;
+
 	public void Awake () {
 		int activePlayer = GlobalData.Instance.GetLastActivePlayer ();
 		if (activePlayer == -1) {
@@ -14,9 +16,11 @@ public class Login : MonoBehaviour {
 			//disable load button
 			//disable continue button
 			Debug.Log ("No active player found.");
+			welcomeText.text = "WELCOME!";
 		} else {
 			Debug.Log ("Got active player " + activePlayer);
-			GlobalData.Instance.SetActivePlayer (activePlayer);
+			welcomeText.text = "WELCOME, " + GlobalData.Instance.GetActivePlayerData ().name + "!";
+			GlobalData.Instance.SetLastActivePlayer (activePlayer);
 			SoundManager.Instance.SetVolume ();
 			//set text to welcome, playername
 			//enable continue button

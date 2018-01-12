@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 //REWRITE THIS SHITTY MESS
 
-/*
+
 public class Loader : MonoBehaviour {
 	void Awake () {
 		Time.timeScale = 1f;
@@ -37,4 +37,4 @@ public class Loader : MonoBehaviour {
 			yield return null;
 		}
 	}
-}*/
+}

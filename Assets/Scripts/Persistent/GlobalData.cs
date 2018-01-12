@@ -23,7 +23,7 @@ public class GlobalData : MonoBehaviour {
 	private List<LevelData> allLevelData;
 	private List<AchievementData> allAchievementData;
 	private List<HighscoreData> allHighscoreData;
-	private List<PlayerData> allPlayerData;
+	public List<PlayerData> allPlayerData;
 
 	private int activePlayer;
 	public string loadNext;
@@ -56,12 +56,20 @@ public class GlobalData : MonoBehaviour {
 	//Sets int activeLevel in list of PlayerData by index activePlayer
 	public void SetActiveLevel (int index) {
 		allPlayerData [activePlayer].activeLevel = index;
+		SaveLoad.SaveFile (ref allPlayerData, playerDataFilename);
 	}
 
 	//Sets bool in list unlockedLevels by index
 	//in a list of all PlayerData by index activePlayer
 	public void UnlockLevel (int index) {
-		allPlayerData [activePlayer].unlockedLevels [index] = true;
+		allPlayerData [activePlayer].unlockedLevels [index].isUnlocked = true;
+		SaveLoad.SaveFile (ref allPlayerData, playerDataFilename);
+	}
+
+	public void UnlockLevel (string name) {
+		UnlockedLevel uLevel = allPlayerData [activePlayer].unlockedLevels.Find (item => item.name == name);
+		uLevel.isUnlocked = true;
+		SaveLoad.SaveFile (ref allPlayerData, playerDataFilename);
 	}
 
 	//Active player get;set and save
@@ -72,12 +80,7 @@ public class GlobalData : MonoBehaviour {
 		if (activePlayer == -1)
 			return new PlayerData ();
 		else
-				return allPlayerData [activePlayer];
-	}
-
-	//Sets int activePlayer to a new int
-	public void SetActivePlayer (int index) {
-		activePlayer = index;
+			return allPlayerData [activePlayer];
 	}
 
 	//Sets PlayerData in a list of all PlayerData by index to playerData
@@ -92,14 +95,19 @@ public class GlobalData : MonoBehaviour {
 	public void CreateNewPlayerData (string playerName) {
 		PlayerData playerData = new PlayerData ();
 		for (int i = 0; i < allLevelData.Count; i++) {
-			playerData.unlockedLevels.Add (false);
+			LevelData l = allLevelData [i];
+			playerData.unlockedLevels.Add (new UnlockedLevel () {
+				name = l.levelName,
+				showName = l.levelShowName,
+				index = i,
+				isUnlocked = false
+			});
 		}
 		playerData.name = playerName;
-		ResetLastActivePlayer ();
 		playerData.isActive = true;
-		allPlayerData.Add (playerData);
-		SaveLoad.SaveFile (ref allPlayerData, playerDataFilename);
-		SetActivePlayer (GetLastActivePlayer ());
+		allPlayerData.Insert (0, playerData);
+		SetLastActivePlayer (0);
+		UnlockLevel ("Default");
 	}
 
 	//LastActivePLayer
@@ -121,7 +129,9 @@ public class GlobalData : MonoBehaviour {
 	//after resetting every PlayerData.isActive in list to false
 	public void SetLastActivePlayer (int index) {
 		ResetLastActivePlayer ();
+		activePlayer = index;
 		allPlayerData [index].isActive = true;
+		SaveLoad.SaveFile (ref allPlayerData, playerDataFilename);
 	}
 
 	//Sets every PlayerData.isActive in a list of all PlayerData to false
@@ -174,7 +184,7 @@ public class PlayerData {
 	public string name;
 	public bool isActive;
 	public int activeLevel;
-	public List<bool> unlockedLevels;
+	public List<UnlockedLevel> unlockedLevels;
 
 	public List<AudioSettings> audioSettings;
 
@@ -182,7 +192,7 @@ public class PlayerData {
 		this.name = "";
 		this.isActive = false;
 		this.activeLevel = 0;
-		this.unlockedLevels = new List<bool> ();
+		this.unlockedLevels = new List<UnlockedLevel> ();
 
 		this.audioSettings = new List<AudioSettings> ();
 
@@ -242,5 +252,20 @@ public class AudioSettings {
 		this.name = name;
 		this.volume = 0;
 		this.enabled = true;
+	}
+}
+
+[System.Serializable]
+public class UnlockedLevel {
+	public string name;
+	public string showName;
+	public bool isUnlocked;
+	public int index;
+
+	public UnlockedLevel () {
+		this.name = "";
+		this.showName = "";
+		this.isUnlocked = false;
+		this.index = 0;
 	}
 }

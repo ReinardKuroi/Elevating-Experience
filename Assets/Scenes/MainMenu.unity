@@ -834,7 +834,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 487543851}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -202, y: -436, z: 0}
+  m_LocalPosition: {x: -200.5, y: -434, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 667591166}
@@ -1275,7 +1275,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 667591162}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 282, y: 451, z: 0}
+  m_LocalPosition: {x: 280.5, y: 449, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 487543852}
@@ -1373,7 +1373,7 @@ Prefab:
     - target: {fileID: 114128203066373430, guid: 8b80bb6d013bc89439845de8b48e0c0a,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 224505998467591962, guid: 8b80bb6d013bc89439845de8b48e0c0a,
         type: 2}
@@ -1538,7 +1538,7 @@ Prefab:
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
-      objectReference: {fileID: 1272816557}
+      objectReference: {fileID: 0}
     - target: {fileID: 114128203066373430, guid: 8b80bb6d013bc89439845de8b48e0c0a,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
@@ -2033,6 +2033,36 @@ Prefab:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_BoolArgument
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114128203066373430, guid: 8b80bb6d013bc89439845de8b48e0c0a,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114128203066373430, guid: 8b80bb6d013bc89439845de8b48e0c0a,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114128203066373430, guid: 8b80bb6d013bc89439845de8b48e0c0a,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114128203066373430, guid: 8b80bb6d013bc89439845de8b48e0c0a,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114128203066373430, guid: 8b80bb6d013bc89439845de8b48e0c0a,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: GenerateLevelButtons
+      objectReference: {fileID: 0}
+    - target: {fileID: 114128203066373430, guid: 8b80bb6d013bc89439845de8b48e0c0a,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8b80bb6d013bc89439845de8b48e0c0a, type: 2}
   m_IsPrefabParent: 0
@@ -2153,8 +2183,8 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1237436093}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 282, y: 451, z: 0}
-  m_LocalScale: {x: 1.151005, y: 1.151005, z: 1.151005}
+  m_LocalPosition: {x: 280.5, y: 449, z: 0}
+  m_LocalScale: {x: 1.1453916, y: 1.1453916, z: 1.1453916}
   m_Children:
   - {fileID: 693737575}
   - {fileID: 415945957}
@@ -2325,21 +2355,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1272816553}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e675ddf644047bd429396fa963c6fc7e, type: 3}
+  m_Script: {fileID: 11500000, guid: 22ebe2e194faf7244ba5fdc2d1e546ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   buttonPrefab: {fileID: 1899635514226796, guid: 8b80bb6d013bc89439845de8b48e0c0a,
     type: 2}
-  playerData:
-    name: 
-    lastActive: 1
-    musicVolume: 0
-    musicEnabled: 1
-    sfxVolume: 0
-    sfxEnabled: 1
-    selectedLevel: 
-    unlockedLevels: []
-  buttons: []
 --- !u!1 &1522384541
 GameObject:
   m_ObjectHideFlags: 0
@@ -2482,11 +2502,14 @@ MonoBehaviour:
     name: 
     isActive: 0
     activeLevel: 0
-    unlockedLevels: 
-    musicVolume: 0
-    musicEnabled: 1
-    sfxVolume: 0
-    sfxEnabled: 1
+    unlockedLevels: []
+    audioSettings:
+    - name: MusicVolumeControl
+      volume: 0
+      enabled: 1
+    - name: SFXVolumeControl
+      volume: 0
+      enabled: 1
 --- !u!4 &1661502094
 Transform:
   m_ObjectHideFlags: 0
