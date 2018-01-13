@@ -4,28 +4,25 @@ using System.Collections.Generic;
 using UnityEngine;
 //Shit to do:
 //Remake button generator and apply to login screen and level selection: DONE
-//remake loader so it actually works
+//remake loader so it actually works: DONE
 //make a game engine
+//make loader fancier
+//add a delete player button to settings?
 
 public class GlobalData : MonoBehaviour {
 
 	public static GlobalData Instance { get; private set; }
 
-	public int highscore;
-	public int multiplier;
-	public int score;
-
 	private List<LevelData> allLevelData;
 	private List<AchievementData> allAchievementData;
-	private List<HighscoreData> allHighscoreData;
 	public List<PlayerData> allPlayerData;
 
 	private int activePlayer;
 
 	public static string levelDataFilename = "level.data";
 	public static string achievementDataFilename = "achievement.data";
-	public static string highscoreDataFilename = "highscore.data";
 	public static string playerDataFilename = "player.data";
+
 	public static string exposedMusicVolume = "MusicVolumeControl";
 	public static string exposedSFXVolume = "SFXVolumeControl";
 
@@ -89,13 +86,12 @@ public class GlobalData : MonoBehaviour {
 	public void CreateNewPlayerData (string playerName) {
 		PlayerData playerData = new PlayerData ();
 		for (int i = 0; i < allLevelData.Count; i++) {
-			LevelData l = allLevelData [i];
-			playerData.unlockedLevels.Add (new UnlockedLevel () {
-				name = l.levelName,
-				showName = l.levelShowName,
+			LevelData levelData = allLevelData [i];
+			playerData.unlockedLevels.Add (new UnlockedLevel (levelData) {
 				index = i,
 				isUnlocked = false
 			});
+			playerData.highscores.Add (new Highscore (levelData.levelName));
 		}
 		playerData.name = playerName;
 		playerData.isActive = true;
@@ -137,39 +133,18 @@ public class GlobalData : MonoBehaviour {
 		}
 	}
 
-	//Reset
-
-	public void Reset () {
-		score = 0;
-		highscore = 0;
-		multiplier = 0;
-	}
-
 	//SaveLoad
 
 	public void LoadGameData () {
 		SaveLoad.LoadFile (ref allLevelData, levelDataFilename);
 		SaveLoad.LoadFile (ref allAchievementData, achievementDataFilename);
-		SaveLoad.LoadFile (ref allHighscoreData, highscoreDataFilename);
 		SaveLoad.LoadFile (ref allPlayerData, playerDataFilename);
 	}
 
 	public void SaveGameData () {
 		SaveLoad.SaveFile (ref allLevelData, levelDataFilename);
 		SaveLoad.SaveFile (ref allAchievementData, achievementDataFilename);
-		SaveLoad.SaveFile (ref allHighscoreData, highscoreDataFilename);
 		SaveLoad.SaveFile (ref allPlayerData, playerDataFilename);
-	}
-}
-
-[System.Serializable]
-public class HighscoreData {
-	public string level;
-	public int highscore;
-
-	public HighscoreData () {
-		this.level = "";
-		this.highscore = 0;
 	}
 }
 
@@ -179,7 +154,7 @@ public class PlayerData {
 	public bool isActive;
 	public int activeLevel;
 	public List<UnlockedLevel> unlockedLevels;
-
+	public List<Highscore> highscores;
 	public List<AudioSettings> audioSettings;
 
 	public PlayerData () {
@@ -187,7 +162,7 @@ public class PlayerData {
 		this.isActive = false;
 		this.activeLevel = 0;
 		this.unlockedLevels = new List<UnlockedLevel> ();
-
+		this.highscores = new List<Highscore> ();
 		this.audioSettings = new List<AudioSettings> ();
 
 		this.audioSettings.Add (new AudioSettings (GlobalData.exposedMusicVolume));
@@ -256,10 +231,21 @@ public class UnlockedLevel {
 	public bool isUnlocked;
 	public int index;
 
-	public UnlockedLevel () {
-		this.name = "";
-		this.showName = "";
+	public UnlockedLevel (LevelData levelData) {
+		this.name = levelData.levelName;
+		this.showName = levelData.levelShowName;
 		this.isUnlocked = false;
 		this.index = 0;
+	}
+}
+
+[System.Serializable]
+public class Highscore {
+	public string levelName;
+	public int highscore;
+
+	public Highscore (string name) {
+		this.levelName = name;
+		this.highscore = 0;
 	}
 }

@@ -3,12 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-//REWRITE THIS SHITTY MESS
+public class LoadManager : MonoBehaviour {
 
-
-public class Loader : MonoBehaviour {
-
-	public static Loader Instance { get; private set; }
+	public static LoadManager Instance { get; private set; }
 
 	void Awake () {
 		if (Instance == null) {
@@ -23,11 +20,13 @@ public class Loader : MonoBehaviour {
 	//overloaded method to load a scene
 
 	public void LoadScene (string name) {
+		Time.timeScale = 1f;
 		Debug.Log ("Loading scene: " + name);
 		StartCoroutine (LoadNew (name));
 	}
 
 	public void LoadScene (int index) {
+		Time.timeScale = 1f;
 		Debug.Log("Loading scene #" + index.ToString());
 		StartCoroutine (LoadNew (index));
 	}

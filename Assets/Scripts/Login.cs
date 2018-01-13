@@ -45,12 +45,12 @@ public class Login : MonoBehaviour {
 
 	public void Continue () {
 		Debug.Log ("Pressed 'Continue'.");
-		Loader.Instance.LoadScene ("MainMenu");
+		LoadManager.Instance.LoadScene ("MainMenu");
 	}
 
 	public void Load () {
 		Debug.Log ("Pressed 'Load'.");
-		Loader.Instance.LoadScene ("MainMenu");
+		LoadManager.Instance.LoadScene ("MainMenu");
 	}
 
 	public void Create (InputField input) {
@@ -58,6 +58,6 @@ public class Login : MonoBehaviour {
 		string playerName = input.text;
 		GlobalData.Instance.CreateNewPlayerData (playerName);
 		SoundManager.Instance.SetVolume ();
-		Loader.Instance.LoadScene ("MainMenu");
+		LoadManager.Instance.LoadScene ("MainMenu");
 	}
 }

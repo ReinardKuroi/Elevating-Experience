@@ -51,6 +51,6 @@ public class InGameMenuController : MonoBehaviour {
 	}
 
 	public void Quit () {
-		Loader.Instance.LoadScene ("MainMenu");
+		LoadManager.Instance.LoadScene ("MainMenu");
 	}
 }

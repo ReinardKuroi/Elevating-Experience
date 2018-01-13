@@ -10,13 +10,11 @@ public class GameDataEditor: EditorWindow {
 
 	private string levelDataFilename = GlobalData.levelDataFilename;
 	private string achievementDataFilename = GlobalData.achievementDataFilename;
-	private string highscoreDataFilename = GlobalData.highscoreDataFilename;
 	private string playerDataFilename = GlobalData.playerDataFilename;
-	private List<string> allDataList = new List<string> { "allLevelData", "allAchievementData", "allHighscoreData", "allPlayerData" };
+	private List<string> allDataList = new List<string> { "allLevelData", "allAchievementData", "allPlayerData" };
 
 	public List<LevelData> allLevelData;
 	public List<AchievementData> allAchievementData;
-	public List<HighscoreData> allHighscoreData;
 	public List<PlayerData> allPlayerData;
 
 	[MenuItem ("Window/GameObject Data Editor")]
@@ -25,7 +23,7 @@ public class GameDataEditor: EditorWindow {
 	}
 
 	void OnGUI () {
-		if ((allLevelData != null) && (allAchievementData != null) && (allHighscoreData != null) && (allPlayerData != null)) {
+		if ((allLevelData != null) && (allAchievementData != null)  && (allPlayerData != null)) {
 			foreach (string name in allDataList) {
 				ApplyField (name);
 			}
@@ -48,14 +46,12 @@ public class GameDataEditor: EditorWindow {
 	private void LoadGameData () {
 		SaveLoad.LoadFile (ref allLevelData, levelDataFilename);
 		SaveLoad.LoadFile (ref allAchievementData, achievementDataFilename);
-		SaveLoad.LoadFile (ref allHighscoreData, highscoreDataFilename);
 		SaveLoad.LoadFile (ref allPlayerData, playerDataFilename);
 	}
 
 	private void SaveGameData () {
 		SaveLoad.SaveFile (ref allLevelData, levelDataFilename);
 		SaveLoad.SaveFile (ref allAchievementData, achievementDataFilename);
-		SaveLoad.SaveFile (ref allHighscoreData, highscoreDataFilename);
 		SaveLoad.SaveFile (ref allPlayerData, playerDataFilename);
 	}
 }
