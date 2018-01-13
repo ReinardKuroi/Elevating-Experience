@@ -2,18 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class MainMenuController : MonoBehaviour {
-
-	public GameObject buttonPrefab;
-	public PlayerData activePlayer;
 
 	void Start () {
 		//ADD INITIALIZATION I DONT CARE HOW OR WHY FUCK YOU FUTURE ME
 
 		//greeting text or something
 		//like, show player name and stats
+		Debug.Log("Player #" + GlobalData.Instance.GetLastActivePlayer ().ToString () + ", name: " + GlobalData.Instance.GetActivePlayerData ().name);
 	}
 
 	public void Quit () {
@@ -29,7 +26,8 @@ public class MainMenuController : MonoBehaviour {
 		#endif
 	}
 
-	public void LoadScene () {
-		SceneManager.LoadScene ("LoadingScreen");
+	public void Play () {
+		PlayerData playerData = GlobalData.Instance.GetActivePlayerData ();
+		Loader.Instance.LoadScene (playerData.activeLevel);
 	}
 }

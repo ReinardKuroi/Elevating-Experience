@@ -1,14 +1,9 @@
 ﻿using System;
-using System.IO;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
-using UnityEngine.Serialization;
-using UnityEngine.Audio;
-
 //Shit to do:
-//Remake button generator and apply to login screen and level selection
+//Remake button generator and apply to login screen and level selection: DONE
 //remake loader so it actually works
 //make a game engine
 
@@ -26,7 +21,6 @@ public class GlobalData : MonoBehaviour {
 	public List<PlayerData> allPlayerData;
 
 	private int activePlayer;
-	public string loadNext;
 
 	public static string levelDataFilename = "level.data";
 	public static string achievementDataFilename = "achievement.data";

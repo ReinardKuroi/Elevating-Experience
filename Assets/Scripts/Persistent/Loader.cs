@@ -7,31 +7,48 @@ using UnityEngine.SceneManagement;
 
 
 public class Loader : MonoBehaviour {
+
+	public static Loader Instance { get; private set; }
+
 	void Awake () {
-		Time.timeScale = 1f;
-		string name;
-		if (GlobalData.Instance == null) {
-			Debug.Log ("GlobalData is null");
-			name = "MainMenu";
+		if (Instance == null) {
+			Instance = this;
+			DontDestroyOnLoad (gameObject);
 		} else {
-			if (GlobalData.Instance.getlast) {
-				Debug.Log ("No active player");
-				name = "MainMenu";
-			}
-			else {
-				name = GlobalData.Instance.loadNext;
-			}
+			Destroy (gameObject);
 		}
-		Debug.Log ("Loading level " + name);
-		StartCoroutine (LoadNew (name));
-		SoundManager.Instance.Init ();
-		GlobalData.Instance.Reset ();
+		LoadScene ("Login");
 	}
+
+	//overloaded method to load a scene
+
+	public void LoadScene (string name) {
+		Debug.Log ("Loading scene: " + name);
+		StartCoroutine (LoadNew (name));
+	}
+
+	public void LoadScene (int index) {
+		Debug.Log("Loading scene #" + index.ToString());
+		StartCoroutine (LoadNew (index));
+	}
+
+	//overloaded coroutine for scene loading
+	//IMPLEMENT MORE FANCY STUFF HERE
 
 	IEnumerator LoadNew (string name) {
 		yield return new WaitForSeconds (2);
 
 		AsyncOperation ao = SceneManager.LoadSceneAsync (name);
+
+		while (!ao.isDone) {
+			yield return null;
+		}
+	}
+
+	IEnumerator LoadNew (int index) {
+		yield return new WaitForSeconds (2);
+
+		AsyncOperation ao = SceneManager.LoadSceneAsync (index);
 
 		while (!ao.isDone) {
 			yield return null;

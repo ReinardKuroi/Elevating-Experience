@@ -2,13 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class Login : MonoBehaviour {
 
 	public Text welcomeText;
 
 	public void Awake () {
+		OpenLoginMenu ();
+	}
+
+	public void OpenLoginMenu () {
+		Debug.Log ("Opened 'Login' Menu.");
 		int activePlayer = GlobalData.Instance.GetLastActivePlayer ();
 		if (activePlayer == -1) {
 			//no activeplayer found
@@ -18,9 +22,10 @@ public class Login : MonoBehaviour {
 			Debug.Log ("No active player found.");
 			welcomeText.text = "WELCOME!";
 		} else {
-			Debug.Log ("Got active player " + activePlayer);
-			welcomeText.text = "WELCOME, " + GlobalData.Instance.GetActivePlayerData ().name + "!";
 			GlobalData.Instance.SetLastActivePlayer (activePlayer);
+			PlayerData playerData = GlobalData.Instance.GetActivePlayerData ();
+			Debug.Log ("Got active player " + playerData.name);
+			welcomeText.text = "WELCOME, " + playerData.name + "!";
 			SoundManager.Instance.SetVolume ();
 			//set text to welcome, playername
 			//enable continue button
@@ -40,13 +45,12 @@ public class Login : MonoBehaviour {
 
 	public void Continue () {
 		Debug.Log ("Pressed 'Continue'.");
-		SceneManager.LoadScene ("MainMenu");
+		Loader.Instance.LoadScene ("MainMenu");
 	}
 
-	public void Load (int index) {
+	public void Load () {
 		Debug.Log ("Pressed 'Load'.");
-//		GlobalData.Instance.SetActivePlayer (index);
-		SceneManager.LoadScene ("MainMenu");
+		Loader.Instance.LoadScene ("MainMenu");
 	}
 
 	public void Create (InputField input) {
@@ -54,6 +58,6 @@ public class Login : MonoBehaviour {
 		string playerName = input.text;
 		GlobalData.Instance.CreateNewPlayerData (playerName);
 		SoundManager.Instance.SetVolume ();
-		SceneManager.LoadScene ("MainMenu");
+		Loader.Instance.LoadScene ("MainMenu");
 	}
 }

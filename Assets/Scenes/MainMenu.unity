@@ -795,7 +795,7 @@ Prefab:
     - target: {fileID: 114128203066373430, guid: 8b80bb6d013bc89439845de8b48e0c0a,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: LoadScene
+      value: Play
       objectReference: {fileID: 0}
     - target: {fileID: 114128203066373430, guid: 8b80bb6d013bc89439845de8b48e0c0a,
         type: 2}
@@ -2496,20 +2496,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 045ee2ed2be50de45b4abb66d5a550be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonPrefab: {fileID: 1899635514226796, guid: 8b80bb6d013bc89439845de8b48e0c0a,
-    type: 2}
-  activePlayer:
-    name: 
-    isActive: 0
-    activeLevel: 0
-    unlockedLevels: []
-    audioSettings:
-    - name: MusicVolumeControl
-      volume: 0
-      enabled: 1
-    - name: SFXVolumeControl
-      volume: 0
-      enabled: 1
 --- !u!4 &1661502094
 Transform:
   m_ObjectHideFlags: 0
