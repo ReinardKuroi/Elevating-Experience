@@ -21,12 +21,14 @@ public class InGameMenuController : MonoBehaviour {
 	}
 
 	void TogglePause () {
-		pauseCanvas.SetActive (!pauseCanvas.activeSelf);
-		if (pauseCanvas.activeSelf) {
-			Time.timeScale = 0f;
+		if (GameManager.Instance.game.CurrentState == GameManager.State.Active) {
+			GameManager.Instance.Pause ();
+			pauseCanvas.SetActive (true);
 			pauseButton.GetComponent<Image> ().sprite = playSprite;
-		} else {
-			Time.timeScale = 1f;
+		}
+		if (GameManager.Instance.game.CurrentState == GameManager.State.Paused) {
+			GameManager.Instance.Resume ();
+			pauseCanvas.SetActive (false);
 			pauseButton.GetComponent<Image> ().sprite = pauseSprite;
 		}
 	}
@@ -51,6 +53,7 @@ public class InGameMenuController : MonoBehaviour {
 	}
 
 	public void Quit () {
+		GameManager.Instance.Stop ();
 		LoadManager.Instance.LoadScene ("MainMenu");
 	}
 }

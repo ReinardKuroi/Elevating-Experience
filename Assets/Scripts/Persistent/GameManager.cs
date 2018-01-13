@@ -97,6 +97,8 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 
+	//misc
+
 	public int Score () {
 		return currentScore;
 	}

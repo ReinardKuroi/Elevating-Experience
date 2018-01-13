@@ -15,7 +15,7 @@ public class MainMenuController : MonoBehaviour {
 
 	public void Quit () {
 
-		GlobalData.Instance.SaveGameData ();
+		GameManager.Instance.Quit ();
 
 		#if UNITY_STANDALONE
 		Application.Quit ();
