@@ -5,14 +5,12 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
 
-	public static GameManager Instance { get; private set; }
 	public Process game;
+	public ScoreController scoreController;
+	InputManager inputManager;
 
-	private LevelData levelData;
-	private int currentScore;
-	private int currentMutliplier;
-	private System.Random randomNumber;
-
+	//Singleton
+	public static GameManager Instance { get; private set; }
 	void Awake () {
 		if (Instance == null) {
 			Instance = this;
@@ -21,9 +19,20 @@ public class GameManager : MonoBehaviour {
 			Destroy (gameObject);
 		}
 		game = new Process ();
+		scoreController = new ScoreController ();
+		inputManager = new InputManager ();
 	}
 
-	//states and commands
+	public int Score {
+		get { return Score; }
+		private set { Score = value; }
+	}
+	public int Multiplier {
+		get { return Multiplier; }
+		private set { Multiplier = value; }
+	}
+
+	//states and actions
 
 	public enum State
 	{
@@ -33,7 +42,7 @@ public class GameManager : MonoBehaviour {
 		Terminated
 	}
 
-	public enum Command
+	public enum Action
 	{
 		Begin,
 		End,
@@ -42,82 +51,48 @@ public class GameManager : MonoBehaviour {
 		Exit
 	}
 
-	//public commands for game state
+	//public actions for game state
 
 	public void Pause () {
-		if (game.MoveNext (Command.Pause) == State.Paused) {
+		if (game.MoveNext (Action.Pause) == State.Paused) {
 			Debug.Log ("Game paused.");
 		}
 	}
 
 	public void Resume () {
-		if (game.MoveNext (Command.Resume) == State.Active) {
+		if (game.MoveNext (Action.Resume) == State.Active) {
 			Debug.Log ("Game resumed.");
 		}
 	}
 
 	public void Play () {
-		if (game.MoveNext (Command.Begin) == State.Active) {
-			currentScore = 0;
-			currentMutliplier = 1;
-			levelData = GlobalData.Instance.GetActiveLevelData ();
-			randomNumber = new System.Random (System.DateTime.Now.Millisecond);
+		if (game.MoveNext (Action.Begin) == State.Active) {
+			scoreController = new ScoreController ();
+			scoreController.Set ();
 			Debug.Log ("Game started.");
 		}
 	}
 
 	public void Stop () {
-		if (game.MoveNext (Command.End) == State.Inactive) {
+		if (game.MoveNext (Action.End) == State.Inactive) {
 			GlobalData.Instance.SaveGameData ();
 			Debug.Log ("Game ended.");
 		}
 	}
 
 	public void Quit () {
-		if (game.MoveNext (Command.Exit) == State.Terminated) {
+		if (game.MoveNext (Action.Exit) == State.Terminated) {
 			GlobalData.Instance.SaveGameData ();
 			Debug.Log ("Exiting game.");
 		}
 	}
 
-	//game engine
+	//cycle
 
 	void Update () {
 		if (game.CurrentState == State.Active) {
-			//Code for the game itself
-			if (Input.GetKeyDown(KeyCode.Mouse0))
-			{
-				GameObject g = Cast();
-				if (g) {
-					ObjectController o = g.GetComponent<ObjectController> ();
-					if (o)
-						o.OnClick ();
-				}
-			}
+			inputManager.HandleInput ();
 		}
-	}
-
-	//misc
-
-	public int Score () {
-		return currentScore;
-	}
-
-	public int Multiplier () {
-		return currentMutliplier;
-	}
-
-	bool Crit () {
-		return (levelData.critChance > randomNumber.Next (1, 100));
-	}
-
-	GameObject Cast () {
-		Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
-		RaycastHit hit;
-		if (Physics.Raycast (ray, out hit) && hit.collider.gameObject) {
-			return hit.collider.gameObject;
-		}
-		return null;
 	}
 
 	//state machine
@@ -125,9 +100,9 @@ public class GameManager : MonoBehaviour {
 	public class Process {
 		public class StateTransition {
 			readonly State CurrentState;
-			readonly Command Command;
+			readonly Action Command;
 
-			public StateTransition (State currentState, Command command) {
+			public StateTransition (State currentState, Action command) {
 				CurrentState = currentState;
 				Command = command;
 			}
@@ -148,16 +123,16 @@ public class GameManager : MonoBehaviour {
 		public Process () {
 			CurrentState = State.Inactive;
 			transitions = new Dictionary<StateTransition, State> {
-				{new StateTransition (State.Inactive, Command.Exit), State.Terminated},
-				{new StateTransition (State.Inactive, Command.Begin), State.Active},
-				{new StateTransition (State.Active, Command.End), State.Inactive},
-				{new StateTransition (State.Active, Command.Pause), State.Paused},
-				{new StateTransition (State.Paused, Command.End), State.Inactive},
-				{new StateTransition (State.Paused, Command.Resume), State.Active}
+				{new StateTransition (State.Inactive, Action.Exit), State.Terminated},
+				{new StateTransition (State.Inactive, Action.Begin), State.Active},
+				{new StateTransition (State.Active, Action.End), State.Inactive},
+				{new StateTransition (State.Active, Action.Pause), State.Paused},
+				{new StateTransition (State.Paused, Action.End), State.Inactive},
+				{new StateTransition (State.Paused, Action.Resume), State.Active}
 			};
 		}
 
-		public State GetNext (Command command) {
+		public State GetNext (Action command) {
 			StateTransition transition = new StateTransition (CurrentState, command);
 			State nextState;
 			if (!transitions.TryGetValue (transition, out nextState))
@@ -165,7 +140,7 @@ public class GameManager : MonoBehaviour {
 			return nextState;
 		}
 
-		public State MoveNext (Command command) {
+		public State MoveNext (Action command) {
 			CurrentState = GetNext (command);
 			return CurrentState;
 		}

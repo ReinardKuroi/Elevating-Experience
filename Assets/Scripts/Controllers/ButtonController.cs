@@ -9,6 +9,6 @@ public class ButtonController : ObjectController {
 		AnimationController.PlayAnimation (gameObject, "Idle");
 		AnimationController.PlayAnimation (gameObject, "Pressed");
 		SoundController.PlaySound ();
-		GlobalData.Instance.score += ScoreController.ScoreUpdate ();
+		GameManager.Instance.scoreController.OnClick ();
 	}
 }

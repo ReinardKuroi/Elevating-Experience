@@ -1,8 +1,8 @@
-﻿	using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+/*
 public class UIController : MonoBehaviour {
 
 	public Text scoreTableText;
@@ -19,9 +19,9 @@ public class UIController : MonoBehaviour {
 	
 	// Update is called once per frame
 	public void Update () {
-		StartCoroutine(SlowRoll( GlobalData.Instance.score));
+		StartCoroutine(SlowRoll(GameManager.Instance.scoreController.Score));
 		scoreTableText.text = score.ToString ();
-		multiplierText.text = "X" + GlobalData.Instance.multiplier.ToString ();
+		multiplierText.text = "X" + GameManager.Instance.scoreController.Multiplier.ToString ();
 	}
 
 	IEnumerator SlowRoll (int target) {
@@ -32,4 +32,4 @@ public class UIController : MonoBehaviour {
 		}
 	}
 
-}
+}*/

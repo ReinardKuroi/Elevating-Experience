@@ -5,64 +5,57 @@ using UnityEngine;
 
 public class ScoreController : MonoBehaviour {
 
-	public static LevelData levelData;
+	private LevelData levelData;
+	private System.Random systemRandom;
 
-	static int scoreMultiplier;
-	static float multiplierCounter;
+	public int Score {
+		get { return Score; }
+		private set { Score = value; }
+	}
+	public int Multiplier {
+		get { return Multiplier; }
+		private set { Multiplier = value; }
+	}
 
-	static float timeBefore;
-	static float timeAfter;
-	static float deltaTime;
-	static System.Random rand;
+	public float Weightbar {
+		get { return Weightbar; }
+		private set { Weightbar = value; }
+	}
 
-	public static void Awake () {
-		scoreMultiplier = 1;
-		multiplierCounter = 0;
-		rand = new System.Random (System.DateTime.Now.Millisecond);
+	public void Set () {
+		Score = 0;
+		Multiplier = 1;
+		Weightbar = 0f;
 		levelData = GlobalData.Instance.GetActiveLevelData ();
-		Debug.Log ("Loaded level data: " + levelData.levelName);
-		timeBefore = timeAfter = Time.time;
+		systemRandom = new System.Random (System.DateTime.Now.Millisecond);
+		StartCoroutine (Accumulate ());
 	}
 
-	public static int ScoreUpdate () {
-		GlobalData.Instance.multiplier = scoreMultiplier;
-		return CalcScore ();
-	}
-
-	static void Accumulate () {
-		timeBefore = timeAfter;
-		timeAfter = Time.time;
-		deltaTime = timeAfter - timeBefore;
-		if (deltaTime <= levelData.clickDecay / scoreMultiplier)
-			multiplierCounter += levelData.clickWeight;
-		else
-			multiplierCounter -= levelData.clickWeight;
-		if ((multiplierCounter >= levelData.multiplierDynamic) && (scoreMultiplier < levelData.multiplierLimit)) {
-			scoreMultiplier += 1;
-			multiplierCounter = 0;
-		}
-		if ((multiplierCounter < 0) && (scoreMultiplier > 1)) {
-			scoreMultiplier -= 1;
-			multiplierCounter = levelData.multiplierDynamic - 1;
+	private IEnumerator Accumulate () {
+		while (GameManager.Instance.game.CurrentState == GameManager.State.Active) {
+			if (Weightbar > 0f)
+				Weightbar -= Time.deltaTime * levelData.clickDecay;
+			if (Weightbar >= levelData.multiplierDynamic && Multiplier < levelData.multiplierLimit) {
+				Multiplier += 1;
+				Weightbar = 0f;
+			}
+			if (Weightbar <= 0f && Multiplier > 1)
+				Multiplier -= 1;
+			Debug.Log ("Weight: " + Weightbar.ToString () + ", Score: " + Score.ToString () + ", Multiplier: " + Multiplier.ToString ());
+			yield return new WaitForEndOfFrame ();
 		}
 	}
 
-	static bool Crit () {
-		if (levelData.critChance > rand.Next (1, 100))
-			return true;
+	public void OnClick () {
+		if (Weightbar < levelData.multiplierDynamic)
+			Weightbar += levelData.clickWeight;
+		if (Crit ())
+			Score += Multiplier * levelData.critMultiplier;
 		else
-			return false;
+			Score += Multiplier;
 	}
 
-	static int CalcScore () {
-		Accumulate ();
-		int score = 0;
-		if (Crit ()) {
-			score = levelData.critMultiplier * scoreMultiplier;
-			Debug.Log ("Crit!");
-		}
-		else
-			score = scoreMultiplier;
-		return score;
+	private bool Crit () {
+		return (levelData.critChance > systemRandom.Next (1, 100));
 	}
 }

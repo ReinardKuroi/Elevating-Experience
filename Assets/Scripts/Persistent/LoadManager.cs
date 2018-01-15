@@ -20,13 +20,11 @@ public class LoadManager : MonoBehaviour {
 	//overloaded method to load a scene
 
 	public void LoadScene (string name) {
-		Time.timeScale = 1f;
 		Debug.Log ("Loading scene: " + name);
 		StartCoroutine (LoadNew (name));
 	}
 
 	public void LoadScene (int index) {
-		Time.timeScale = 1f;
 		Debug.Log("Loading scene #" + index.ToString());
 		StartCoroutine (LoadNew (index));
 	}
@@ -35,7 +33,7 @@ public class LoadManager : MonoBehaviour {
 	//IMPLEMENT MORE FANCY STUFF HERE
 
 	IEnumerator LoadNew (string name) {
-		yield return new WaitForSeconds (2);
+		yield return new WaitForSeconds (0.1f);
 
 		AsyncOperation ao = SceneManager.LoadSceneAsync (name);
 
@@ -45,7 +43,7 @@ public class LoadManager : MonoBehaviour {
 	}
 
 	IEnumerator LoadNew (int index) {
-		yield return new WaitForSeconds (2);
+		yield return new WaitForSeconds (0.1f);
 
 		AsyncOperation ao = SceneManager.LoadSceneAsync (index);
 
