@@ -11,6 +11,8 @@ public class FSM {
 		Inactive,
 		Active,
 		Paused,
+		Transition,
+		Loading,
 		Terminated
 	}
 
@@ -20,6 +22,8 @@ public class FSM {
 		End,
 		Pause,
 		Resume,
+		Load,
+		Transition,
 		Exit
 	}
 

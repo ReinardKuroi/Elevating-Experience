@@ -5,9 +5,18 @@ using UnityEngine;
 //Shit to do:
 //Remake button generator and apply to login screen and level selection: DONE
 //remake loader so it actually works: DONE
-//make a game engine
+//make a game engine : DONE
+//add a delete player button to settings? : DONE
+//add more states, e.g. Transition and Loading : No need
+//Quit button for login screen? : DONE
+//Make login screen fancier : DONE
+
+//implement highscore system
 //make loader fancier
-//add a delete player button to settings?
+//Add "delete player" button to login screen
+//Start working on achievements system
+//Modify level data to include music
+//Modify player data to include selected music
 
 public class GlobalData : MonoBehaviour {
 
@@ -98,7 +107,7 @@ public class GlobalData : MonoBehaviour {
 		allPlayerData.Insert (0, playerData);
 		SetLastActivePlayer (0);
 		UnlockLevel ("Default");
-		UnlockLevel ("Foo");
+		UnlockLevel ("Foo"); // fix later
 	}
 
 	//LastActivePLayer

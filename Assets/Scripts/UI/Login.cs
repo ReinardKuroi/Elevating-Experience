@@ -53,6 +53,19 @@ public class Login : MonoBehaviour {
 		Debug.Log ("Pressed 'Continue'.");
 		LoadManager.Instance.LoadScene ("MainMenu");
 	}
+		
+	public void Quit () {
+
+		GameManager.Instance.Quit ();
+
+		#if UNITY_STANDALONE
+		Application.Quit ();
+		#endif
+
+		#if UNITY_EDITOR
+		UnityEditor.EditorApplication.isPlaying = false;
+		#endif
+	}
 
 	public void Load () {
 		Debug.Log ("Pressed 'Load'.");
