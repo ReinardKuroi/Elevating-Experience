@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class Login : MonoBehaviour {
 
 	public Text welcomeText;
+	public GameObject continueButton;
+	public GameObject loginButton;
 
 	public void Awake () {
 		OpenLoginMenu ();
@@ -15,6 +17,8 @@ public class Login : MonoBehaviour {
 		Debug.Log ("Opened 'Login' Menu.");
 		int activePlayer = GlobalData.Instance.GetLastActivePlayer ();
 		if (activePlayer == -1) {
+			continueButton.GetComponent<Button> ().interactable = false;
+			loginButton.GetComponent<Button> ().interactable = false;
 			//no activeplayer found
 			//can only create new
 			//disable load button
@@ -27,6 +31,8 @@ public class Login : MonoBehaviour {
 			Debug.Log ("Got active player " + playerData.name);
 			welcomeText.text = "WELCOME, " + playerData.name + "!";
 			SoundManager.Instance.SetVolume ();
+			continueButton.GetComponent<Button> ().interactable = true;
+			loginButton.GetComponent<Button> ().interactable = true;
 			//set text to welcome, playername
 			//enable continue button
 		}
@@ -56,8 +62,12 @@ public class Login : MonoBehaviour {
 	public void Create (InputField input) {
 		Debug.Log ("Pressed 'New'.");
 		string playerName = input.text;
-		GlobalData.Instance.CreateNewPlayerData (playerName);
-		SoundManager.Instance.SetVolume ();
-		LoadManager.Instance.LoadScene ("MainMenu");
+		if (playerName.Length > 0) {
+			GlobalData.Instance.CreateNewPlayerData (playerName);
+			SoundManager.Instance.SetVolume ();
+			LoadManager.Instance.LoadScene ("MainMenu");
+		} else {
+			Debug.Log ("Player name must not be empty.");
+		}
 	}
 }

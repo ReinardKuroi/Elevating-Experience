@@ -8,51 +8,46 @@ public class ScoreController : MonoBehaviour {
 	private LevelData levelData;
 	private System.Random systemRandom;
 
-	public int Score {
-		get { return Score; }
-		private set { Score = value; }
-	}
-	public int Multiplier {
-		get { return Multiplier; }
-		private set { Multiplier = value; }
-	}
-
-	public float Weightbar {
-		get { return Weightbar; }
-		private set { Weightbar = value; }
-	}
+	public int score;
+	public int multiplier;
+	public float weightbar;
 
 	public void Set () {
-		Score = 0;
-		Multiplier = 1;
-		Weightbar = 0f;
+		score = 0;
+		multiplier = 1;
+		weightbar = 0f;
 		levelData = GlobalData.Instance.GetActiveLevelData ();
 		systemRandom = new System.Random (System.DateTime.Now.Millisecond);
 		StartCoroutine (Accumulate ());
 	}
 
 	private IEnumerator Accumulate () {
-		while (GameManager.Instance.game.CurrentState == GameManager.State.Active) {
-			if (Weightbar > 0f)
-				Weightbar -= Time.deltaTime * levelData.clickDecay;
-			if (Weightbar >= levelData.multiplierDynamic && Multiplier < levelData.multiplierLimit) {
-				Multiplier += 1;
-				Weightbar = 0f;
+		FSM.State gamestate;
+		do {
+			gamestate = GameManager.Instance.GetState ();
+			if (gamestate == FSM.State.Active) {
+				if (weightbar > 0f)
+					weightbar -= Time.deltaTime * (levelData.clickDecay + multiplier / levelData.clickDecay);
+				if (weightbar >= levelData.multiplierDynamic && multiplier < levelData.multiplierLimit) {
+					multiplier += 1;
+					weightbar = 0.5f;
+				}
+				if (weightbar <= 0f && multiplier > 1) {
+					multiplier -= 1;
+					weightbar = levelData.multiplierDynamic - 0.5f;
+				}
 			}
-			if (Weightbar <= 0f && Multiplier > 1)
-				Multiplier -= 1;
-			Debug.Log ("Weight: " + Weightbar.ToString () + ", Score: " + Score.ToString () + ", Multiplier: " + Multiplier.ToString ());
 			yield return new WaitForEndOfFrame ();
-		}
+		} while ((gamestate == FSM.State.Active) || (gamestate == FSM.State.Paused));
 	}
 
 	public void OnClick () {
-		if (Weightbar < levelData.multiplierDynamic)
-			Weightbar += levelData.clickWeight;
+		if (weightbar < levelData.multiplierDynamic)
+			weightbar += levelData.clickWeight;
 		if (Crit ())
-			Score += Multiplier * levelData.critMultiplier;
+			score += multiplier * levelData.critMultiplier;
 		else
-			Score += Multiplier;
+			score += multiplier;
 	}
 
 	private bool Crit () {

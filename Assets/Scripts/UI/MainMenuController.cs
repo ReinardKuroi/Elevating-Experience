@@ -26,9 +26,14 @@ public class MainMenuController : MonoBehaviour {
 		#endif
 	}
 
+	public void Reset () {
+		GlobalData.Instance.ResetPlayerData ();
+		LoadManager.Instance.LoadScene ("Login");
+	}
+
 	public void Play () {
 		LevelData levelData = GlobalData.Instance.GetActiveLevelData ();
-		LoadManager.Instance.LoadScene (levelData.levelName);
 		GameManager.Instance.Play ();
+		LoadManager.Instance.LoadScene (levelData.levelName);
 	}
 }

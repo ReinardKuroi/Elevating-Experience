@@ -4,17 +4,15 @@ using UnityEngine;
 
 public class InputManager {
 
-	public InputManager () { }
+	public InputManager () {
+		LeftClick = new Click ();
+	}
 
 	public abstract class Command {
 		public abstract void Execute ();
 	}
 
 	private Command LeftClick;
-
-	void Start () {
-		LeftClick = new Click ();
-	}
 
 	public void HandleInput () {
 		if (Input.GetKeyDown (KeyCode.Mouse0))

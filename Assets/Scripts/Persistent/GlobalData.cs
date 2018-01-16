@@ -98,6 +98,7 @@ public class GlobalData : MonoBehaviour {
 		allPlayerData.Insert (0, playerData);
 		SetLastActivePlayer (0);
 		UnlockLevel ("Default");
+		UnlockLevel ("Foo");
 	}
 
 	//LastActivePLayer
@@ -134,6 +135,11 @@ public class GlobalData : MonoBehaviour {
 	}
 
 	//SaveLoad
+
+	public void ResetPlayerData () {
+		allPlayerData.Clear ();
+		SaveLoad.SaveFile (ref allPlayerData, playerDataFilename);
+	}
 
 	public void LoadGameData () {
 		SaveLoad.LoadFile (ref allLevelData, levelDataFilename);

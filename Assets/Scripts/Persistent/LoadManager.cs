@@ -33,7 +33,7 @@ public class LoadManager : MonoBehaviour {
 	//IMPLEMENT MORE FANCY STUFF HERE
 
 	IEnumerator LoadNew (string name) {
-		yield return new WaitForSeconds (0.1f);
+		yield return new WaitForEndOfFrame ();
 
 		AsyncOperation ao = SceneManager.LoadSceneAsync (name);
 
@@ -43,7 +43,7 @@ public class LoadManager : MonoBehaviour {
 	}
 
 	IEnumerator LoadNew (int index) {
-		yield return new WaitForSeconds (0.1f);
+		yield return new WaitForEndOfFrame ();
 
 		AsyncOperation ao = SceneManager.LoadSceneAsync (index);
 

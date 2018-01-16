@@ -21,15 +21,16 @@ public class InGameMenuController : MonoBehaviour {
 	}
 
 	void TogglePause () {
-		if (GameManager.Instance.game.CurrentState == GameManager.State.Active) {
+		if (GameManager.Instance.game.CurrentState == FSM.State.Active) {
 			GameManager.Instance.Pause ();
 			pauseCanvas.SetActive (true);
 			pauseButton.GetComponent<Image> ().sprite = playSprite;
-		}
-		if (GameManager.Instance.game.CurrentState == GameManager.State.Paused) {
-			GameManager.Instance.Resume ();
-			pauseCanvas.SetActive (false);
-			pauseButton.GetComponent<Image> ().sprite = pauseSprite;
+		} else {
+			if (GameManager.Instance.game.CurrentState == FSM.State.Paused) {
+				GameManager.Instance.Resume ();
+				pauseCanvas.SetActive (false);
+				pauseButton.GetComponent<Image> ().sprite = pauseSprite;
+			}
 		}
 	}
 

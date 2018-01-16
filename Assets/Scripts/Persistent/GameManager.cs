@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
 
-	public Process game;
+	public FSM.Process game;
+	[HideInInspector]
 	public ScoreController scoreController;
 	InputManager inputManager;
 
@@ -18,131 +19,72 @@ public class GameManager : MonoBehaviour {
 		} else {
 			Destroy (gameObject);
 		}
-		game = new Process ();
-		scoreController = new ScoreController ();
+		game = new FSM.Process ();
 		inputManager = new InputManager ();
 	}
 
 	public int Score {
-		get { return Score; }
-		private set { Score = value; }
+		get { return scoreController.score; }
 	}
+
 	public int Multiplier {
-		get { return Multiplier; }
-		private set { Multiplier = value; }
+		get { return scoreController.multiplier; }
 	}
 
-	//states and actions
-
-	public enum State
-	{
-		Inactive,
-		Active,
-		Paused,
-		Terminated
-	}
-
-	public enum Action
-	{
-		Begin,
-		End,
-		Pause,
-		Resume,
-		Exit
+	public float Weightbar {
+		get { return scoreController.weightbar; }
 	}
 
 	//public actions for game state
 
 	public void Pause () {
-		if (game.MoveNext (Action.Pause) == State.Paused) {
+		if (game.MoveNext (FSM.Action.Pause) == FSM.State.Paused) {
 			Debug.Log ("Game paused.");
 		}
 	}
 
 	public void Resume () {
-		if (game.MoveNext (Action.Resume) == State.Active) {
+		if (game.MoveNext (FSM.Action.Resume) == FSM.State.Active) {
 			Debug.Log ("Game resumed.");
 		}
 	}
 
 	public void Play () {
-		if (game.MoveNext (Action.Begin) == State.Active) {
-			scoreController = new ScoreController ();
+		if (game.MoveNext (FSM.Action.Begin) == FSM.State.Active) {
+			if (scoreController == null)
+				scoreController = gameObject.AddComponent<ScoreController> () as ScoreController;
+			else
+				scoreController = gameObject.GetComponent<ScoreController> ();
 			scoreController.Set ();
 			Debug.Log ("Game started.");
 		}
 	}
 
 	public void Stop () {
-		if (game.MoveNext (Action.End) == State.Inactive) {
+		if (game.MoveNext (FSM.Action.End) == FSM.State.Inactive) {
+			if (scoreController)
+				Destroy (scoreController);
 			GlobalData.Instance.SaveGameData ();
 			Debug.Log ("Game ended.");
 		}
 	}
 
 	public void Quit () {
-		if (game.MoveNext (Action.Exit) == State.Terminated) {
+		if (game.MoveNext (FSM.Action.Exit) == FSM.State.Terminated) {
 			GlobalData.Instance.SaveGameData ();
 			Debug.Log ("Exiting game.");
 		}
 	}
 
+	public FSM.State GetState () {
+		return game.CurrentState;
+	}
+
 	//cycle
 
 	void Update () {
-		if (game.CurrentState == State.Active) {
+		if (game.CurrentState == FSM.State.Active) {
 			inputManager.HandleInput ();
-		}
-	}
-
-	//state machine
-
-	public class Process {
-		public class StateTransition {
-			readonly State CurrentState;
-			readonly Action Command;
-
-			public StateTransition (State currentState, Action command) {
-				CurrentState = currentState;
-				Command = command;
-			}
-
-			public override int GetHashCode () {
-				return 17 + 31 * CurrentState.GetHashCode () + 31 * Command.GetHashCode ();
-			}
-
-			public override bool Equals (object obj) {
-				StateTransition other = obj as StateTransition;
-				return other != null && this.CurrentState == other.CurrentState && this.Command == other.Command;
-			}
-		}
-
-		Dictionary<StateTransition, State> transitions;
-		public State CurrentState { get; private set; }
-
-		public Process () {
-			CurrentState = State.Inactive;
-			transitions = new Dictionary<StateTransition, State> {
-				{new StateTransition (State.Inactive, Action.Exit), State.Terminated},
-				{new StateTransition (State.Inactive, Action.Begin), State.Active},
-				{new StateTransition (State.Active, Action.End), State.Inactive},
-				{new StateTransition (State.Active, Action.Pause), State.Paused},
-				{new StateTransition (State.Paused, Action.End), State.Inactive},
-				{new StateTransition (State.Paused, Action.Resume), State.Active}
-			};
-		}
-
-		public State GetNext (Action command) {
-			StateTransition transition = new StateTransition (CurrentState, command);
-			State nextState;
-			if (!transitions.TryGetValue (transition, out nextState))
-				throw new UnityException ("Error! Invalid transition: " + CurrentState + " -> " + command);
-			return nextState;
-		}
-
-		public State MoveNext (Action command) {
-			CurrentState = GetNext (command);
-			return CurrentState;
 		}
 	}
 }
