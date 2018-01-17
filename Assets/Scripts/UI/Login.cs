@@ -15,7 +15,7 @@ public class Login : MonoBehaviour {
 
 	public void OpenLoginMenu () {
 		Debug.Log ("Opened 'Login' Menu.");
-		int activePlayer = GlobalData.Instance.GetLastActivePlayer ();
+		int activePlayer = GlobalData.Instance.LastActivePlayer;
 		if (activePlayer == -1) {
 			continueButton.GetComponent<Button> ().interactable = false;
 			loginButton.GetComponent<Button> ().interactable = false;
@@ -26,8 +26,8 @@ public class Login : MonoBehaviour {
 			Debug.Log ("No active player found.");
 			welcomeText.text = "WELCOME!";
 		} else {
-			GlobalData.Instance.SetLastActivePlayer (activePlayer);
-			PlayerData playerData = GlobalData.Instance.GetActivePlayerData ();
+			GlobalData.Instance.LastActivePlayer = activePlayer;
+			PlayerData playerData = GlobalData.Instance.ActivePlayerData;
 			Debug.Log ("Got active player " + playerData.name);
 			welcomeText.text = "WELCOME, " + playerData.name + "!";
 			SoundManager.Instance.SetVolume ();

@@ -17,6 +17,7 @@ using UnityEngine;
 //Start working on achievements system
 //Modify level data to include music
 //Modify player data to include selected music
+//Add cool looking effects with wumbers on click
 
 public class GlobalData : MonoBehaviour {
 
@@ -47,16 +48,20 @@ public class GlobalData : MonoBehaviour {
 
 	//Active level get;set and unlock
 
-	//Returns a new LevelData from a list of all LevelData by index
-	//int index is got from all PlayerData's activeLevel using index activeplayer
-	public LevelData GetActiveLevelData () {
-		return allLevelData [allPlayerData[activePlayer].activeLevel];
+	public LevelData ActiveLevelData {
+		get {
+			return allLevelData [allPlayerData[activePlayer].activeLevel];
+		}
 	}
 
-	//Sets int activeLevel in list of PlayerData by index activePlayer
-	public void SetActiveLevel (int index) {
-		allPlayerData [activePlayer].activeLevel = index;
-		SaveLoad.SaveFile (ref allPlayerData, playerDataFilename);
+	public int ActiveLevelIndex {
+		get {
+			return allPlayerData [activePlayer].activeLevel;
+		}
+		set {
+			allPlayerData [activePlayer].activeLevel = value;
+			SaveLoad.SaveFile (ref allPlayerData, playerDataFilename);			
+		}
 	}
 
 	//Sets bool in list unlockedLevels by index
@@ -74,20 +79,17 @@ public class GlobalData : MonoBehaviour {
 
 	//Active player get;set and save
 
-	//Returns a new PlayerData from a list of all PlayerData by index
-	//int index is activePlayer
-	public PlayerData GetActivePlayerData () {
-		if (activePlayer == -1)
-			return new PlayerData ();
-		else
-			return allPlayerData [activePlayer];
-	}
-
-	//Sets PlayerData in a list of all PlayerData by index to playerData
-	//int index is activePlayer
-	public void SetActivePlayerData (PlayerData playerData) {
-		allPlayerData [activePlayer] = playerData;
-		SaveLoad.SaveFile (ref allPlayerData, playerDataFilename);
+	public PlayerData ActivePlayerData {
+		get {
+			if (activePlayer == -1)
+				return new PlayerData ();
+			else
+				return allPlayerData [activePlayer];
+		}
+		set {
+			allPlayerData [activePlayer] = value;
+			SaveLoad.SaveFile (ref allPlayerData, playerDataFilename);
+		}
 	}
 
 	//NewPlayer
@@ -103,43 +105,44 @@ public class GlobalData : MonoBehaviour {
 			playerData.highscores.Add (new Highscore (levelData.levelName));
 		}
 		playerData.name = playerName;
-		playerData.isActive = true;
 		allPlayerData.Insert (0, playerData);
-		SetLastActivePlayer (0);
+		LastActivePlayer = 0;
 		UnlockLevel ("Default");
 		UnlockLevel ("Foo"); // fix later
 	}
 
 	//LastActivePLayer
 
-	//Returns int index after searching a list of all PlayerdData
-	//index is -1 if no active PlayerData.isActive found
-	//or index of PlayerData in a list
-	public int GetLastActivePlayer () {
-		if (allPlayerData.Count != 0) {
-			foreach (PlayerData playerData in allPlayerData) {
-				if (playerData.isActive)
-					return allPlayerData.IndexOf (playerData);
-			}
+	public int LastActivePlayer {
+		get {
+			if (allPlayerData.Count != 0)
+				return allPlayerData.FindIndex (item => item.isActive);
+			else
+				return -1;
 		}
-		return -1;
-	}
-
-	//Sets PlayerData.isActive to true in a list of all PlayerData by index
-	//after resetting every PlayerData.isActive in list to false
-	public void SetLastActivePlayer (int index) {
-		ResetLastActivePlayer ();
-		activePlayer = index;
-		allPlayerData [index].isActive = true;
-		SaveLoad.SaveFile (ref allPlayerData, playerDataFilename);
-	}
-
-	//Sets every PlayerData.isActive in a list of all PlayerData to false
-	public void ResetLastActivePlayer () {
-		if (allPlayerData.Count != 0) {
-			foreach (PlayerData playerData in allPlayerData) {
-				playerData.isActive = false;
+		set {
+			if (allPlayerData.Count != 0) {
+				foreach (PlayerData playerData in allPlayerData) {
+					playerData.isActive = false;
+				}
 			}
+			activePlayer = value;
+			allPlayerData [value].isActive = true;
+			SaveLoad.SaveFile (ref allPlayerData, playerDataFilename);
+		}
+	}
+
+	//Hghscore
+
+	public int Highscore {
+		get {
+			int index = ActivePlayerData.highscores.FindIndex (item => item.levelName == ActiveLevelData.levelName);
+			int highscore = ActivePlayerData.highscores [index].highscore;
+			return highscore;
+		}
+		set {
+			int index = ActivePlayerData.highscores.FindIndex (item => item.levelName == ActiveLevelData.levelName);
+			ActivePlayerData.highscores [index].highscore = value;
 		}
 	}
 

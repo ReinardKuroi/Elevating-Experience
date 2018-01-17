@@ -13,7 +13,7 @@ public class UIController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		LevelData levelData = GlobalData.Instance.GetActiveLevelData ();
+		LevelData levelData = GlobalData.Instance.ActiveLevelData;
 		score = 0;
 		scoreTableText.text = "";
 		multiplierText.text = "";

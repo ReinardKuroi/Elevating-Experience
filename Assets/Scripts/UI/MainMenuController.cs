@@ -10,7 +10,7 @@ public class MainMenuController : MonoBehaviour {
 
 		//greeting text or something
 		//like, show player name and stats
-		Debug.Log("Player #" + GlobalData.Instance.GetLastActivePlayer ().ToString () + ", name: " + GlobalData.Instance.GetActivePlayerData ().name);
+		Debug.Log("Player #" + GlobalData.Instance.LastActivePlayer.ToString () + ", name: " + GlobalData.Instance.ActivePlayerData.name);
 	}
 
 	public void Quit () {
@@ -32,7 +32,7 @@ public class MainMenuController : MonoBehaviour {
 	}
 
 	public void Play () {
-		LevelData levelData = GlobalData.Instance.GetActiveLevelData ();
+		LevelData levelData = GlobalData.Instance.ActiveLevelData;
 		GameManager.Instance.Play ();
 		LoadManager.Instance.LoadScene (levelData.levelName);
 	}

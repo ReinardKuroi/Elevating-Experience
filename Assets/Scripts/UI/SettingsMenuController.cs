@@ -35,7 +35,7 @@ public class SettingsMenuController : MonoBehaviour {
 	}
 
 	void Init () {
-		PlayerData playerData = GlobalData.Instance.GetActivePlayerData ();
+		PlayerData playerData = GlobalData.Instance.ActivePlayerData;
 		foreach (AudioSettings audio in playerData.audioSettings) {
 			audioControls [audio.name].Slider.value = Mathf.Pow (10, audio.volume / 20);
 			audioControls [audio.name].Toggle.isOn = audio.enabled;

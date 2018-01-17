@@ -7,17 +7,35 @@ public class ScoreController : MonoBehaviour {
 
 	private LevelData levelData;
 	private System.Random systemRandom;
+	private Subject scoreObserver;
 
-	public int score;
-	public int multiplier;
-	public float weightbar;
+	private int _score;
+	private int _multiplier;
+	private float _weightbar;
+
+	public int Score {
+		get { return _score; }
+		private set { _score = value; }
+	}
+
+	public int Multiplier {
+		get { return _multiplier; }
+		private set { _multiplier = value; }
+	}
+
+	public float Weightbar {
+		get { return _weightbar; }
+		private set { _weightbar = value; }
+	}
 
 	public void Set () {
-		score = 0;
-		multiplier = 1;
-		weightbar = 0f;
-		levelData = GlobalData.Instance.GetActiveLevelData ();
+		_score = 0;
+		_multiplier = 1;
+		_weightbar = 0f;
+		levelData = GlobalData.Instance.ActiveLevelData;
 		systemRandom = new System.Random (System.DateTime.Now.Millisecond);
+		scoreObserver = new Subject ();
+		scoreObserver.AddObserver (new Highscore ());
 		StartCoroutine (Accumulate ());
 	}
 
@@ -26,15 +44,15 @@ public class ScoreController : MonoBehaviour {
 		do {
 			gamestate = GameManager.Instance.GetState ();
 			if (gamestate == FSM.State.Active) {
-				if (weightbar > 0f)
-					weightbar -= Time.deltaTime * (levelData.clickDecay + multiplier / levelData.clickDecay);
-				if (weightbar >= levelData.multiplierDynamic && multiplier < levelData.multiplierLimit) {
-					multiplier += 1;
-					weightbar = 0.5f;
+				if (_weightbar > 0f)
+					_weightbar -= Time.deltaTime * (levelData.clickDecay + _multiplier / levelData.clickDecay);
+				if (_weightbar >= levelData.multiplierDynamic && _multiplier < levelData.multiplierLimit) {
+					_multiplier += 1;
+					_weightbar = 0.5f;
 				}
-				if (weightbar <= 0f && multiplier > 1) {
-					multiplier -= 1;
-					weightbar = levelData.multiplierDynamic - 0.5f;
+				if (_weightbar <= 0f && _multiplier > 1) {
+					_multiplier -= 1;
+					_weightbar = levelData.multiplierDynamic - 0.5f;
 				}
 			}
 			yield return new WaitForEndOfFrame ();
@@ -42,15 +60,31 @@ public class ScoreController : MonoBehaviour {
 	}
 
 	public void OnClick () {
-		if (weightbar < levelData.multiplierDynamic)
-			weightbar += levelData.clickWeight;
+		if (_weightbar < levelData.multiplierDynamic)
+			_weightbar += levelData.clickWeight;
 		if (Crit ())
-			score += multiplier * levelData.critMultiplier;
+			_score += _multiplier * levelData.critMultiplier;
 		else
-			score += multiplier;
+			_score += _multiplier;
+		scoreObserver.Notify ();
 	}
 
 	private bool Crit () {
 		return (levelData.critChance > systemRandom.Next (1, 100));
+	}
+
+	private class Highscore : Observer {
+
+		private delegate void DelegateVoid ();
+		private DelegateVoid scoreUpdate;
+
+		public Highscore () {
+			scoreUpdate = GameManager.Instance.SetHighscore;
+		}
+
+		public override void OnNotify ()
+		{
+			scoreUpdate ();
+		}
 	}
 }

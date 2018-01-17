@@ -11,11 +11,11 @@ public class LevelButtonGenerator : MonoBehaviour {
 	private delegate void OnClick ();
 
 	void Start () {
-		PlayerData playerData = GlobalData.Instance.GetActivePlayerData ();
+		PlayerData playerData = GlobalData.Instance.ActivePlayerData;
 
 		foreach (UnlockedLevel uLevel in playerData.unlockedLevels) {
 			OnClick OnClickLevel = delegate {
-				GlobalData.Instance.SetActiveLevel (uLevel.index);
+				GlobalData.Instance.ActiveLevelIndex = uLevel.index;
 				Colorize ();
 			};
 
@@ -43,7 +43,7 @@ public class LevelButtonGenerator : MonoBehaviour {
 	}
 
 	void Colorize () {
-		PlayerData playerData = GlobalData.Instance.GetActivePlayerData ();
+		PlayerData playerData = GlobalData.Instance.ActivePlayerData;
 		foreach (GameObject g in buttons) {
 			g.GetComponent<Image> ().color = Color.white;
 		}

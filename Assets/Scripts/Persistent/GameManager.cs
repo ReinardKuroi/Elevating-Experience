@@ -19,20 +19,29 @@ public class GameManager : MonoBehaviour {
 		} else {
 			Destroy (gameObject);
 		}
-		game = new FSM.Process ();
-		inputManager = new InputManager ();
+		if (game == null)
+			game = new FSM.Process ();
+		if (inputManager == null)
+			inputManager = new InputManager ();
 	}
 
 	public int Score {
-		get { return scoreController.score; }
+		get { return scoreController.Score; }
 	}
 
 	public int Multiplier {
-		get { return scoreController.multiplier; }
+		get { return scoreController.Multiplier; }
 	}
 
 	public float Weightbar {
-		get { return scoreController.weightbar; }
+		get { return scoreController.Weightbar; }
+	}
+
+	//highscore code
+
+	public void SetHighscore () {
+		if (Score > GlobalData.Instance.Highscore)
+			GlobalData.Instance.Highscore = Score;
 	}
 
 	//public actions for game state

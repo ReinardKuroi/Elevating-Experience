@@ -15,7 +15,7 @@ public class PlayerButtonGenerator : MonoBehaviour {
 			int index = GlobalData.Instance.allPlayerData.IndexOf (playerData);
 			OnClick OnClickPlayer = delegate {
 				Debug.LogError ("Selected Player " + index);
-				GlobalData.Instance.SetLastActivePlayer (index);
+				GlobalData.Instance.LastActivePlayer = index;
 				Colorize ();
 			};
 
@@ -47,7 +47,7 @@ public class PlayerButtonGenerator : MonoBehaviour {
 			g.GetComponent<Image> ().color = Color.white;
 		}
 
-		int index = GlobalData.Instance.GetLastActivePlayer ();
+		int index = GlobalData.Instance.LastActivePlayer;
 		if (index != -1) {
 			buttons [index].GetComponent<Image> ().color = Color.red;
 		}

@@ -21,7 +21,7 @@ public class SoundManager : MonoBehaviour {
 	//Gets active PlayerData and checks audio parameters
 	//applies them to audio mixer
 	public void SetVolume () {
-		PlayerData playerData = GlobalData.Instance.GetActivePlayerData ();
+		PlayerData playerData = GlobalData.Instance.ActivePlayerData;
 		foreach (AudioSettings audio in playerData.audioSettings) {
 			if (audio.enabled) {
 				aMixer.SetFloat (audio.name, audio.volume);
@@ -34,10 +34,10 @@ public class SoundManager : MonoBehaviour {
 	//Gets slider values, NOT SLIDERS
 	//sets active PlayerData to it
 	public void GetVolume (string name, float volume, bool isOn) {
-		PlayerData playerData = GlobalData.Instance.GetActivePlayerData ();
+		PlayerData playerData = GlobalData.Instance.ActivePlayerData;
 		AudioSettings audio = playerData.audioSettings.Find(item => item.name == name);
 		audio.volume = Mathf.Log10 (volume) * 20;
 		audio.enabled = isOn;
-		GlobalData.Instance.SetActivePlayerData (playerData);
+		GlobalData.Instance.ActivePlayerData = playerData;
 	}
 }
