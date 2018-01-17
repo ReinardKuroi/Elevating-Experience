@@ -10,11 +10,11 @@ using UnityEngine;
 //add more states, e.g. Transition and Loading : No need
 //Quit button for login screen? : DONE
 //Make login screen fancier : DONE
+//implement highscore system : DONE
+//Start working on achievements system : DONE
 
-//implement highscore system
 //make loader fancier
 //Add "delete player" button to login screen
-//Start working on achievements system
 //Modify level data to include music
 //Modify player data to include selected music
 //Add cool looking effects with wumbers on click
@@ -111,7 +111,6 @@ public class GlobalData : MonoBehaviour {
 		allPlayerData.Insert (0, playerData);
 		LastActivePlayer = 0;
 		UnlockLevel ("Default");
-		UnlockLevel ("Foo"); // fix later
 	}
 
 	//LastActivePLayer

@@ -53,16 +53,12 @@ public class GameManager : MonoBehaviour {
 	//achievement
 
 	public void CheckAchievement (AchievementData achievement) {
-		if (achievement.levelRestriction == "Any") {
-			if (achievement.triggerName == "Score") {
-				if (Score >= achievement.triggerValue)
-					UnlockAchievement (achievement);
-			}
-		}
 		if (achievement.levelRestriction == GlobalData.Instance.ActiveLevelData.levelName) {
 			if (achievement.triggerName == "Score") {
-				if (Score >= achievement.triggerValue)
+				if (Score >= achievement.triggerValue) {
 					UnlockAchievement (achievement);
+					GlobalData.Instance.UnlockLevel ("Foo");
+				}
 			}
 		}
 	}
