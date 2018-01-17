@@ -28,9 +28,7 @@ public class LevelButtonGenerator : MonoBehaviour {
 	//Creates buttons from a prefab
 
 	GameObject NewButton (OnClick onClick, string name, GameObject prefab, bool interactable) {
-		GameObject button = new GameObject ();
-
-		button = (GameObject)GameObject.Instantiate (prefab);
+		GameObject button = (GameObject)GameObject.Instantiate (prefab);
 
 		button.transform.SetParent (gameObject.transform, false);
 		button.SetActive (true);

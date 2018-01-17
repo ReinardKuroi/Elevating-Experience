@@ -5,10 +5,13 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
 
+	[HideInInspector]
 	public FSM.Process game;
 	[HideInInspector]
 	public ScoreController scoreController;
-	InputManager inputManager;
+
+	private InputManager inputManager;
+	private Subject achievementObserver;
 
 	//Singleton
 	public static GameManager Instance { get; private set; }
@@ -23,6 +26,9 @@ public class GameManager : MonoBehaviour {
 			game = new FSM.Process ();
 		if (inputManager == null)
 			inputManager = new InputManager ();
+		if (achievementObserver == null) {
+			achievementObserver = new Subject ();
+		}
 	}
 
 	public int Score {
@@ -42,6 +48,30 @@ public class GameManager : MonoBehaviour {
 	public void SetHighscore () {
 		if (Score > GlobalData.Instance.Highscore)
 			GlobalData.Instance.Highscore = Score;
+	}
+
+	//achievement
+
+	public void CheckAchievement (AchievementData achievement) {
+		if (achievement.levelRestriction == "Any") {
+			if (achievement.triggerName == "Score") {
+				if (Score >= achievement.triggerValue)
+					UnlockAchievement (achievement);
+			}
+		}
+		if (achievement.levelRestriction == GlobalData.Instance.ActiveLevelData.levelName) {
+			if (achievement.triggerName == "Score") {
+				if (Score >= achievement.triggerValue)
+					UnlockAchievement (achievement);
+			}
+		}
+	}
+
+	public void UnlockAchievement (AchievementData achievement) {
+		PlayerData playerData = GlobalData.Instance.ActivePlayerData;
+		playerData.unlockedAchievements.Find (item => item.achievementName == achievement.achievementName).isUnlocked = true;
+		GlobalData.Instance.ActivePlayerData = playerData;
+		GlobalData.Instance.SaveGameData ();
 	}
 
 	//public actions for game state
@@ -65,6 +95,11 @@ public class GameManager : MonoBehaviour {
 			else
 				scoreController = gameObject.GetComponent<ScoreController> ();
 			scoreController.Set ();
+			if (achievementObserver != null) {
+				foreach (AchievementData data in GlobalData.Instance.Achievements) {
+					achievementObserver.AddObserver (new Achievement (data));
+				}
+			}
 			Debug.Log ("Game started.");
 		}
 	}
@@ -94,6 +129,23 @@ public class GameManager : MonoBehaviour {
 	void Update () {
 		if (game.CurrentState == FSM.State.Active) {
 			inputManager.HandleInput ();
+			achievementObserver.Notify ();
+		}
+	}
+
+	private class Achievement : Observer {
+
+		private delegate void DelegateVoid (AchievementData data);
+		private DelegateVoid achievementCheck;
+		private AchievementData achievementData;
+
+		public Achievement (AchievementData data) {
+			achievementCheck = GameManager.Instance.CheckAchievement;
+			this.achievementData = data;
+		}
+
+		public override void OnNotify () {
+			achievementCheck (achievementData);
 		}
 	}
 }

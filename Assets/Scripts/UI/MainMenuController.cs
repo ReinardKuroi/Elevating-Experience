@@ -36,4 +36,8 @@ public class MainMenuController : MonoBehaviour {
 		GameManager.Instance.Play ();
 		LoadManager.Instance.LoadScene (levelData.levelName);
 	}
+
+	public void Logout () {
+		LoadManager.Instance.LoadScene ("Login");
+	}
 }

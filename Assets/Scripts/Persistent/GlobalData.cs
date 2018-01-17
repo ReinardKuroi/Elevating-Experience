@@ -72,7 +72,7 @@ public class GlobalData : MonoBehaviour {
 	}
 
 	public void UnlockLevel (string name) {
-		UnlockedLevel uLevel = allPlayerData [activePlayer].unlockedLevels.Find (item => item.name == name);
+		UnlockedLevel uLevel = allPlayerData [activePlayer].unlockedLevels.Find (item => item.levelName == name);
 		uLevel.isUnlocked = true;
 		SaveLoad.SaveFile (ref allPlayerData, playerDataFilename);
 	}
@@ -103,6 +103,9 @@ public class GlobalData : MonoBehaviour {
 				isUnlocked = false
 			});
 			playerData.highscores.Add (new Highscore (levelData.levelName));
+		}
+		foreach (AchievementData data in allAchievementData) {
+			playerData.unlockedAchievements.Add (new UnlockedAchievement (data.achievementName));
 		}
 		playerData.name = playerName;
 		allPlayerData.Insert (0, playerData);
@@ -146,10 +149,19 @@ public class GlobalData : MonoBehaviour {
 		}
 	}
 
+	//Achievement
+
+	public List<AchievementData> Achievements {
+		get {
+			return allAchievementData;
+		}
+	}
+
 	//SaveLoad
 
 	public void ResetPlayerData () {
 		allPlayerData.Clear ();
+		allPlayerData = new List<PlayerData> ();
 		SaveLoad.SaveFile (ref allPlayerData, playerDataFilename);
 	}
 
@@ -173,6 +185,7 @@ public class PlayerData {
 	public int activeLevel;
 	public List<UnlockedLevel> unlockedLevels;
 	public List<Highscore> highscores;
+	public List<UnlockedAchievement> unlockedAchievements;
 	public List<AudioSettings> audioSettings;
 
 	public PlayerData () {
@@ -181,10 +194,11 @@ public class PlayerData {
 		this.activeLevel = 0;
 		this.unlockedLevels = new List<UnlockedLevel> ();
 		this.highscores = new List<Highscore> ();
-		this.audioSettings = new List<AudioSettings> ();
-
-		this.audioSettings.Add (new AudioSettings (GlobalData.exposedMusicVolume));
-		this.audioSettings.Add (new AudioSettings (GlobalData.exposedSFXVolume));
+		this.unlockedAchievements = new List<UnlockedAchievement> ();
+		this.audioSettings = new List<AudioSettings> {
+			new AudioSettings (GlobalData.exposedMusicVolume),
+			new AudioSettings (GlobalData.exposedSFXVolume)
+		};
 	}
 }
 
@@ -244,16 +258,27 @@ public class AudioSettings {
 
 [System.Serializable]
 public class UnlockedLevel {
-	public string name;
+	public string levelName;
 	public string showName;
 	public bool isUnlocked;
 	public int index;
 
 	public UnlockedLevel (LevelData levelData) {
-		this.name = levelData.levelName;
+		this.levelName = levelData.levelName;
 		this.showName = levelData.levelShowName;
 		this.isUnlocked = false;
 		this.index = 0;
+	}
+}
+
+[System.Serializable]
+public class UnlockedAchievement {
+	public string achievementName;
+	public bool isUnlocked;
+
+	public UnlockedAchievement (string name) {
+		this.achievementName = name;
+		this.isUnlocked = false;
 	}
 }
 

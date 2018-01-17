@@ -14,7 +14,6 @@ public class PlayerButtonGenerator : MonoBehaviour {
 		foreach (PlayerData playerData in GlobalData.Instance.allPlayerData) {
 			int index = GlobalData.Instance.allPlayerData.IndexOf (playerData);
 			OnClick OnClickPlayer = delegate {
-				Debug.LogError ("Selected Player " + index);
 				GlobalData.Instance.LastActivePlayer = index;
 				Colorize ();
 			};
@@ -28,9 +27,7 @@ public class PlayerButtonGenerator : MonoBehaviour {
 	//Creates buttons from a prefab
 
 	GameObject NewButton (OnClick onClick, string name, GameObject prefab, bool interactable) {
-		GameObject button = new GameObject ();
-
-		button = (GameObject)GameObject.Instantiate (prefab);
+		GameObject button = (GameObject)GameObject.Instantiate (prefab);
 
 		button.transform.SetParent (gameObject.transform, false);
 		button.SetActive (true);
