@@ -13,13 +13,13 @@ public class LevelButtonGenerator : MonoBehaviour {
 	void Start () {
 		PlayerData playerData = GlobalData.Instance.ActivePlayerData;
 
-		foreach (UnlockedLevel uLevel in playerData.unlockedLevels) {
+		foreach (ScoreData data in playerData.scoreData) {
 			OnClick OnClickLevel = delegate {
-				GlobalData.Instance.ActiveLevelIndex = uLevel.index;
+				GlobalData.Instance.ActiveLevelIndex = data.index;
 				Colorize ();
 			};
 
-			buttons.Add (NewButton (OnClickLevel, uLevel.showName, buttonPrefab, uLevel.isUnlocked));
+			buttons.Add (NewButton (OnClickLevel, data.showName, buttonPrefab, data.isUnlocked));
 		}
 		Colorize ();
 	}

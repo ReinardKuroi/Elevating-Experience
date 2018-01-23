@@ -10,9 +10,9 @@ public class HighscoreTableGenerator : MonoBehaviour {
 	void Start () {
 		PlayerData playerData = GlobalData.Instance.ActivePlayerData;
 
-		foreach (UnlockedLevel uLevel in playerData.unlockedLevels) {
-			Highscore highscore = playerData.highscores.Find (item => item.levelName == uLevel.levelName);
-			NewText (textPrefab, highscore.levelName, highscore.highscore);
+		foreach (ScoreData data in playerData.scoreData) {
+			ScoreData scoreData = playerData.scoreData.Find (item => item.levelName == data.levelName);
+			NewText (textPrefab, scoreData.levelName, scoreData.highscore);
 		}
 	}
 

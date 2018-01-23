@@ -14,10 +14,10 @@ using UnityEngine;
 //Start working on achievements system : DONE
 
 //make loader fancier
-//Add "delete player" button to login screen
 //Modify level data to include music
 //Modify player data to include selected music
 //Add cool looking effects with wumbers on click
+//Add level intermezzo transition
 
 public class GlobalData : MonoBehaviour {
 
@@ -67,13 +67,13 @@ public class GlobalData : MonoBehaviour {
 	//Sets bool in list unlockedLevels by index
 	//in a list of all PlayerData by index activePlayer
 	public void UnlockLevel (int index) {
-		allPlayerData [activePlayer].unlockedLevels [index].isUnlocked = true;
+		ActivePlayerData.scoreData [index].isUnlocked = true;
 		SaveLoad.SaveFile (ref allPlayerData, playerDataFilename);
 	}
 
 	public void UnlockLevel (string name) {
-		UnlockedLevel uLevel = allPlayerData [activePlayer].unlockedLevels.Find (item => item.levelName == name);
-		uLevel.isUnlocked = true;
+		ScoreData scoreData = ActivePlayerData.scoreData.Find (item => item.levelName == name);
+		scoreData.isUnlocked = true;
 		SaveLoad.SaveFile (ref allPlayerData, playerDataFilename);
 	}
 
@@ -92,17 +92,16 @@ public class GlobalData : MonoBehaviour {
 		}
 	}
 
-	//NewPlayer
+	//New player
 
 	public void CreateNewPlayerData (string playerName) {
 		PlayerData playerData = new PlayerData ();
 		for (int i = 0; i < allLevelData.Count; i++) {
 			LevelData levelData = allLevelData [i];
-			playerData.unlockedLevels.Add (new UnlockedLevel (levelData) {
+			playerData.scoreData.Add (new ScoreData (levelData) {
 				index = i,
-				isUnlocked = false
+				isUnlocked = false,
 			});
-			playerData.highscores.Add (new Highscore (levelData.levelName));
 		}
 		foreach (AchievementData data in allAchievementData) {
 			playerData.unlockedAchievements.Add (new UnlockedAchievement (data.achievementName));
@@ -111,6 +110,13 @@ public class GlobalData : MonoBehaviour {
 		allPlayerData.Insert (0, playerData);
 		LastActivePlayer = 0;
 		UnlockLevel ("Default");
+	}
+
+	//Delete player
+
+	public void DeletePlayerData (int index) {
+		if (allPlayerData[index] != null)
+			allPlayerData.RemoveAt (index);
 	}
 
 	//LastActivePLayer
@@ -138,13 +144,13 @@ public class GlobalData : MonoBehaviour {
 
 	public int Highscore {
 		get {
-			int index = ActivePlayerData.highscores.FindIndex (item => item.levelName == ActiveLevelData.levelName);
-			int highscore = ActivePlayerData.highscores [index].highscore;
+			ScoreData scoreData = ActivePlayerData.scoreData.Find (item => item.levelName == ActiveLevelData.levelName);
+			int highscore = scoreData.highscore;
 			return highscore;
 		}
 		set {
-			int index = ActivePlayerData.highscores.FindIndex (item => item.levelName == ActiveLevelData.levelName);
-			ActivePlayerData.highscores [index].highscore = value;
+			int index = ActivePlayerData.scoreData.FindIndex (item => item.levelName == ActiveLevelData.levelName);
+			ActivePlayerData.scoreData [index].highscore = value;
 		}
 	}
 
@@ -182,8 +188,7 @@ public class PlayerData {
 	public string name;
 	public bool isActive;
 	public int activeLevel;
-	public List<UnlockedLevel> unlockedLevels;
-	public List<Highscore> highscores;
+	public List<ScoreData> scoreData;
 	public List<UnlockedAchievement> unlockedAchievements;
 	public List<AudioSettings> audioSettings;
 
@@ -191,8 +196,7 @@ public class PlayerData {
 		this.name = "";
 		this.isActive = false;
 		this.activeLevel = 0;
-		this.unlockedLevels = new List<UnlockedLevel> ();
-		this.highscores = new List<Highscore> ();
+		this.scoreData = new List<ScoreData> ();
 		this.unlockedAchievements = new List<UnlockedAchievement> ();
 		this.audioSettings = new List<AudioSettings> {
 			new AudioSettings (GlobalData.exposedMusicVolume),
@@ -256,21 +260,6 @@ public class AudioSettings {
 }
 
 [System.Serializable]
-public class UnlockedLevel {
-	public string levelName;
-	public string showName;
-	public bool isUnlocked;
-	public int index;
-
-	public UnlockedLevel (LevelData levelData) {
-		this.levelName = levelData.levelName;
-		this.showName = levelData.levelShowName;
-		this.isUnlocked = false;
-		this.index = 0;
-	}
-}
-
-[System.Serializable]
 public class UnlockedAchievement {
 	public string achievementName;
 	public bool isUnlocked;
@@ -282,12 +271,24 @@ public class UnlockedAchievement {
 }
 
 [System.Serializable]
-public class Highscore {
+public class ScoreData {
 	public string levelName;
+	public string showName;
+	public bool isUnlocked;
+	public int index;
 	public int highscore;
+	public float playTime;
+	public int playCount;
+	public int floorCount;
 
-	public Highscore (string name) {
-		this.levelName = name;
+	public ScoreData (LevelData levelData) {
+		this.levelName = levelData.levelName;
+		this.showName = levelData.levelShowName;
+		this.isUnlocked = false;
+		this.index = 0;
 		this.highscore = 0;
+		this.playTime = 0f;
+		this.playCount = 0;
+		this.floorCount = 0;
 	}
 }
