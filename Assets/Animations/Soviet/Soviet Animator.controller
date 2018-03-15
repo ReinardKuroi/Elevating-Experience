@@ -5,7 +5,7 @@ AnimatorController:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: ButtonController
+  m_Name: Soviet Animator
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: Pressed
@@ -68,7 +68,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: e04b8ee84ecf75748bd1566096392e77, type: 2}
+  m_Motion: {fileID: 7400000, guid: 6a03d7afa11477f43ab775d25177f337, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
