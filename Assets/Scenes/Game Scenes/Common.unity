@@ -674,7 +674,7 @@ Camera:
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
-  m_AllowMSAA: 1
+  m_AllowMSAA: 0
   m_ForceIntoRT: 0
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
@@ -791,7 +791,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 382974304}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 184.94897, y: -351.91833, z: 0}
+  m_LocalPosition: {x: 184.98804, y: -351.85587, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2019631935}
@@ -1055,7 +1055,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 486429776}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -137.99896, y: 338.44342, z: 0}
+  m_LocalPosition: {x: -138.03802, y: 338.38095, z: 0}
   m_LocalScale: {x: 1.0695003, y: 1.0695003, z: 1.0695003}
   m_Children: []
   m_Father: {fileID: 2019631935}
@@ -1726,7 +1726,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1033410561}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 137.99887, y: 338.44342, z: 0}
+  m_LocalPosition: {x: 138.03793, y: 338.38095, z: 0}
   m_LocalScale: {x: 1.0695003, y: 1.0695003, z: 1.0695003}
   m_Children: []
   m_Father: {fileID: 2019631935}
@@ -2037,7 +2037,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1761854063}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -184.94897, y: -351.91833, z: 0}
+  m_LocalPosition: {x: -184.98804, y: -351.85587, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2019631935}
@@ -2352,8 +2352,8 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2019631934}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 297.5, y: 476, z: 0}
-  m_LocalScale: {x: 1.2145387, y: 1.2145387, z: 1.2145387}
+  m_LocalPosition: {x: 196, y: 313.5, z: 0}
+  m_LocalScale: {x: 0.80003905, y: 0.80003905, z: 0.80003905}
   m_Children:
   - {fileID: 1033410562}
   - {fileID: 486429777}
