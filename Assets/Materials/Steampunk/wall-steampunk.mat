@@ -8,7 +8,7 @@ Material:
   m_PrefabInternal: {fileID: 0}
   m_Name: wall-steampunk
   m_Shader: {fileID: 47, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: _METALLICGLOSSMAP _NORMALMAP _PARALLAXMAP _SPECGLOSSMAP
+  m_ShaderKeywords: _METALLICGLOSSMAP _NORMALMAP _SPECGLOSSMAP
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -19,7 +19,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BumpMap:
-        m_Texture: {fileID: 2800000, guid: 4a1cfc53a732b614dbadd8eac43e98fa, type: 3}
+        m_Texture: {fileID: 2800000, guid: a0a1ebe279578b84b9d6655bf10c7889, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -36,26 +36,26 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
         m_Texture: {fileID: 0}
-        m_Scale: {x: 3, y: 3}
+        m_Scale: {x: 5, y: 5}
         m_Offset: {x: 0.35, y: 0.27}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: bc7ff62c25e25e04da7d5c0969a22d7e, type: 3}
-        m_Scale: {x: 3, y: 3}
+        m_Texture: {fileID: 2800000, guid: 208e1a8a67a68cf48b7de029f08d3e19, type: 3}
+        m_Scale: {x: 5, y: 5}
         m_Offset: {x: 0.35, y: 0.27}
     - _MetallicGlossMap:
-        m_Texture: {fileID: 2800000, guid: bc932408266bdc84c87ff2b8bc3c0cf9, type: 3}
+        m_Texture: {fileID: 2800000, guid: a487f0a7553912d4192e08410acb7b6e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
-        m_Texture: {fileID: 2800000, guid: c1b826aa7fbd87649be6dd2db6e2011f, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ParallaxMap:
-        m_Texture: {fileID: 2800000, guid: e93a8034b92f1f44abb7b2e588aa3f91, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
-        m_Texture: {fileID: 2800000, guid: 1b0e79290790a624c89d9fa724175b16, type: 3}
+        m_Texture: {fileID: 2800000, guid: fde86115fefcebd4097e8b7d497eec53, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
