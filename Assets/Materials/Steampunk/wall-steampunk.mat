@@ -8,7 +8,7 @@ Material:
   m_PrefabInternal: {fileID: 0}
   m_Name: wall-steampunk
   m_Shader: {fileID: 47, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: _METALLICGLOSSMAP _NORMALMAP _SPECGLOSSMAP
+  m_ShaderKeywords: _METALLICGLOSSMAP _NORMALMAP _PARALLAXMAP
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -19,7 +19,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BumpMap:
-        m_Texture: {fileID: 2800000, guid: a0a1ebe279578b84b9d6655bf10c7889, type: 3}
+        m_Texture: {fileID: 2800000, guid: a29a36f872f283a48bba9c42daefa65e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -36,14 +36,14 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
         m_Texture: {fileID: 0}
-        m_Scale: {x: 5, y: 5}
-        m_Offset: {x: 0.35, y: 0.27}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: -0.03}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 208e1a8a67a68cf48b7de029f08d3e19, type: 3}
-        m_Scale: {x: 5, y: 5}
-        m_Offset: {x: 0.35, y: 0.27}
+        m_Texture: {fileID: 2800000, guid: 6ac729af84e7c0540a94cd8f6d478842, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: -0.03}
     - _MetallicGlossMap:
-        m_Texture: {fileID: 2800000, guid: a487f0a7553912d4192e08410acb7b6e, type: 3}
+        m_Texture: {fileID: 2800000, guid: 5d3727c3de9b17c4eb1e23d2025fb79b, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
@@ -51,11 +51,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ParallaxMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 1a0edd047dc10a1418a6169cb94bc765, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
-        m_Texture: {fileID: 2800000, guid: fde86115fefcebd4097e8b7d497eec53, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
@@ -69,12 +69,12 @@ Material:
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
-    - _Parallax: 0.02
+    - _Parallax: 0.052
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 0.63235295, g: 0.63235295, b: 0.63235295, a: 1}
+    - _Color: {r: 0.8508867, g: 0.9202467, b: 0.9485294, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
