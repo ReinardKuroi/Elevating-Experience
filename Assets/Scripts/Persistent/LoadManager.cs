@@ -24,11 +24,6 @@ public class LoadManager : MonoBehaviour {
 		StartCoroutine (LoadNew (name));
 	}
 
-	public void LoadScene (int index) {
-		Debug.Log("Loading scene #" + index.ToString());
-		StartCoroutine (LoadNew (index));
-	}
-
 	//overloaded coroutine for scene loading
 	//IMPLEMENT MORE FANCY STUFF HERE
 

@@ -96,6 +96,7 @@ public class GameManager : MonoBehaviour {
 					achievementObserver.AddObserver (new Achievement (data));
 				}
 			}
+			SoundManager.Instance.LevelMusic (GlobalData.Instance.ActiveLevelData.levelName);
 			Debug.Log ("Game started.");
 		}
 	}
@@ -105,6 +106,7 @@ public class GameManager : MonoBehaviour {
 			if (scoreController)
 				Destroy (scoreController);
 			GlobalData.Instance.SaveGameData ();
+			SoundManager.Instance.StopMusic ();
 			Debug.Log ("Game ended.");
 		}
 	}

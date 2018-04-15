@@ -109,7 +109,7 @@ public class GlobalData : MonoBehaviour {
 		playerData.name = playerName;
 		allPlayerData.Insert (0, playerData);
 		LastActivePlayer = 0;
-		UnlockLevel ("Default");
+		UnlockLevel ("Common");
 	}
 
 	//Delete player

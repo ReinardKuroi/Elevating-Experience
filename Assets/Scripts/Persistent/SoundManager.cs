@@ -9,6 +9,9 @@ public class SoundManager : MonoBehaviour {
 
 	public AudioMixer aMixer;
 
+	private AudioSource musicSource;
+	private AudioSource sfxSource;
+
 	void Awake () {
 		if (Instance == null) {
 			Instance = this;
@@ -16,6 +19,10 @@ public class SoundManager : MonoBehaviour {
 		} else {
 			Destroy (gameObject);
 		}
+
+		AudioSource[] sources = gameObject.GetComponents<AudioSource> ();
+		musicSource = sources [0];
+		sfxSource = sources [1];
 	}
 
 	//Gets active PlayerData and checks audio parameters
@@ -39,5 +46,31 @@ public class SoundManager : MonoBehaviour {
 		audio.volume = Mathf.Log10 (volume) * 20;
 		audio.enabled = isOn;
 		GlobalData.Instance.ActivePlayerData = playerData;
+	}
+
+	public void LevelMusic (string name) {
+		AudioClip intro;
+		AudioClip loop;
+	
+		intro = Resources.Load (name + "-intro") as AudioClip;
+		loop = Resources.Load (name + "-loop") as AudioClip;
+
+		if ((intro != null) && (loop != null)) {
+			StartCoroutine (PlayMusic (intro, loop));
+		}
+	}
+
+	public IEnumerator PlayMusic (AudioClip intro, AudioClip loop) {
+		musicSource.clip = intro;
+		musicSource.loop = false;
+		musicSource.Play ();
+		yield return new WaitWhile (() => musicSource.isPlaying);
+		musicSource.clip = loop;
+		musicSource.loop = true;
+		musicSource.Play ();
+	}
+
+	public void StopMusic () {
+		musicSource.Stop ();
 	}
 }
