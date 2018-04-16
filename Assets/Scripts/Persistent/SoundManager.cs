@@ -12,6 +12,8 @@ public class SoundManager : MonoBehaviour {
 	private AudioSource musicSource;
 	private AudioSource sfxSource;
 
+	private IEnumerator coroutine;
+
 	void Awake () {
 		if (Instance == null) {
 			Instance = this;
@@ -19,7 +21,7 @@ public class SoundManager : MonoBehaviour {
 		} else {
 			Destroy (gameObject);
 		}
-
+		coroutine = null;
 		AudioSource[] sources = gameObject.GetComponents<AudioSource> ();
 		musicSource = sources [0];
 		sfxSource = sources [1];
@@ -56,7 +58,8 @@ public class SoundManager : MonoBehaviour {
 		loop = Resources.Load (name + "-loop") as AudioClip;
 
 		if ((intro != null) && (loop != null)) {
-			StartCoroutine (PlayMusic (intro, loop));
+			coroutine = PlayMusic (intro, loop);
+			StartCoroutine (coroutine);
 		}
 	}
 
@@ -71,6 +74,12 @@ public class SoundManager : MonoBehaviour {
 	}
 
 	public void StopMusic () {
+		if (coroutine != null) {
+			StopCoroutine (coroutine);
+			coroutine = null;
+		}
+		musicSource.volume = Mathf.Lerp (1f, 0f, Time.time);
 		musicSource.Stop ();
+		musicSource.volume = 1f;
 	}
 }
