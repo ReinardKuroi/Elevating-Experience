@@ -5,6 +5,7 @@ using UnityEngine;
 public class ShaderEffect_CorruptedVram_Steampunk : MonoBehaviour {
 
 	public float shift = 10;
+	public int chance = 9990;
 	private Texture texture;
 	private Material material;
 
@@ -22,7 +23,7 @@ public class ShaderEffect_CorruptedVram_Steampunk : MonoBehaviour {
 
 		material.SetFloat("_ValueX", shift);
 		material.SetTexture("_Texture", texture);
-		if (random.Next (1, 10000) > 9990) {
+		if (random.Next (1, 10000) > chance) {
 			Graphics.Blit (source, destination, material);
 		} else {
 			Graphics.Blit (source, destination);

@@ -9,7 +9,7 @@ public class RandomPulseLight : MonoBehaviour {
 	public float minIntensity = 0.25f;
 	public float maxIntensity = 0.5f;
 
-	private Light light;
+	private Light light = new Light ();
 
 	float random;
 
