@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Login : MonoBehaviour {
 
-	public Text welcomeText;
+	public TextMeshProUGUI welcomeText;
 	public GameObject continueButton;
 	public GameObject loginButton;
 
@@ -24,12 +25,12 @@ public class Login : MonoBehaviour {
 			//disable load button
 			//disable continue button
 			Debug.Log ("No active player found.");
-			welcomeText.text = "WELCOME!";
+			welcomeText.text = "WELCOME";
 		} else {
 			GlobalData.Instance.LastActivePlayer = activePlayer;
 			PlayerData playerData = GlobalData.Instance.ActivePlayerData;
 			Debug.Log ("Got active player " + playerData.name);
-			welcomeText.text = "WELCOME, " + playerData.name + "!";
+			welcomeText.text = playerData.name ;
 			SoundManager.Instance.SetVolume ();
 			continueButton.GetComponent<Button> ().interactable = true;
 			loginButton.GetComponent<Button> ().interactable = true;

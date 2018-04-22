@@ -82,4 +82,11 @@ public class SoundManager : MonoBehaviour {
 		musicSource.Stop ();
 		musicSource.volume = 1f;
 	}
+
+	public void PlaySound (AudioClip sound) {
+		//randomize pitch?
+		sfxSource.clip = sound;
+		sfxSource.loop = false;
+		sfxSource.Play ();
+	}
 }
