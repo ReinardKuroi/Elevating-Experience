@@ -211,12 +211,14 @@ public class AchievementData {
 	public string levelRestriction;
 	public string triggerName;
 	public int triggerValue;
+	public string unlocks;
 
 	AchievementData () {
 		this.achievementName = "";
 		this.levelRestriction = "";
 		this.triggerName = "";
 		this.triggerValue = 0;
+		this.unlocks = "none";
 	}
 }
 
@@ -279,7 +281,7 @@ public class ScoreData {
 	public int highscore;
 	public float playTime;
 	public int playCount;
-	public int floorCount;
+//	public int floorCount;
 
 	public ScoreData (LevelData levelData) {
 		this.levelName = levelData.levelName;
@@ -289,6 +291,6 @@ public class ScoreData {
 		this.highscore = 0;
 		this.playTime = 0f;
 		this.playCount = 0;
-		this.floorCount = 0;
+//		this.floorCount = 0;
 	}
 }

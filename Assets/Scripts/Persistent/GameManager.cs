@@ -53,11 +53,59 @@ public class GameManager : MonoBehaviour {
 	//achievement
 
 	public void CheckAchievement (AchievementData achievement) {
-		if (achievement.levelRestriction == GlobalData.Instance.ActiveLevelData.levelName) {
-			if (achievement.triggerName == "Score") {
-				if (Score >= achievement.triggerValue) {
-					UnlockAchievement (achievement);
-					GlobalData.Instance.UnlockLevel ("Foo");
+		PlayerData player = GlobalData.Instance.ActivePlayerData;
+		LevelData level = GlobalData.Instance.ActiveLevelData;
+
+		if (player.unlockedAchievements.Find (item => item.achievementName == achievement.achievementName).isUnlocked) {
+			//skip
+		} else {
+
+			//if this achievement is unlocked -- do not check
+			if ((achievement.levelRestriction == level.levelName) || (achievement.levelRestriction == "none")) {
+
+				switch (achievement.triggerName) {
+				case "Score":
+					{
+						if (Score >= achievement.triggerValue) {
+							UnlockAchievement (achievement);
+						}
+						break;}
+				case "Time":
+					{
+						if (achievement.levelRestriction == "none") {
+							float time = 0f;
+							foreach (ScoreData data in player.scoreData) {
+								time += data.playTime;
+							}
+							if (time >= achievement.triggerValue) {
+								UnlockAchievement (achievement);
+							}
+						} else if (player.scoreData.Find(item => item.levelName == level.levelName).playTime >= achievement.triggerValue) {
+							UnlockAchievement (achievement);
+						}
+						break;}
+				case "Playcount":
+					{
+						if (achievement.levelRestriction == "none") {
+							int count = 0;
+							foreach (ScoreData data in player.scoreData) {
+								count += data.playCount;
+							}
+							if (count >= achievement.triggerValue) {
+								UnlockAchievement (achievement);
+							}
+						} else if (player.scoreData.Find (item => item.levelName == level.levelName).playCount >= achievement.triggerValue) {
+							UnlockAchievement (achievement);
+						}
+						break;}
+				case "Multi":
+					{
+						if (Multiplier >= achievement.triggerValue) {
+							UnlockAchievement (achievement);
+						}
+						break;}
+				default:
+					{break;}
 				}
 			}
 		}
@@ -66,6 +114,11 @@ public class GameManager : MonoBehaviour {
 	public void UnlockAchievement (AchievementData achievement) {
 		PlayerData playerData = GlobalData.Instance.ActivePlayerData;
 		playerData.unlockedAchievements.Find (item => item.achievementName == achievement.achievementName).isUnlocked = true;
+		if (achievement.unlocks == "none") {
+			//skip
+		} else {
+			GlobalData.Instance.UnlockLevel (achievement.unlocks);
+		}
 		GlobalData.Instance.ActivePlayerData = playerData;
 		GlobalData.Instance.SaveGameData ();
 	}
@@ -96,7 +149,9 @@ public class GameManager : MonoBehaviour {
 					achievementObserver.AddObserver (new Achievement (data));
 				}
 			}
+			SoundManager.Instance.StopMusic ();
 			SoundManager.Instance.LevelMusic (GlobalData.Instance.ActiveLevelData.levelName);
+			GlobalData.Instance.ActivePlayerData.scoreData.Find (item => item.levelName == GlobalData.Instance.ActiveLevelData.levelName).playCount += 1;
 			Debug.Log ("Game started.");
 		}
 	}
@@ -107,6 +162,7 @@ public class GameManager : MonoBehaviour {
 				Destroy (scoreController);
 			GlobalData.Instance.SaveGameData ();
 			SoundManager.Instance.StopMusic ();
+			SoundManager.Instance.LevelMusic ("menu");
 			Debug.Log ("Game ended.");
 		}
 	}
@@ -128,6 +184,7 @@ public class GameManager : MonoBehaviour {
 		if (game.CurrentState == FSM.State.Active) {
 			inputManager.HandleInput ();
 			achievementObserver.Notify ();
+			GlobalData.Instance.ActivePlayerData.scoreData.Find(item => item.levelName == GlobalData.Instance.ActiveLevelData.levelName).playTime += Time.deltaTime;
 		}
 	}
 

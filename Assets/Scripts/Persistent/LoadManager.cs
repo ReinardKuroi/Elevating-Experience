@@ -14,6 +14,10 @@ public class LoadManager : MonoBehaviour {
 		} else {
 			Destroy (gameObject);
 		}
+	}
+
+	void Start () {
+		SoundManager.Instance.LevelMusic ("menu");
 		LoadScene ("Login");
 	}
 

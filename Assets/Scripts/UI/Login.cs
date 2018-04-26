@@ -73,7 +73,7 @@ public class Login : MonoBehaviour {
 		LoadManager.Instance.LoadScene ("MainMenu");
 	}
 
-	public void Create (InputField input) {
+	public void Create (TMP_InputField input) {
 		Debug.Log ("Pressed 'New'.");
 		string playerName = input.text;
 		if (playerName.Length > 0) {

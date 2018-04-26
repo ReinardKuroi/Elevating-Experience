@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class PlayerButtonGenerator : MonoBehaviour {
 
@@ -34,7 +35,7 @@ public class PlayerButtonGenerator : MonoBehaviour {
 		button.name = name;
 		button.GetComponent<Button> ().interactable = interactable;
 		button.GetComponent<Button> ().onClick.AddListener (delegate {onClick ();});
-		button.GetComponentInChildren<Text> ().text = name;
+		button.GetComponentInChildren<TextMeshProUGUI> ().text = name;
 
 		return button;
 	}
