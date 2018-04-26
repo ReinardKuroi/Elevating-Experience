@@ -14,6 +14,8 @@ public class SoundManager : MonoBehaviour {
 
 	private IEnumerator coroutine;
 
+	private System.Random random;
+
 	void Awake () {
 		if (Instance == null) {
 			Instance = this;
@@ -25,6 +27,7 @@ public class SoundManager : MonoBehaviour {
 		AudioSource[] sources = gameObject.GetComponents<AudioSource> ();
 		musicSource = sources [0];
 		sfxSource = sources [1];
+		random = new System.Random ();
 	}
 
 	//Gets active PlayerData and checks audio parameters
@@ -83,8 +86,12 @@ public class SoundManager : MonoBehaviour {
 		musicSource.volume = 1f;
 	}
 
-	public void PlaySound (AudioClip sound) {
+	public void PlaySound (string name) {
+		AudioClip sound = Resources.Load (name) as AudioClip;
+
 		//randomize pitch?
+		sfxSource.pitch = 1f + ((float)random.NextDouble() - 0.5f)/5;
+
 		sfxSource.clip = sound;
 		sfxSource.loop = false;
 		sfxSource.Play ();

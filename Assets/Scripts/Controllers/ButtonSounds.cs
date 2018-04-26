@@ -7,10 +7,14 @@ public class ButtonSounds : MonoBehaviour {
 
 	void Start () {
 		int i = 0;
-		foreach (Button o in Object.FindObjectsOfType<Button>()) {
+		foreach (Button o in Resources.FindObjectsOfTypeAll<Button>() as Button[]) {
 			i++;
-			o.onClick.AddListener (() => Debug.Log ("Got one!"));
+			o.onClick.AddListener (() => Pressed ());
 		}
 		Debug.Log ("Got buttons: " + i);
+	}
+
+	void Pressed () {
+		SoundManager.Instance.PlaySound ("menu-button");
 	}
 }

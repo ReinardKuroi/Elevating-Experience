@@ -1,9 +1,12 @@
 fileFormatVersion: 2
-guid: c2731328d0ac21448a1582ae1a516a21
-timeCreated: 1524508895
+guid: 3b52bb8be9338da4d83d18d399fe63cf
+timeCreated: 1524776498
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: TexturesCom_AudioEquipment0024_M_0
+    21300002: TexturesCom_AudioEquipment0024_M_1
+    21300004: TexturesCom_AudioEquipment0024_M_2
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -31,7 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: -1
     aniso: -1
     mipBias: -1
     wrapU: 0
@@ -40,13 +43,13 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 0
-  alignment: 0
-  spritePivot: {x: 0.5, y: 0.5}
-  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 300
+  alignment: 2
+  spritePivot: {x: 0.5, y: 1}
+  spriteBorder: {x: 83, y: 0, z: 71, w: 509}
+  spritePixelsToUnits: 100
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -85,7 +88,49 @@ TextureImporter:
     overridden: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: TexturesCom_AudioEquipment0024_M_0
+      rect:
+        serializedVersion: 2
+        x: 302
+        y: 714
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TexturesCom_AudioEquipment0024_M_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 368
+        width: 1395
+        height: 509
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TexturesCom_AudioEquipment0024_M_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1395
+        height: 368
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
     outline: []
     physicsShape: []
   spritePackingTag: 

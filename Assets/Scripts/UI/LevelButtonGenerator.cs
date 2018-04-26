@@ -2,10 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class LevelButtonGenerator : MonoBehaviour {
 
 	public GameObject buttonPrefab;
+	public Sprite disabledImage;
+	public Sprite enabledImage;
+	public Sprite selectedImage;
 
 	private List<GameObject> buttons = new List<GameObject> ();
 	private delegate void OnClick ();
@@ -16,10 +20,13 @@ public class LevelButtonGenerator : MonoBehaviour {
 		foreach (ScoreData data in playerData.scoreData) {
 			OnClick OnClickLevel = delegate {
 				GlobalData.Instance.ActiveLevelIndex = data.index;
+				SoundManager.Instance.PlaySound ("menu-button");
 				Colorize ();
 			};
 
-			buttons.Add (NewButton (OnClickLevel, data.showName, buttonPrefab, data.isUnlocked));
+			GameObject g = NewButton (OnClickLevel, data.showName, buttonPrefab, data.isUnlocked);
+
+			buttons.Add (g);
 		}
 		Colorize ();
 	}
@@ -28,14 +35,26 @@ public class LevelButtonGenerator : MonoBehaviour {
 	//Creates buttons from a prefab
 
 	GameObject NewButton (OnClick onClick, string name, GameObject prefab, bool interactable) {
-		GameObject button = (GameObject)GameObject.Instantiate (prefab);
+		GameObject host = (GameObject)GameObject.Instantiate (prefab);
+		GameObject button = host.transform.Find ("Button").gameObject;
+		GameObject text = host.transform.Find ("TextMeshPro").gameObject;
 
-		button.transform.SetParent (gameObject.transform, false);
-		button.SetActive (true);
-		button.name = name;
-		button.GetComponent<Button> ().interactable = interactable;
-		button.GetComponent<Button> ().onClick.AddListener (delegate {onClick ();});
-		button.GetComponentInChildren<Text> ().text = name;
+		Image i = button.GetComponent<Image> ();
+		Button b = button.GetComponent<Button> ();
+		TextMeshProUGUI t = text.GetComponent<TextMeshProUGUI> ();
+
+		host.transform.SetParent (gameObject.transform, false);
+		host.SetActive (true);
+		host.name = name;
+		if (interactable) {
+			b.interactable = true;
+			i.sprite = enabledImage;
+		} else {
+			b.interactable = false;
+			i.sprite = disabledImage;
+		}
+		b.onClick.AddListener (delegate {onClick ();});
+		t.text = name;
 
 		return button;
 	}
@@ -43,8 +62,11 @@ public class LevelButtonGenerator : MonoBehaviour {
 	void Colorize () {
 		PlayerData playerData = GlobalData.Instance.ActivePlayerData;
 		foreach (GameObject g in buttons) {
-			g.GetComponent<Image> ().color = Color.white;
+			Button b = g.GetComponent<Button> ();
+			if (b.interactable) {
+				g.GetComponent<Image> ().sprite = enabledImage;
+			}
 		}
-		buttons [playerData.activeLevel].GetComponent<Image> ().color = Color.red;
+		buttons [playerData.activeLevel].GetComponent<Image> ().sprite = selectedImage;
 	}
 }
