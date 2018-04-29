@@ -203,6 +203,36 @@ public class PlayerData {
 			new AudioSettings (GlobalData.exposedSFXVolume)
 		};
 	}
+
+	public float PlayTime {
+		get {
+			float time = 0f;
+			foreach (ScoreData data in this.scoreData) {
+				time += data.playTime;
+			}
+			return time;
+		}
+	}
+
+	public int PlayCount {
+		get {
+			int count = 0;
+			foreach (ScoreData data in this.scoreData) {
+				count += data.playCount;
+			}
+			return count;
+		}
+	}
+
+	public int TotalScore {
+		get {
+			int score = 0;
+			foreach (ScoreData data in this.scoreData) {
+				score += data.highscore;
+			}
+			return score;
+		}
+	}
 }
 
 [System.Serializable]
@@ -212,6 +242,7 @@ public class AchievementData {
 	public string triggerName;
 	public int triggerValue;
 	public string unlocks;
+	public string description;
 
 	AchievementData () {
 		this.achievementName = "";
@@ -219,6 +250,7 @@ public class AchievementData {
 		this.triggerName = "";
 		this.triggerValue = 0;
 		this.unlocks = "none";
+		this.description = "";
 	}
 }
 

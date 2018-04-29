@@ -1,12 +1,14 @@
 fileFormatVersion: 2
-guid: 3b52bb8be9338da4d83d18d399fe63cf
-timeCreated: 1524777008
+guid: 19197a84297aa104187dc1d0343c4091
+timeCreated: 1524931769
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: TexturesCom_AudioEquipment0024_M_0
-    21300002: TexturesCom_AudioEquipment0024_M_1
-    21300004: TexturesCom_AudioEquipment0024_M_2
+    21300000: TexturesCom_Gauges0108_3_S_0
+    21300002: TexturesCom_Gauges0108_3_S_1
+    21300004: TexturesCom_Gauges0108_3_S_2
+    21300006: TexturesCom_Gauges0108_3_S_3
+    21300008: TexturesCom_Gauges0108_3_S_4
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -37,18 +39,18 @@ TextureImporter:
     filterMode: -1
     aniso: -1
     mipBias: -1
-    wrapU: 0
-    wrapV: 0
-    wrapW: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: -1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 0
-  alignment: 2
-  spritePivot: {x: 0.5, y: 1}
-  spriteBorder: {x: 83, y: 0, z: 71, w: 509}
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 100
   alphaUsage: 1
   alphaIsTransparency: 1
@@ -90,59 +92,73 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: TexturesCom_AudioEquipment0024_M_0
+      name: TexturesCom_Gauges0108_3_S_0
       rect:
         serializedVersion: 2
-        x: 302
-        y: 714
-        width: 9
-        height: 6
+        x: 874
+        y: 0
+        width: 150
+        height: 145
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -4.5, y: 3}
-        - {x: -4.5, y: -3}
-        - {x: 4.5, y: -3}
-        - {x: 4.5, y: 3}
+      outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: TexturesCom_AudioEquipment0024_M_1
+      name: TexturesCom_Gauges0108_3_S_1
       rect:
         serializedVersion: 2
-        x: 0
-        y: 368
-        width: 1395
-        height: 509
+        x: 661
+        y: 0
+        width: 212
+        height: 145
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -697.5, y: 254.5}
-        - {x: -697.5, y: -146.5}
-        - {x: -694.5, y: -254.5}
-        - {x: 697.5, y: -254.5}
-        - {x: 697.5, y: 254.5}
+      outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: TexturesCom_AudioEquipment0024_M_2
+      name: TexturesCom_Gauges0108_3_S_2
+      rect:
+        serializedVersion: 2
+        x: 483
+        y: 0
+        width: 178
+        height: 145
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TexturesCom_Gauges0108_3_S_3
+      rect:
+        serializedVersion: 2
+        x: 267
+        y: 0
+        width: 216
+        height: 145
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TexturesCom_Gauges0108_3_S_4
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1395
-        height: 368
+        width: 268
+        height: 145
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -694.5, y: 184}
-        - {x: -695.5, y: 149}
-        - {x: -695.5, y: -184}
-        - {x: 697.5, y: -184}
-        - {x: 697.5, y: 184}
+      outline: []
       physicsShape: []
       tessellationDetail: 0
     outline: []

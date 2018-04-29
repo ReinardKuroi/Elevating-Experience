@@ -73,10 +73,7 @@ public class GameManager : MonoBehaviour {
 				case "Time":
 					{
 						if (achievement.levelRestriction == "none") {
-							float time = 0f;
-							foreach (ScoreData data in player.scoreData) {
-								time += data.playTime;
-							}
+							float time = player.PlayTime;
 							if (time >= achievement.triggerValue) {
 								UnlockAchievement (achievement);
 							}
@@ -87,10 +84,7 @@ public class GameManager : MonoBehaviour {
 				case "Playcount":
 					{
 						if (achievement.levelRestriction == "none") {
-							int count = 0;
-							foreach (ScoreData data in player.scoreData) {
-								count += data.playCount;
-							}
+							int count = player.PlayCount;
 							if (count >= achievement.triggerValue) {
 								UnlockAchievement (achievement);
 							}
