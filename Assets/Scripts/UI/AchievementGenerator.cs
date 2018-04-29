@@ -28,6 +28,7 @@ public class AchievementGenerator : MonoBehaviour {
 	GameObject DrawScreen (AchievementData data) {
 		GameObject g;
 		Transform t = gameObject.transform.Find ("AchievementScreen");
+
 		if (t == null) {
 			g = GameObject.Instantiate (achievementPrefab, gameObject.transform);
 		} else {
