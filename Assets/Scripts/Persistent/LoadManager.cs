@@ -7,7 +7,7 @@ public class LoadManager : MonoBehaviour {
 
 	public static LoadManager Instance { get; private set; }
 
-	private int depth = -1000;
+//	private int depth = -1000;
 	[Range(0, 1)]
 	public float fadeSpeed = 0.8f;
 

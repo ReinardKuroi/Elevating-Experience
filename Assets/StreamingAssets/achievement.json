@@ -1,0 +1,100 @@
+{
+    "Items": [
+        {
+            "achievementName": "Zen",
+            "levelRestriction": "none",
+            "triggerName": "Playcount",
+            "triggerValue": 3,
+            "unlocks": "Zen",
+            "description": ""
+        },
+        {
+            "achievementName": "Revolution",
+            "levelRestriction": "none",
+            "triggerName": "Score",
+            "triggerValue": 1917,
+            "unlocks": "Soviet",
+            "description": ""
+        },
+        {
+            "achievementName": "The Future is Now",
+            "levelRestriction": "none",
+            "triggerName": "Multi",
+            "triggerValue": 9,
+            "unlocks": "Futuristic",
+            "description": ""
+        },
+        {
+            "achievementName": "Raising Steam",
+            "levelRestriction": "none",
+            "triggerName": "Playcount",
+            "triggerValue": 42,
+            "unlocks": "Steampunk",
+            "description": ""
+        },
+        {
+            "achievementName": "Clonk",
+            "levelRestriction": "none",
+            "triggerName": "Time",
+            "triggerValue": 600,
+            "unlocks": "Technical",
+            "description": ""
+        },
+        {
+            "achievementName": "Vanilla",
+            "levelRestriction": "Default",
+            "triggerName": "Playcount",
+            "triggerValue": 50,
+            "unlocks": "none",
+            "description": ""
+        },
+        {
+            "achievementName": "Nirvana",
+            "levelRestriction": "Zen",
+            "triggerName": "Time",
+            "triggerValue": 1800,
+            "unlocks": "none",
+            "description": ""
+        },
+        {
+            "achievementName": "Blood, Sweat and Tears",
+            "levelRestriction": "Premium",
+            "triggerName": "Score",
+            "triggerValue": 1000000,
+            "unlocks": "none",
+            "description": ""
+        },
+        {
+            "achievementName": "KOMRAD",
+            "levelRestriction": "Soviet",
+            "triggerName": "Time",
+            "triggerValue": 600,
+            "unlocks": "none",
+            "description": ""
+        },
+        {
+            "achievementName": "Back to The",
+            "levelRestriction": "Futuristic",
+            "triggerName": "Score",
+            "triggerValue": 8800,
+            "unlocks": "none",
+            "description": ""
+        },
+        {
+            "achievementName": "Engineerin' Degree",
+            "levelRestriction": "Technical",
+            "triggerName": "Playcount",
+            "triggerValue": 42,
+            "unlocks": "none",
+            "description": ""
+        },
+        {
+            "achievementName": "Dedication",
+            "levelRestriction": "none",
+            "triggerName": "Time",
+            "triggerValue": 86400,
+            "unlocks": "none",
+            "description": ""
+        }
+    ]
+}

@@ -29,9 +29,9 @@ public class GlobalData : MonoBehaviour {
 
 	private int activePlayer;
 
-	public static string levelDataFilename = "level.data";
-	public static string achievementDataFilename = "achievement.data";
-	public static string playerDataFilename = "player.data";
+	public static string levelDataFilename = "level.json";
+	public static string achievementDataFilename = "achievement.json";
+	public static string playerDataFilename = "player.json";
 
 	public static string exposedMusicVolume = "MusicVolumeControl";
 	public static string exposedSFXVolume = "SFXVolumeControl";
@@ -209,7 +209,7 @@ public class PlayerData {
 			new AudioSettings (GlobalData.exposedSFXVolume)
 		};
 	}
-
+	[SerializeField]
 	public float PlayTime {
 		get {
 			float time = 0f;
@@ -219,7 +219,7 @@ public class PlayerData {
 			return time;
 		}
 	}
-
+	[SerializeField]
 	public int PlayCount {
 		get {
 			int count = 0;
@@ -229,7 +229,7 @@ public class PlayerData {
 			return count;
 		}
 	}
-
+	[SerializeField]
 	public int TotalScore {
 		get {
 			int score = 0;
