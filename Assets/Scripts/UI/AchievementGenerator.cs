@@ -44,9 +44,9 @@ public class AchievementGenerator : MonoBehaviour {
 		nameText.text = data.achievementName;
 		descriptionText.text = data.description;
 		if (playerData.unlockedAchievements.Find (item => item.achievementName == data.achievementName).isUnlocked) {
-			image.sprite = (Sprite)Resources.Load (data.achievementName + "-unlocked") ?? new Sprite ();
+			image.sprite = (Sprite)Resources.Load (data.achievementName + "-unlocked");
 		} else {
-			image.sprite = (Sprite)Resources.Load (data.achievementName + "-locked") ?? new Sprite ();
+			image.sprite = (Sprite)Resources.Load (data.achievementName + "-locked");
 		}
 
 		return g;

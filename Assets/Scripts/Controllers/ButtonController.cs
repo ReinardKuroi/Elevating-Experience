@@ -8,7 +8,7 @@ public class ButtonController : ObjectController {
 	public override void OnClick() {
 		AnimationController.PlayAnimation (gameObject, "Idle");
 		AnimationController.PlayAnimation (gameObject, "Pressed");
-		SoundController.PlaySound ();
+		SoundManager.Instance.PlaySound (GlobalData.Instance.ActiveLevelData.levelName + "-button");
 		GameManager.Instance.scoreController.OnClick ();
 	}
 }

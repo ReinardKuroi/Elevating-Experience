@@ -17,17 +17,11 @@ public class MainMenuController : MonoBehaviour {
 
 		GameManager.Instance.Quit ();
 
-		#if UNITY_STANDALONE
 		Application.Quit ();
-		#endif
-
-		#if UNITY_EDITOR
-		UnityEditor.EditorApplication.isPlaying = false;
-		#endif
 	}
 
 	public void Reset () {
-		GlobalData.Instance.ResetPlayerData ();
+		GlobalData.Instance.DeletePlayerData (GlobalData.Instance.LastActivePlayer);
 		LoadManager.Instance.LoadScene ("Login");
 	}
 

@@ -115,8 +115,14 @@ public class GlobalData : MonoBehaviour {
 	//Delete player
 
 	public void DeletePlayerData (int index) {
-		if (allPlayerData[index] != null)
+		Debug.Log (0);
+		if (allPlayerData [index] != null) {
+			Debug.Log (1);
 			allPlayerData.RemoveAt (index);
+			Debug.Log (2);
+			LastActivePlayer = 0;
+			Debug.Log (3);
+		}
 	}
 
 	//LastActivePLayer
@@ -133,9 +139,9 @@ public class GlobalData : MonoBehaviour {
 				foreach (PlayerData playerData in allPlayerData) {
 					playerData.isActive = false;
 				}
+				activePlayer = value;
+				allPlayerData [value].isActive = true;
 			}
-			activePlayer = value;
-			allPlayerData [value].isActive = true;
 			SaveLoad.SaveFile (ref allPlayerData, playerDataFilename);
 		}
 	}
