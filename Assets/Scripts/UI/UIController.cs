@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UIController : MonoBehaviour {
 
-	public Text scoreTableText;
-	public Text multiplierText;
+	public TextMeshProUGUI scoreTableText;
+	public TextMeshProUGUI multiplierText;
 	public Slider weightBar;
 
 	private int score;

@@ -1,14 +1,12 @@
 fileFormatVersion: 2
 guid: 3b52bb8be9338da4d83d18d399fe63cf
-timeCreated: 1524777008
-licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
     21300000: TexturesCom_AudioEquipment0024_M_0
     21300002: TexturesCom_AudioEquipment0024_M_1
     21300004: TexturesCom_AudioEquipment0024_M_2
   externalObjects: {}
-  serializedVersion: 4
+  serializedVersion: 5
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -34,7 +32,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
+    filterMode: 0
     aniso: -1
     mipBias: -1
     wrapU: 0
@@ -48,18 +46,21 @@ TextureImporter:
   spriteMeshType: 0
   alignment: 2
   spritePivot: {x: 0.5, y: 1}
-  spriteBorder: {x: 83, y: 0, z: 71, w: 509}
   spritePixelsToUnits: 100
+  spriteBorder: {x: 83, y: 0, z: 71, w: 509}
+  spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
   textureType: 8
   textureShape: 1
+  singleChannelComponent: 0
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
   platformSettings:
-  - buildTarget: DefaultTexturePlatform
+  - serializedVersion: 2
+    buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -68,7 +69,9 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
-  - buildTarget: Standalone
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Standalone
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -77,7 +80,9 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
-  - buildTarget: Android
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Android
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -86,6 +91,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    androidETC2FallbackOverride: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -107,6 +113,12 @@ TextureImporter:
         - {x: 4.5, y: 3}
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: f7e08ba7dadb46d43a15565660216907
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: TexturesCom_AudioEquipment0024_M_1
       rect:
@@ -126,6 +138,12 @@ TextureImporter:
         - {x: 697.5, y: 254.5}
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: e895bc1347bfdb247a959d4095f725bc
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: TexturesCom_AudioEquipment0024_M_2
       rect:
@@ -145,8 +163,20 @@ TextureImporter:
         - {x: 697.5, y: 184}
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: c443faf305f09614da25e77d7ae78391
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
+    bones: []
+    spriteID: 
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
   spritePackingTag: 
   userData: 
   assetBundleName: 
