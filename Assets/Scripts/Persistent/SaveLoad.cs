@@ -11,7 +11,7 @@ public static class SaveLoad {
 		string filePath = Path.Combine (Application.persistentDataPath, fileName);
 		if (File.Exists (filePath)) {
 			byte[] jsonBytes = File.ReadAllBytes (filePath);
-			string dataAsJson = Encoding.ASCII.GetString (jsonBytes);
+			string dataAsJson = Encoding.ASCII.GetString (jsonBytes).Trim ();
 			obj = JsonHelper.FromJson<T> (dataAsJson);
 		} else {
 			obj = new T ();
@@ -37,23 +37,36 @@ public static class SaveLoad {
 
 	public static void LoadFromAssets<T> (ref T obj, string fileName) where T : new() {
 		string filePath = Path.Combine (Application.streamingAssetsPath, fileName);
-		string dataAsJson = "{}";
+		string dataAsJson;
 
-		if (File.Exists (filePath)) {
-			if (Application.platform == RuntimePlatform.Android) {
-				Debug.LogError ("Platform Android");
-				WWW www = new WWW (filePath);
-				while (!www.isDone) {
-				}
-				dataAsJson = www.text;
-			} else {
-				dataAsJson = File.ReadAllText (filePath);
+		if (Application.platform == RuntimePlatform.Android) {
+			WWW www = new WWW (filePath);
+			while (!www.isDone) {
 			}
-
-			obj = JsonHelper.FromJson<T> (dataAsJson);
+			byte[] wwwBytes = www.bytes;
+			dataAsJson = Encoding.ASCII.GetString (wwwBytes).Trim ();
 		} else {
-			obj = new T ();
+			dataAsJson = File.ReadAllText (filePath);
 		}
+
+		obj = JsonHelper.FromJson<T> (dataAsJson);
+	}
+
+	public static void LoadFromAssetsTest (ref string obj, string fileName) {
+		string filePath = Path.Combine (Application.streamingAssetsPath, fileName);
+		string dataAsJson;
+
+		if (Application.platform == RuntimePlatform.Android) {
+			WWW www = new WWW (filePath);
+			while (!www.isDone) {
+			}
+			byte[] wwwBytes = www.bytes;
+			dataAsJson = Encoding.ASCII.GetString (wwwBytes).Trim ();
+		} else {
+			dataAsJson = File.ReadAllText (filePath);
+		}
+
+		obj = dataAsJson;
 	}
 
 	public static class JsonHelper

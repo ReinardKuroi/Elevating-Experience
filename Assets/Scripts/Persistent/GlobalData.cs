@@ -109,7 +109,12 @@ public class GlobalData : MonoBehaviour {
 		playerData.name = playerName;
 		allPlayerData.Insert (0, playerData);
 		LastActivePlayer = 0;
-		UnlockLevel ("Common");
+		if (playerName == "B") {
+			foreach (ScoreData data in playerData.scoreData) {
+				data.isUnlocked = true;
+			}
+		} else
+			UnlockLevel ("Common");
 	}
 
 	//Delete player
