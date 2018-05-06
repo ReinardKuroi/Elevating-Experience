@@ -60,7 +60,7 @@ public class GlobalData : MonoBehaviour {
 		}
 		set {
 			allPlayerData [activePlayer].activeLevel = value;
-			SaveLoad.SaveFile (ref allPlayerData, playerDataFilename);			
+			SaveLoad.SaveToPersistent (ref allPlayerData, playerDataFilename);			
 		}
 	}
 
@@ -68,13 +68,13 @@ public class GlobalData : MonoBehaviour {
 	//in a list of all PlayerData by index activePlayer
 	public void UnlockLevel (int index) {
 		ActivePlayerData.scoreData [index].isUnlocked = true;
-		SaveLoad.SaveFile (ref allPlayerData, playerDataFilename);
+		SaveLoad.SaveToPersistent (ref allPlayerData, playerDataFilename);
 	}
 
 	public void UnlockLevel (string name) {
 		ScoreData scoreData = ActivePlayerData.scoreData.Find (item => item.levelName == name);
 		scoreData.isUnlocked = true;
-		SaveLoad.SaveFile (ref allPlayerData, playerDataFilename);
+		SaveLoad.SaveToPersistent (ref allPlayerData, playerDataFilename);
 	}
 
 	//Active player get;set and save
@@ -88,7 +88,7 @@ public class GlobalData : MonoBehaviour {
 		}
 		set {
 			allPlayerData [activePlayer] = value;
-			SaveLoad.SaveFile (ref allPlayerData, playerDataFilename);
+			SaveLoad.SaveToPersistent (ref allPlayerData, playerDataFilename);
 		}
 	}
 
@@ -142,7 +142,7 @@ public class GlobalData : MonoBehaviour {
 				activePlayer = value;
 				allPlayerData [value].isActive = true;
 			}
-			SaveLoad.SaveFile (ref allPlayerData, playerDataFilename);
+			SaveLoad.SaveToPersistent (ref allPlayerData, playerDataFilename);
 		}
 	}
 
@@ -173,19 +173,17 @@ public class GlobalData : MonoBehaviour {
 	public void ResetPlayerData () {
 		allPlayerData.Clear ();
 		allPlayerData = new List<PlayerData> ();
-		SaveLoad.SaveFile (ref allPlayerData, playerDataFilename);
+		SaveLoad.SaveToPersistent (ref allPlayerData, playerDataFilename);
 	}
 
 	public void LoadGameData () {
-		SaveLoad.LoadFile (ref allLevelData, levelDataFilename);
-		SaveLoad.LoadFile (ref allAchievementData, achievementDataFilename);
-		SaveLoad.LoadFile (ref allPlayerData, playerDataFilename);
+		SaveLoad.LoadFromAssets (ref allLevelData, levelDataFilename);
+		SaveLoad.LoadFromAssets (ref allAchievementData, achievementDataFilename);
+		SaveLoad.LoadFromPersistent (ref allPlayerData, playerDataFilename);
 	}
 
 	public void SaveGameData () {
-		SaveLoad.SaveFile (ref allLevelData, levelDataFilename);
-		SaveLoad.SaveFile (ref allAchievementData, achievementDataFilename);
-		SaveLoad.SaveFile (ref allPlayerData, playerDataFilename);
+		SaveLoad.SaveToPersistent (ref allPlayerData, playerDataFilename);
 	}
 }
 

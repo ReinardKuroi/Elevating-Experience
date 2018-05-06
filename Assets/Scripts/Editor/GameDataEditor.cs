@@ -44,14 +44,14 @@ public class GameDataEditor: EditorWindow {
 	}
 
 	private void LoadGameData () {
-		SaveLoad.LoadFile (ref allLevelData, levelDataFilename);
-		SaveLoad.LoadFile (ref allAchievementData, achievementDataFilename);
-		SaveLoad.LoadFile (ref allPlayerData, playerDataFilename);
+		SaveLoad.LoadFromAssets (ref allLevelData, levelDataFilename);
+		SaveLoad.LoadFromAssets (ref allAchievementData, achievementDataFilename);
+		SaveLoad.LoadFromPersistent (ref allPlayerData, playerDataFilename);
 	}
 
 	private void SaveGameData () {
-		SaveLoad.SaveFile (ref allLevelData, levelDataFilename);
-		SaveLoad.SaveFile (ref allAchievementData, achievementDataFilename);
-		SaveLoad.SaveFile (ref allPlayerData, playerDataFilename);
+		SaveLoad.SaveToAssets (ref allLevelData, levelDataFilename);
+		SaveLoad.SaveToAssets (ref allAchievementData, achievementDataFilename);
+		SaveLoad.SaveToPersistent (ref allPlayerData, playerDataFilename);
 	}
 }

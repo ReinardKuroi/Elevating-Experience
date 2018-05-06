@@ -3,57 +3,59 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
+using System.Text;
 
 public static class SaveLoad {
-	
-	public static void LoadFile<T> (ref T obj, string fileName) where T : new () {
-		string filePath;
-		if (Application.platform == RuntimePlatform.Android) {
-			filePath = "jar:file://" + Application.dataPath + "!/assets/" + fileName;
-			Debug.LogError (filePath);
-			if (File.Exists (filePath)) {
-				byte[] jsonByte;
-				if (filePath.Contains ("://") || filePath.Contains (":///")) {
-					WWW www = new WWW (filePath);
-					jsonByte = www.bytes;
-				} else {
-					jsonByte = File.ReadAllBytes (filePath);
-				}
 
-				string dataAsJson = System.Text.Encoding.ASCII.GetString (jsonByte);
-				Debug.LogError (dataAsJson);
-				obj = (T)JsonHelper.FromJson<T> (dataAsJson);
-			} else {
-				obj = new T ();
-			}
+	public static void LoadFromPersistent<T> (ref T obj, string fileName) where T : new() {
+		string filePath = Path.Combine (Application.persistentDataPath, fileName);
+		if (File.Exists (filePath)) {
+			byte[] jsonBytes = File.ReadAllBytes (filePath);
+			string dataAsJson = Encoding.ASCII.GetString (jsonBytes);
+			obj = JsonHelper.FromJson<T> (dataAsJson);
 		} else {
-			filePath = Path.Combine (Application.streamingAssetsPath, fileName);
-
-			if (File.Exists (filePath)) {
-				string dataAsJson = File.ReadAllText (filePath);
-				obj = (T)JsonHelper.FromJson<T> (dataAsJson);
-			} else {
-				obj = new T ();
-			}
+			obj = new T ();
 		}
 	}
 
-	public static void SaveFile<T> (ref T obj, string fileName) where T : class {
-		string filePath;
-		if (Application.platform == RuntimePlatform.Android) {
-			filePath = "jar:file://" + Application.dataPath + "!/assets/" + fileName;
+	public static void SaveToPersistent<T> (ref T obj, string fileName) {
+		string filePath = Path.Combine (Application.persistentDataPath, fileName);
+		string dataAsJson = JsonHelper.ToJson (obj, true);
+		byte[] jsonBytes = Encoding.ASCII.GetBytes (dataAsJson);
+		File.WriteAllBytes (filePath, jsonBytes);
+	}
 
-			string dataAsJson = JsonHelper.ToJson (obj, true);
-			byte[] jsonByte = System.Text.Encoding.ASCII.GetBytes (dataAsJson);
-			File.WriteAllBytes (filePath, jsonByte);
-		} else {
-			filePath = Path.Combine (Application.streamingAssetsPath, fileName);
-
+	public static void SaveToAssets<T> (ref T obj, string fileName) {	//Use only in Editor!
+		if (Application.platform == RuntimePlatform.WindowsEditor) {
+			string filePath = Path.Combine (Application.streamingAssetsPath, fileName);
 			string dataAsJson = JsonHelper.ToJson (obj, true);
 			File.WriteAllText (filePath, dataAsJson);
+		} else {
+			Debug.LogError ("Not in Editor!");
 		}
 	}
-		
+
+	public static void LoadFromAssets<T> (ref T obj, string fileName) where T : new() {
+		string filePath = Path.Combine (Application.streamingAssetsPath, fileName);
+		string dataAsJson = "{}";
+
+		if (File.Exists (filePath)) {
+			if (Application.platform == RuntimePlatform.Android) {
+				Debug.LogError ("Platform Android");
+				WWW www = new WWW (filePath);
+				while (!www.isDone) {
+				}
+				dataAsJson = www.text;
+			} else {
+				dataAsJson = File.ReadAllText (filePath);
+			}
+
+			obj = JsonHelper.FromJson<T> (dataAsJson);
+		} else {
+			obj = new T ();
+		}
+	}
+
 	public static class JsonHelper
 	{
 		public static T FromJson<T>(string json)
