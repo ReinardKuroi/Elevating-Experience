@@ -10,19 +10,31 @@ public static class SaveLoad {
 		string filePath;
 		if (Application.platform == RuntimePlatform.Android) {
 			filePath = "jar:file://" + Application.dataPath + "!/assets/" + fileName;
+			Debug.LogError (filePath);
+			if (File.Exists (filePath)) {
+				byte[] jsonByte;
+				if (filePath.Contains ("://") || filePath.Contains (":///")) {
+					WWW www = new WWW (filePath);
+					jsonByte = www.bytes;
+				} else {
+					jsonByte = File.ReadAllBytes (filePath);
+				}
+
+				string dataAsJson = System.Text.Encoding.ASCII.GetString (jsonByte);
+				Debug.LogError (dataAsJson);
+				obj = (T)JsonHelper.FromJson<T> (dataAsJson);
+			} else {
+				obj = new T ();
+			}
 		} else {
 			filePath = Path.Combine (Application.streamingAssetsPath, fileName);
-		}
 
-		if (File.Exists (filePath)) {
-			string dataAsJson = File.ReadAllText (filePath);
-			obj = (T)JsonHelper.FromJson<T> (dataAsJson);
-//			BinaryFormatter bFormatter = new BinaryFormatter ();
-//			FileStream fileStream = File.Open (filePath, FileMode.Open);
-//			obj = (T)bFormatter.Deserialize (fileStream);
-//			fileStream.Close ();
-		} else {
-			obj = new T ();
+			if (File.Exists (filePath)) {
+				string dataAsJson = File.ReadAllText (filePath);
+				obj = (T)JsonHelper.FromJson<T> (dataAsJson);
+			} else {
+				obj = new T ();
+			}
 		}
 	}
 
@@ -30,18 +42,16 @@ public static class SaveLoad {
 		string filePath;
 		if (Application.platform == RuntimePlatform.Android) {
 			filePath = "jar:file://" + Application.dataPath + "!/assets/" + fileName;
+
+			string dataAsJson = JsonHelper.ToJson (obj, true);
+			byte[] jsonByte = System.Text.Encoding.ASCII.GetBytes (dataAsJson);
+			File.WriteAllBytes (filePath, jsonByte);
 		} else {
 			filePath = Path.Combine (Application.streamingAssetsPath, fileName);
+
+			string dataAsJson = JsonHelper.ToJson (obj, true);
+			File.WriteAllText (filePath, dataAsJson);
 		}
-
-		string dataAsJson = JsonHelper.ToJson (obj, true);
-//		Debug.Log (dataAsJson);
-		File.WriteAllText (filePath, dataAsJson);
-
-//		BinaryFormatter bFormatter = new BinaryFormatter ();
-//		FileStream fileStream = File.Create (filePath);
-//		bFormatter.Serialize (fileStream, obj);
-//		fileStream.Close ();
 	}
 		
 	public static class JsonHelper

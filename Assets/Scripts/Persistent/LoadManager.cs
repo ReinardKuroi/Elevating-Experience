@@ -7,12 +7,10 @@ public class LoadManager : MonoBehaviour {
 
 	public static LoadManager Instance { get; private set; }
 
-//	private int depth = -1000;
-	[Range(0, 1)]
-	public float fadeSpeed = 0.8f;
-
 	public GameObject prefab;
 
+	private GameObject fader;
+	private Animator animator;
 
 	void Awake () {
 		if (Instance == null) {
@@ -24,6 +22,9 @@ public class LoadManager : MonoBehaviour {
 	}
 
 	void Start () {
+		fader = GameObject.Instantiate (prefab);
+		fader.SetActive (false);
+		animator = fader.GetComponent<Animator> ();
 		SoundManager.Instance.LevelMusic ("menu");
 		LoadScene ("Login");
 	}
@@ -34,30 +35,8 @@ public class LoadManager : MonoBehaviour {
 	}
 	//IMPLEMENT MORE FANCY STUFF HERE
 
-	IEnumerator Fade (Direction fadeDirection) {
-		yield return new WaitForEndOfFrame ();
-
-		float alpha = 0f;
-		float start = 0f;
-		float target = 0f;
-
-		if (true) {
-		}
-
-		if (fadeDirection == Direction.In) {
-			start = 1f;
-			target = 0f;
-		} else if (fadeDirection == Direction.Out) {
-			start = 0f;
-			target = 1f;
-		}
-
-		alpha = start;
-
-		while (alpha != target) {
-			alpha = Mathf.Lerp (start, target, Time.deltaTime * fadeSpeed);
-			
-		}
+	void FaderOpen () {
+		animator.GetParameter (0);
 	}
 
 	IEnumerator LoadNew (string name) {
