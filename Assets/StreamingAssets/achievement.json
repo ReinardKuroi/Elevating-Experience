@@ -6,7 +6,7 @@
             "triggerName": "Playcount",
             "triggerValue": 3,
             "unlocks": "Zen",
-            "description": ""
+            "description": "Sometimes truth lies in simple things. Like mint candy. Or number three."
         },
         {
             "achievementName": "Revolution",
@@ -14,7 +14,7 @@
             "triggerName": "Score",
             "triggerValue": 1917,
             "unlocks": "Soviet",
-            "description": ""
+            "description": "One goverment falls, other forms. Score!"
         },
         {
             "achievementName": "The Future is Now",
@@ -22,7 +22,7 @@
             "triggerName": "Multi",
             "triggerValue": 9,
             "unlocks": "Futuristic",
-            "description": ""
+            "description": "If you click fast enough, spacetime itself will bend to your will."
         },
         {
             "achievementName": "Raising Steam",
@@ -30,7 +30,7 @@
             "triggerName": "Playcount",
             "triggerValue": 42,
             "unlocks": "Steampunk",
-            "description": ""
+            "description": "Piston movement is a repetitive process. It also happens to be the key to steam power."
         },
         {
             "achievementName": "Clonk",
@@ -38,7 +38,7 @@
             "triggerName": "Time",
             "triggerValue": 600,
             "unlocks": "Technical",
-            "description": ""
+            "description": "You know that heavy sound that every underground elevator in a mine makes when one of its ropes breaks? Exactly that. And then you fall for 10 minutes."
         },
         {
             "achievementName": "Vanilla",
@@ -46,7 +46,7 @@
             "triggerName": "Playcount",
             "triggerValue": 50,
             "unlocks": "none",
-            "description": ""
+            "description": "Looks like you really like the classics... Fifty shades of elevators, eh?"
         },
         {
             "achievementName": "Nirvana",
@@ -54,7 +54,7 @@
             "triggerName": "Time",
             "triggerValue": 1800,
             "unlocks": "none",
-            "description": ""
+            "description": "If you meditate long enough, you'll get enlightenment, and a sore back."
         },
         {
             "achievementName": "Blood, Sweat and Tears",
@@ -62,7 +62,7 @@
             "triggerName": "Score",
             "triggerValue": 1000000,
             "unlocks": "none",
-            "description": ""
+            "description": "Who wants to be a millionaire? Even with fake points that's something."
         },
         {
             "achievementName": "KOMRAD",
@@ -70,7 +70,7 @@
             "triggerName": "Time",
             "triggerValue": 600,
             "unlocks": "none",
-            "description": ""
+            "description": "Ten minutes is just enough time to get apprehended, interrogated and sent to Solovki. Just like the old times."
         },
         {
             "achievementName": "Back to The",
@@ -78,7 +78,7 @@
             "triggerName": "Score",
             "triggerValue": 8800,
             "unlocks": "none",
-            "description": ""
+            "description": "It's gonna take some time to reach 88 miles per hour..."
         },
         {
             "achievementName": "Engineerin' Degree",
@@ -86,7 +86,7 @@
             "triggerName": "Playcount",
             "triggerValue": 42,
             "unlocks": "none",
-            "description": ""
+            "description": "Did you know that it takes exactly forty two tries to get a bachelors in engineering? Oh, sorry, months. I meant months."
         },
         {
             "achievementName": "Dedication",
@@ -94,39 +94,7 @@
             "triggerName": "Time",
             "triggerValue": 86400,
             "unlocks": "none",
-            "description": ""
-        },
-        {
-            "achievementName": "Test Time",
-            "levelRestriction": "none",
-            "triggerName": "Time",
-            "triggerValue": 20,
-            "unlocks": "none",
-            "description": ""
-        },
-        {
-            "achievementName": "Test Score",
-            "levelRestriction": "none",
-            "triggerName": "Score",
-            "triggerValue": 50,
-            "unlocks": "none",
-            "description": ""
-        },
-        {
-            "achievementName": "Test Multi",
-            "levelRestriction": "none",
-            "triggerName": "Multi",
-            "triggerValue": 2,
-            "unlocks": "none",
-            "description": ""
-        },
-        {
-            "achievementName": "Test Count",
-            "levelRestriction": "none",
-            "triggerName": "Playcount",
-            "triggerValue": 1,
-            "unlocks": "none",
-            "description": ""
+            "description": "I'm not sure how or why you did this, but congrats. You played yourself. And this game. For 24 hours. Why?"
         }
     ]
 }
