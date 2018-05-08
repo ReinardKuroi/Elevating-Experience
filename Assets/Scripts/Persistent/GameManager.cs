@@ -115,6 +115,7 @@ public class GameManager : MonoBehaviour {
 		}
 		GlobalData.Instance.ActivePlayerData = playerData;
 		GlobalData.Instance.SaveGameData ();
+		Debug.Log ("Achievement unlocked: " + achievement.achievementName);
 	}
 
 	//public actions for game state
@@ -138,7 +139,9 @@ public class GameManager : MonoBehaviour {
 			else
 				scoreController = gameObject.GetComponent<ScoreController> ();
 			scoreController.Set ();
-			if (achievementObserver != null) {
+			if (achievementObserver == null) {
+				achievementObserver = new Subject ();
+			} else {
 				foreach (AchievementData data in GlobalData.Instance.Achievements) {
 					achievementObserver.AddObserver (new Achievement (data));
 				}
@@ -154,6 +157,8 @@ public class GameManager : MonoBehaviour {
 		if (game.MoveNext (FSM.Action.End) == FSM.State.Inactive) {
 			if (scoreController)
 				Destroy (scoreController);
+			if (achievementObserver != null)
+				achievementObserver = null;
 			GlobalData.Instance.SaveGameData ();
 			SoundManager.Instance.StopMusic ();
 			SoundManager.Instance.LevelMusic ("menu");

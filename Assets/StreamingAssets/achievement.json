@@ -95,6 +95,38 @@
             "triggerValue": 86400,
             "unlocks": "none",
             "description": ""
+        },
+        {
+            "achievementName": "Test Time",
+            "levelRestriction": "none",
+            "triggerName": "Time",
+            "triggerValue": 20,
+            "unlocks": "none",
+            "description": ""
+        },
+        {
+            "achievementName": "Test Score",
+            "levelRestriction": "none",
+            "triggerName": "Score",
+            "triggerValue": 50,
+            "unlocks": "none",
+            "description": ""
+        },
+        {
+            "achievementName": "Test Multi",
+            "levelRestriction": "none",
+            "triggerName": "Multi",
+            "triggerValue": 2,
+            "unlocks": "none",
+            "description": ""
+        },
+        {
+            "achievementName": "Test Count",
+            "levelRestriction": "none",
+            "triggerName": "Playcount",
+            "triggerValue": 1,
+            "unlocks": "none",
+            "description": ""
         }
     ]
 }
