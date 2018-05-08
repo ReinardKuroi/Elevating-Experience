@@ -12,6 +12,7 @@ public class Login : MonoBehaviour {
 
 	public void Awake () {
 		OpenLoginMenu ();
+		SoundManager.Instance.LevelMusic ("menu");
 	}
 
 	public void OpenLoginMenu () {

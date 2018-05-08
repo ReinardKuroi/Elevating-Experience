@@ -35,8 +35,9 @@ public class AchievementGenerator : MonoBehaviour {
 			g = t.gameObject;
 		}
 
-		TextMeshProUGUI nameText = g.transform.Find("MainText").gameObject.GetComponent<TextMeshProUGUI> ();
-		TextMeshProUGUI descriptionText = g.transform.Find("InfoText").gameObject.GetComponent<TextMeshProUGUI> ();
+		TextMeshProUGUI nameText = g.transform.Find ("MainText").gameObject.GetComponent<TextMeshProUGUI> ();
+		TextMeshProUGUI descriptionText = g.transform.Find ("InfoText").gameObject.GetComponent<TextMeshProUGUI> ();
+		TextMeshProUGUI unlockedText = g.transform.Find ("UnlockedText").gameObject.GetComponent<TextMeshProUGUI> ();
 		Image image = g.transform.Find("Image").gameObject.GetComponent<Image> ();
 
 		g.name = "AchievementScreen";
@@ -44,8 +45,10 @@ public class AchievementGenerator : MonoBehaviour {
 		nameText.text = data.achievementName;
 		descriptionText.text = data.description;
 		if (playerData.unlockedAchievements.Find (item => item.achievementName == data.achievementName).isUnlocked) {
+			unlockedText.text = "UNLOCKED";
 			image.sprite = (Sprite)Resources.Load (data.achievementName + "-unlocked");
 		} else {
+			unlockedText.text = "LOCKED";
 			image.sprite = (Sprite)Resources.Load (data.achievementName + "-locked");
 		}
 

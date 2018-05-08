@@ -139,13 +139,9 @@ public class GameManager : MonoBehaviour {
 			else
 				scoreController = gameObject.GetComponent<ScoreController> ();
 			scoreController.Set ();
-			if (achievementObserver == null) {
-				achievementObserver = new Subject ();
-			} else {
-				foreach (AchievementData data in GlobalData.Instance.Achievements) {
-					achievementObserver.AddObserver (new Achievement (data));
-				}
-			}
+			achievementObserver = new Subject ();
+			foreach (AchievementData data in GlobalData.Instance.Achievements)
+				achievementObserver.AddObserver (new Achievement (data));
 			SoundManager.Instance.StopMusic ();
 			SoundManager.Instance.LevelMusic (GlobalData.Instance.ActiveLevelData.levelName);
 			GlobalData.Instance.ActivePlayerData.scoreData.Find (item => item.levelName == GlobalData.Instance.ActiveLevelData.levelName).playCount += 1;

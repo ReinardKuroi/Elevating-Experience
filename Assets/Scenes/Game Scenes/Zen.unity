@@ -259,6 +259,7 @@ GameObject:
   - component: {fileID: 136013216}
   - component: {fileID: 136013220}
   - component: {fileID: 136013221}
+  - component: {fileID: 136013222}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -353,6 +354,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   intensity: 1
+--- !u!114 &136013222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 136013215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3742b3db229aa4af88a4485f7a021c8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shift: 50
+  chance: 9995
 --- !u!1 &214596682
 GameObject:
   m_ObjectHideFlags: 0

@@ -20,7 +20,6 @@ public class LoadManager : MonoBehaviour {
 	}
 
 	void Start () {
-		SoundManager.Instance.LevelMusic ("menu");
 		LoadScene ("Login");
 	}
 
