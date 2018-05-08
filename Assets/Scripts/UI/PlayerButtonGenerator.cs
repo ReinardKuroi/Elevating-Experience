@@ -42,12 +42,14 @@ public class PlayerButtonGenerator : MonoBehaviour {
 
 	void Colorize () {
 		foreach (GameObject g in buttons) {
-			g.GetComponent<Image> ().color = Color.white;
+			g.GetComponent<Image> ().color = new Color32 (0, 0, 0, 0);
+			Debug.Log ("Reset color");
 		}
 
 		int index = GlobalData.Instance.LastActivePlayer;
 		if (index != -1) {
-			buttons [index].GetComponent<Image> ().color = Color.red;
+			buttons [index].GetComponent<Image> ().color = new Color32 (0, 255, 0, 20);
+			Debug.Log ("Set active color");
 		}
 	}
 }

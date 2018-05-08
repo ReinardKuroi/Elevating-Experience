@@ -3597,6 +3597,7 @@ GameObject:
   - component: {fileID: 2016244806}
   - component: {fileID: 2016244807}
   - component: {fileID: 2016244808}
+  - component: {fileID: 2016244809}
   m_Layer: 0
   m_Name: UI
   m_TagString: Untagged
@@ -3651,6 +3652,17 @@ MonoBehaviour:
   scoreTableText: {fileID: 553477157}
   multiplierText: {fileID: 412890145}
   weightBar: {fileID: 1382964935}
+--- !u!114 &2016244809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2016244805}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c81d46593fb20684bb445c210729c0f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2019621350
 GameObject:
   m_ObjectHideFlags: 0

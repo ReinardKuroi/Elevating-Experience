@@ -27,8 +27,8 @@ public class MainMenuController : MonoBehaviour {
 
 	public void Play () {
 		LevelData levelData = GlobalData.Instance.ActiveLevelData;
-		GameManager.Instance.Play ();
 		LoadManager.Instance.LoadScene (levelData.levelName);
+		GameManager.Instance.Play ();
 	}
 
 	public void Logout () {

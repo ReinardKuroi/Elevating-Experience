@@ -21,7 +21,7 @@ public class ShaderEffect_Tint_Technical : MonoBehaviour {
 	// Postprocess the image
 	void OnRenderImage (RenderTexture source, RenderTexture destination)
 	{
-		material.SetFloat("_ValueX", y*(float)random.NextDouble());
+		material.SetFloat("_ValueX", y*(0.9f+(float)random.NextDouble()/10f));
 		material.SetFloat("_ValueY", u);
 		material.SetFloat("_ValueZ", v);
 

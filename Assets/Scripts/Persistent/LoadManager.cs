@@ -2,15 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class LoadManager : MonoBehaviour {
 
 	public static LoadManager Instance { get; private set; }
 
-	public GameObject prefab;
-
-	private GameObject fader;
-	private Animator animator;
+	public Slider loadingSlider;
 
 	void Awake () {
 		if (Instance == null) {
@@ -22,9 +20,6 @@ public class LoadManager : MonoBehaviour {
 	}
 
 	void Start () {
-		fader = GameObject.Instantiate (prefab);
-		fader.SetActive (false);
-		animator = fader.GetComponent<Animator> ();
 		SoundManager.Instance.LevelMusic ("menu");
 		LoadScene ("Login");
 	}
@@ -33,25 +28,30 @@ public class LoadManager : MonoBehaviour {
 		Debug.Log ("Loading scene: " + name);
 		StartCoroutine (LoadNew (name));
 	}
-	//IMPLEMENT MORE FANCY STUFF HERE
 
-	void FaderOpen () {
-		animator.GetParameter (0);
-	}
+	//IMPLEMENT MORE FANCY STUFF HERE
 
 	IEnumerator LoadNew (string name) {
 		yield return new WaitForEndOfFrame ();
 
+		GameObject fader = gameObject.transform.GetChild (0).gameObject;
+		fader.SetActive (true);
+		loadingSlider.value = 0f;
+		AnimationController.PlayAnimation (fader, "FaderCloseLinear");
+		SoundManager.Instance.PlaySound ("elevator-close");
+
+		yield return new WaitForSeconds (1.5f);
+
 		AsyncOperation ao = SceneManager.LoadSceneAsync (name);
 
 		while (!ao.isDone) {
+			loadingSlider.value = Mathf.Clamp01 (ao.progress / 0.9f);
 			yield return null;
 		}
-	}
 
-	private enum Direction
-	{
-		In,
-		Out
-	};
+		yield return new WaitForSeconds (0.5f);
+
+		AnimationController.PlayAnimation (fader, "FaderOpenLinear");
+		SoundManager.Instance.PlaySound ("elevator-open");
+	}
 }

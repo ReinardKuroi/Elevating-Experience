@@ -54,7 +54,7 @@ public class InGameMenuController : MonoBehaviour {
 	}
 
 	public void Quit () {
-		GameManager.Instance.Stop ();
 		LoadManager.Instance.LoadScene ("MainMenu");
+		GameManager.Instance.Stop ();
 	}
 }
