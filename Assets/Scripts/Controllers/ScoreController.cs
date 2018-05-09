@@ -48,11 +48,11 @@ public class ScoreController : MonoBehaviour {
 					_weightbar -= Time.deltaTime * (levelData.clickDecay + _multiplier / levelData.clickDecay);
 				if (_weightbar >= levelData.multiplierDynamic && _multiplier < levelData.multiplierLimit) {
 					_multiplier += 1;
-					_weightbar = 0.5f;
+					_weightbar = levelData.multiplierDynamic*0.1f;
 				}
 				if (_weightbar <= 0f && _multiplier > 1) {
 					_multiplier -= 1;
-					_weightbar = levelData.multiplierDynamic - 0.5f;
+					_weightbar = levelData.multiplierDynamic - levelData.multiplierDynamic*0.1f;
 				}
 			}
 			yield return new WaitForEndOfFrame ();

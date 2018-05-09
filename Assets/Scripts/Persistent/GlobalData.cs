@@ -200,6 +200,7 @@ public class PlayerData {
 	public List<ScoreData> scoreData;
 	public List<UnlockedAchievement> unlockedAchievements;
 	public List<AudioSettings> audioSettings;
+	public int totalScore;
 
 	public PlayerData () {
 		this.name = "";
@@ -211,6 +212,7 @@ public class PlayerData {
 			new AudioSettings (GlobalData.exposedMusicVolume),
 			new AudioSettings (GlobalData.exposedSFXVolume)
 		};
+		this.totalScore = 0;
 	}
 	[SerializeField]
 	public float PlayTime {
@@ -230,16 +232,6 @@ public class PlayerData {
 				count += data.playCount;
 			}
 			return count;
-		}
-	}
-	[SerializeField]
-	public int TotalScore {
-		get {
-			int score = 0;
-			foreach (ScoreData data in this.scoreData) {
-				score += data.highscore;
-			}
-			return score;
 		}
 	}
 }

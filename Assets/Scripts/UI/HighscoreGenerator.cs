@@ -46,7 +46,7 @@ public class HighscoreGenerator : MonoBehaviour {
 		TimeSpan timeSpan = TimeSpan.FromSeconds (Mathf.RoundToInt (playerData.PlayTime));
 		string timespan = string.Format ("{0:D2}:{1:D2}:{2:D2}", timeSpan.Hours, timeSpan.Minutes, timeSpan.Seconds);
 
-		list.Add (string.Format(template, "\tTotal: ", playerData.TotalScore, timespan, playerData.PlayCount, unlocked, total));
+		list.Add (string.Format("{0}\n\nScore: {1}\nPlay time: {2}\nPlay count: {3}\nAchievements: {4}/{5}", "\tTotal: ", playerData.totalScore, timespan, playerData.PlayCount, unlocked, total));
 
 		foreach (ScoreData data in playerData.scoreData) {
 			total = 0;

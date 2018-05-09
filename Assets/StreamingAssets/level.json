@@ -5,11 +5,11 @@
             "transitionSpeed": 1,
             "levelShowName": "Common",
             "multiplierLimit": 10,
-            "multiplierDynamic": 5.0,
+            "multiplierDynamic": 8.0,
             "clickDecay": 1.0,
-            "clickWeight": 1.0,
+            "clickWeight": 3.0,
             "critChance": 20,
-            "critMultiplier": 5
+            "critMultiplier": 3
         },
         {
             "levelName": "Futuristic",
@@ -20,26 +20,26 @@
             "clickDecay": 2.0,
             "clickWeight": 1.0,
             "critChance": 50,
-            "critMultiplier": 3
+            "critMultiplier": 5
         },
         {
             "levelName": "Premium",
             "transitionSpeed": 1,
-            "levelShowName": "Premium",
+            "levelShowName": "Gilded",
             "multiplierLimit": 999,
-            "multiplierDynamic": 6.0,
-            "clickDecay": 20.0,
-            "clickWeight": 5.0,
+            "multiplierDynamic": 20.0,
+            "clickDecay": 1.0,
+            "clickWeight": 10.0,
             "critChance": 30,
             "critMultiplier": 20
         },
         {
             "levelName": "Soviet",
             "transitionSpeed": 1,
-            "levelShowName": "Comrade",
+            "levelShowName": "Unionized",
             "multiplierLimit": 17,
             "multiplierDynamic": 2.0,
-            "clickDecay": 5.0,
+            "clickDecay": 1.0,
             "clickWeight": 5.0,
             "critChance": 40,
             "critMultiplier": 6
@@ -47,22 +47,22 @@
         {
             "levelName": "Steampunk",
             "transitionSpeed": 1,
-            "levelShowName": "Steam",
+            "levelShowName": "Antique",
             "multiplierLimit": 7,
-            "multiplierDynamic": 3.0,
+            "multiplierDynamic": 4.0,
             "clickDecay": 1.0,
-            "clickWeight": 1.0,
+            "clickWeight": 2.0,
             "critChance": 80,
             "critMultiplier": 10
         },
         {
             "levelName": "Technical",
             "transitionSpeed": 1,
-            "levelShowName": "Tech",
-            "multiplierLimit": 10,
-            "multiplierDynamic": 4.0,
+            "levelShowName": "Underground",
+            "multiplierLimit": 8,
+            "multiplierDynamic": 8.0,
             "clickDecay": 1.0,
-            "clickWeight": 1.0,
+            "clickWeight": 4.0,
             "critChance": 7,
             "critMultiplier": 120
         },
@@ -73,9 +73,9 @@
             "multiplierLimit": 1,
             "multiplierDynamic": 3.0,
             "clickDecay": 1.0,
-            "clickWeight": 1.0,
-            "critChance": 50,
-            "critMultiplier": 3
+            "clickWeight": 0.0,
+            "critChance": 0,
+            "critMultiplier": 1
         }
     ]
 }

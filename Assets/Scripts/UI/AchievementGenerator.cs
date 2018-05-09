@@ -37,18 +37,22 @@ public class AchievementGenerator : MonoBehaviour {
 
 		TextMeshProUGUI nameText = g.transform.Find ("MainText").gameObject.GetComponent<TextMeshProUGUI> ();
 		TextMeshProUGUI descriptionText = g.transform.Find ("InfoText").gameObject.GetComponent<TextMeshProUGUI> ();
-		TextMeshProUGUI unlockedText = g.transform.Find ("UnlockedText").gameObject.GetComponent<TextMeshProUGUI> ();
+		TextMeshProUGUI flavorText = g.transform.Find ("FlavorText").gameObject.GetComponent<TextMeshProUGUI> ();
+		GameObject lockedText = g.transform.Find ("LockedText").gameObject;
 		Image image = g.transform.Find("Image").gameObject.GetComponent<Image> ();
 
 		g.name = "AchievementScreen";
 
 		nameText.text = data.achievementName;
-		descriptionText.text = data.description;
+		descriptionText.text = string.Format ("{0}{1}:\n   {2}", ((data.levelRestriction != "none") ? ("At " + data.levelRestriction + ",\n") : ""), data.triggerName, data.triggerValue);
 		if (playerData.unlockedAchievements.Find (item => item.achievementName == data.achievementName).isUnlocked) {
-			unlockedText.text = "UNLOCKED";
+			lockedText.SetActive (false);
+			flavorText.gameObject.SetActive (true);
+			flavorText.text = data.description;
 			image.sprite = (Sprite)Resources.Load (data.achievementName + "-unlocked");
 		} else {
-			unlockedText.text = "LOCKED";
+			lockedText.SetActive (true);
+			flavorText.gameObject.SetActive (false);
 			image.sprite = (Sprite)Resources.Load (data.achievementName + "-locked");
 		}
 

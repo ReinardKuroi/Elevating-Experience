@@ -98,6 +98,11 @@ public class GameManager : MonoBehaviour {
 							UnlockAchievement (achievement);
 						}
 						break;}
+				case "Totalscore":
+					{
+						if (player.totalScore >= achievement.triggerValue)
+							UnlockAchievement (achievement);
+						break;}
 				default:
 					{break;}
 				}
@@ -155,6 +160,7 @@ public class GameManager : MonoBehaviour {
 				Destroy (scoreController);
 			if (achievementObserver != null)
 				achievementObserver = null;
+			GlobalData.Instance.ActivePlayerData.totalScore += Score;
 			GlobalData.Instance.SaveGameData ();
 			SoundManager.Instance.StopMusic ();
 			SoundManager.Instance.LevelMusic ("menu");
