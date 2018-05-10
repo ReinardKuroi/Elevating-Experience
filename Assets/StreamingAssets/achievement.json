@@ -1,12 +1,20 @@
 {
     "Items": [
         {
-            "achievementName": "Zen",
+            "achievementName": "The Future is Now",
             "levelRestriction": "none",
-            "triggerName": "Playcount",
-            "triggerValue": 3,
-            "unlocks": "Zen",
-            "description": "Sometimes truth lies in simple things. Like mint candy. Or number three."
+            "triggerName": "Multi",
+            "triggerValue": 10,
+            "unlocks": "Futuristic",
+            "description": "If you click fast enough, space-time itself will bend to your will. You just keep going. Keep on going. Almost there."
+        },
+        {
+            "achievementName": "Cash Money",
+            "levelRestriction": "none",
+            "triggerName": "Totalscore",
+            "triggerValue": 10000,
+            "unlocks": "Premium",
+            "description": "Money doesn't bring happiness. But it sure does bring more money in the right hands. Or it goes down the drain, as usual."
         },
         {
             "achievementName": "Revolution",
@@ -14,23 +22,15 @@
             "triggerName": "Score",
             "triggerValue": 1917,
             "unlocks": "Soviet",
-            "description": "One goverment falls, other forms. Score!"
+            "description": "A story as old as the human civilization itself. Dates differ, people don't. One government falls, other forms. Score!"
         },
         {
-            "achievementName": "The Future is Now",
+            "achievementName": "Back to the",
             "levelRestriction": "none",
-            "triggerName": "Multi",
-            "triggerValue": 9,
-            "unlocks": "Futuristic",
-            "description": "If you click fast enough, spacetime itself will bend to your will."
-        },
-        {
-            "achievementName": "Raising Steam",
-            "levelRestriction": "none",
-            "triggerName": "Playcount",
-            "triggerValue": 42,
+            "triggerName": "Score",
+            "triggerValue": 8800,
             "unlocks": "Steampunk",
-            "description": "Piston movement is a repetitive process. It also happens to be the key to steam power."
+            "description": "It's gonna take some time to reach 88 miles per hour... Don't stop pressing that button. What's it in button numbers, 8800?"
         },
         {
             "achievementName": "Clonk",
@@ -41,31 +41,183 @@
             "description": "You know that heavy sound that every underground elevator in a mine makes when one of its ropes breaks? Exactly that. And then you fall for 10 minutes."
         },
         {
-            "achievementName": "Vanilla",
-            "levelRestriction": "Default",
+            "achievementName": "Zen",
+            "levelRestriction": "none",
+            "triggerName": "Playcount",
+            "triggerValue": 3,
+            "unlocks": "Zen",
+            "description": "Sometimes truth lies in simple things. Like mint candy. Or number three. Sometimes you have to waste time to get to the point."
+        },
+        {
+            "achievementName": "Vanilla I",
+            "levelRestriction": "Common",
+            "triggerName": "Playcount",
+            "triggerValue": 5,
+            "unlocks": "none",
+            "description": "Everybody likes vanilla ice cream. It's not like it's an acquired taste or something. You just eat it again, and again, and again..."
+        },
+        {
+            "achievementName": "Vanilla II",
+            "levelRestriction": "Common",
+            "triggerName": "Playcount",
+            "triggerValue": 10,
+            "unlocks": "none",
+            "description": "I mean yeah, there are some fans of it that prefer it to other flavors, but you are not one of them, are you?"
+        },
+        {
+            "achievementName": "Vanilla III",
+            "levelRestriction": "Common",
             "triggerName": "Playcount",
             "triggerValue": 50,
             "unlocks": "none",
-            "description": "Looks like you really like the classics... Fifty shades of elevators, eh?"
+            "description": "Or you just, like, really like vanilla stuff. Boring, default, usual, mundane things. Why not. Let's be boring together!"
         },
         {
-            "achievementName": "Nirvana",
-            "levelRestriction": "Zen",
+            "achievementName": "Powerlevel I",
+            "levelRestriction": "Common",
+            "triggerName": "Score",
+            "triggerValue": 100,
+            "unlocks": "none",
+            "description": "Hey, your first hundred points! Isn't that awesome? No? OK, maybe not. Still, first step is a first step."
+        },
+        {
+            "achievementName": "Powerlevel II",
+            "levelRestriction": "Common",
+            "triggerName": "Score",
+            "triggerValue": 1000,
+            "unlocks": "none",
+            "description": "A thousand! That's quick, but still it's an achievement. I mean, literally, this is the achievement for it."
+        },
+        {
+            "achievementName": "Powerlevel III",
+            "levelRestriction": "Common",
+            "triggerName": "Score",
+            "triggerValue": 9001,
+            "unlocks": "none",
+            "description": "It's over nine thou- no, I can't do this, sorry. No. Just no. Go back to 2007."
+        },
+        {
+            "achievementName": "Up to Snuff",
+            "levelRestriction": "Common",
+            "triggerName": "Multi",
+            "triggerValue": 10,
+            "unlocks": "none",
+            "description": "Hey, you're up to speed! Maximum power achieved, kinda."
+        },
+        {
+            "achievementName": "Neon I",
+            "levelRestriction": "Futuristic",
+            "triggerName": "Playcount",
+            "triggerValue": 5,
+            "unlocks": "none",
+            "description": "This one is more fun that the first one, admit it. Even though you get less points."
+        },
+        {
+            "achievementName": "Neon II",
+            "levelRestriction": "Futuristic",
+            "triggerName": "Playcount",
+            "triggerValue": 10,
+            "unlocks": "none",
+            "description": "Hey, I like this level too! Those neon lights and, well, mostly neon lights. Music is cool too."
+        },
+        {
+            "achievementName": "Neon III",
+            "levelRestriction": "Futuristic",
+            "triggerName": "Playcount",
+            "triggerValue": 50,
+            "unlocks": "none",
+            "description": "Maybe I should just make a cyberpunk neon game instead of this. You played this neon level so much, might as well play that."
+        },
+        {
+            "achievementName": "Hyperdrive",
+            "levelRestriction": "Futuristic",
+            "triggerName": "Multi",
+            "triggerValue": 5,
+            "unlocks": "none",
+            "description": "I should've made the light synced to the multiplier, or something."
+        },
+        {
+            "achievementName": "Time is Money I",
+            "levelRestriction": "Premium",
+            "triggerName": "Time",
+            "triggerValue": 600,
+            "unlocks": "none",
+            "description": "Hey, you like this one! I like getting lots of money- er, I mean points, too!"
+        },
+        {
+            "achievementName": "Time is Money II",
+            "levelRestriction": "Premium",
             "triggerName": "Time",
             "triggerValue": 1800,
             "unlocks": "none",
-            "description": "If you meditate long enough, you'll get enlightenment, and a sore back."
+            "description": "There isn't much point to this, except points. Points are a fair point. Points."
         },
         {
-            "achievementName": "Blood, Sweat and Tears",
+            "achievementName": "Time is Money III",
+            "levelRestriction": "Premium",
+            "triggerName": "Time",
+            "triggerValue": 3600,
+            "unlocks": "none",
+            "description": "Did you know that in this hour you could've earned at least 10 bucks? It's like 10 times the price of the game!"
+        },
+        {
+            "achievementName": "Loan Shark I",
+            "levelRestriction": "Premium",
+            "triggerName": "Score",
+            "triggerValue": 50000,
+            "unlocks": "none",
+            "description": "A good starting venture capital. You could open your own point shop. Or something."
+        },
+        {
+            "achievementName": "Loan Shark II",
+            "levelRestriction": "Premium",
+            "triggerName": "Score",
+            "triggerValue": 100000,
+            "unlocks": "none",
+            "description": "There are many thing I want in life, a hundred grand is one of them."
+        },
+        {
+            "achievementName": "Loan Shark III",
+            "levelRestriction": "Premium",
+            "triggerName": "Score",
+            "triggerValue": 500000,
+            "unlocks": "none",
+            "description": "Don't you feel like this is pointless? No? You have half a million? Fair point."
+        },
+        {
+            "achievementName": "Loan Shark IV",
             "levelRestriction": "Premium",
             "triggerName": "Score",
             "triggerValue": 1000000,
             "unlocks": "none",
-            "description": "Who wants to be a millionaire? Even with fake points that's something."
+            "description": "It feels good to be a millionaire, even if it's in fake points. I mean, totally real and legit points."
         },
         {
-            "achievementName": "KOMRAD",
+            "achievementName": "Contribution I",
+            "levelRestriction": "Soviet",
+            "triggerName": "Score",
+            "triggerValue": 1000,
+            "unlocks": "none",
+            "description": "Technically we don't pay money here, but it's the dedication to kommunism that really counts."
+        },
+        {
+            "achievementName": "Contribution II",
+            "levelRestriction": "Soviet",
+            "triggerName": "Score",
+            "triggerValue": 5000,
+            "unlocks": "none",
+            "description": "Looks like you've found a treasure. You can keep 25 percent, rest goes to me, the government."
+        },
+        {
+            "achievementName": "Contribution III",
+            "levelRestriction": "Soviet",
+            "triggerName": "Score",
+            "triggerValue": 10000,
+            "unlocks": "none",
+            "description": "I mean if it was real money we'd send you to Gulag and take it all for the good of the motherland."
+        },
+        {
+            "achievementName": "Unco-Operative",
             "levelRestriction": "Soviet",
             "triggerName": "Time",
             "triggerValue": 600,
@@ -73,12 +225,52 @@
             "description": "Ten minutes is just enough time to get apprehended, interrogated and sent to Solovki. Just like the old times."
         },
         {
-            "achievementName": "Back to The",
-            "levelRestriction": "Futuristic",
-            "triggerName": "Score",
-            "triggerValue": 8800,
+            "achievementName": "Paint it Red",
+            "levelRestriction": "Soviet",
+            "triggerName": "Multi",
+            "triggerValue": 17,
             "unlocks": "none",
-            "description": "It's gonna take some time to reach 88 miles per hour..."
+            "description": "Hey, good ol' 17, when it all got flipped-turned upside down. The right side up being USSR. This is definitely not Bolshevik propaganda."
+        },
+        {
+            "achievementName": "Raising Steam I",
+            "levelRestriction": "Steampunk",
+            "triggerName": "Score",
+            "triggerValue": 1000,
+            "unlocks": "none",
+            "description": "It’s hard to understand nothing, but the universe is full of it."
+        },
+        {
+            "achievementName": "Raising Steam II",
+            "levelRestriction": "Steampunk",
+            "triggerName": "Score",
+            "triggerValue": 5000,
+            "unlocks": "none",
+            "description": "We’ve learned by our mistakes. They can learn by theirs."
+        },
+        {
+            "achievementName": "Raising Steam III",
+            "levelRestriction": "Steampunk",
+            "triggerName": "Score",
+            "triggerValue": 10000,
+            "unlocks": "none",
+            "description": "Measurements is your saving grace if you want to raise steam."
+        },
+        {
+            "achievementName": "Precision",
+            "levelRestriction": "Steampunk",
+            "triggerName": "Multi",
+            "triggerValue": 7,
+            "unlocks": "none",
+            "description": "Sliding rule is your best friend, if you wish to make more than one engine."
+        },
+        {
+            "achievementName": "Thwack",
+            "levelRestriction": "Technical",
+            "triggerName": "Time",
+            "triggerValue": 600,
+            "unlocks": "none",
+            "description": "Remember that clonk sound? Yeah, exactly that one. You'd hear another sound by now. Thwack."
         },
         {
             "achievementName": "Engineerin' Degree",
@@ -89,12 +281,60 @@
             "description": "Did you know that it takes exactly forty two tries to get a bachelors in engineering? Oh, sorry, months. I meant months."
         },
         {
+            "achievementName": "Status Nominal",
+            "levelRestriction": "Technical",
+            "triggerName": "Multi",
+            "triggerValue": 8,
+            "unlocks": "none",
+            "description": "After you fix everything, you can rest and enjoy the view. Until soimething else breaks."
+        },
+        {
+            "achievementName": "Nirvana",
+            "levelRestriction": "Zen",
+            "triggerName": "Time",
+            "triggerValue": 1800,
+            "unlocks": "none",
+            "description": "If you meditate long enough, you'll get enlightenment, and a sore back."
+        },
+        {
+            "achievementName": "Classy",
+            "levelRestriction": "none",
+            "triggerName": "Time",
+            "triggerValue": 2700,
+            "unlocks": "none",
+            "description": "One astronomical hour well spent. Hope it was a history lesson, or something similar."
+        },
+        {
+            "achievementName": "Smoke me a kipper",
+            "levelRestriction": "none",
+            "triggerName": "Time",
+            "triggerValue": 14400,
+            "unlocks": "none",
+            "description": "I'll be back for breakfast."
+        },
+        {
             "achievementName": "Dedication",
             "levelRestriction": "none",
             "triggerName": "Time",
             "triggerValue": 86400,
             "unlocks": "none",
-            "description": "I'm not sure how or why you did this, but congrats. You played yourself. And this game. For 24 hours. Why?"
+            "description": "Wow. You actually played this game for 24 hours. Why? I mean OK, I guess yo ureally like it..."
+        },
+        {
+            "achievementName": "Astronomical",
+            "levelRestriction": "none",
+            "triggerName": "Totalscore",
+            "triggerValue": 150000000,
+            "unlocks": "none",
+            "description": "If you took a step for each click, you'd be a long way away from home by now..."
+        },
+        {
+            "achievementName": "Hitchhiking",
+            "levelRestriction": "none",
+            "triggerName": "Playcount",
+            "triggerValue": 42,
+            "unlocks": "none",
+            "description": "What do you get when you multiply six by nine?"
         }
     ]
 }

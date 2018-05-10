@@ -17,6 +17,20 @@ public class AchievementGenerator : MonoBehaviour {
 		playerData = GlobalData.Instance.ActivePlayerData;
 		achievements = GlobalData.Instance.Achievements;
 
+		List<AchievementData> unlocked = new List<AchievementData> ();
+		List<AchievementData> locked = new List<AchievementData> ();
+
+		foreach (UnlockedAchievement data in playerData.unlockedAchievements) {
+			if (data.isUnlocked)
+				unlocked.Add (achievements.Find (item => item.achievementName == data.achievementName));
+			else
+				locked.Add (achievements.Find (item => item.achievementName == data.achievementName));
+		}
+
+		achievements = new List<AchievementData> ();
+		achievements.AddRange (unlocked);
+		achievements.AddRange (locked);
+
 		listSize = achievements.Count;
 		pointer = 0;
 
@@ -35,25 +49,28 @@ public class AchievementGenerator : MonoBehaviour {
 			g = t.gameObject;
 		}
 
-		TextMeshProUGUI nameText = g.transform.Find ("MainText").gameObject.GetComponent<TextMeshProUGUI> ();
-		TextMeshProUGUI descriptionText = g.transform.Find ("InfoText").gameObject.GetComponent<TextMeshProUGUI> ();
-		TextMeshProUGUI flavorText = g.transform.Find ("FlavorText").gameObject.GetComponent<TextMeshProUGUI> ();
-		GameObject lockedText = g.transform.Find ("LockedText").gameObject;
-		Image image = g.transform.Find("Image").gameObject.GetComponent<Image> ();
+		TextMeshProUGUI nameText = g.transform.Find ("NameScreen/NameText").gameObject.GetComponent<TextMeshProUGUI> ();
+		TextMeshProUGUI flavorText = g.transform.Find ("DescriptionScreen/FlavorText").gameObject.GetComponent<TextMeshProUGUI> ();
+		GameObject lockedText = g.transform.Find ("DescriptionScreen/LockedText").gameObject;
+		Image image = g.transform.Find ("ImageScreen/Image").gameObject.GetComponent<Image> ();
+		Image imageLocked = g.transform.Find ("ImageScreen/ImageLocked").gameObject.GetComponent<Image> ();
 
 		g.name = "AchievementScreen";
-
 		nameText.text = data.achievementName;
-		descriptionText.text = string.Format ("{0}{1}:\n   {2}", ((data.levelRestriction != "none") ? ("At " + data.levelRestriction + ",\n") : ""), data.triggerName, data.triggerValue);
+		imageLocked.sprite = Resources.Load ("Sprites/AchievementLocked", typeof(Sprite)) as Sprite;
+		imageLocked.color = Color.red;
+		image.sprite = Resources.Load ("Sprites/" + data.achievementName, typeof(Sprite)) as Sprite;
+		imageLocked.preserveAspect = true;
+		image.preserveAspect = true;
 		if (playerData.unlockedAchievements.Find (item => item.achievementName == data.achievementName).isUnlocked) {
 			lockedText.SetActive (false);
 			flavorText.gameObject.SetActive (true);
 			flavorText.text = data.description;
-			image.sprite = (Sprite)Resources.Load (data.achievementName + "-unlocked");
+			imageLocked.gameObject.SetActive (false);
 		} else {
 			lockedText.SetActive (true);
 			flavorText.gameObject.SetActive (false);
-			image.sprite = (Sprite)Resources.Load (data.achievementName + "-locked");
+			imageLocked.gameObject.SetActive (true);
 		}
 
 		return g;

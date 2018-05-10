@@ -38,7 +38,7 @@
             "transitionSpeed": 1,
             "levelShowName": "Unionized",
             "multiplierLimit": 17,
-            "multiplierDynamic": 2.0,
+            "multiplierDynamic": 10.0,
             "clickDecay": 1.0,
             "clickWeight": 5.0,
             "critChance": 40,

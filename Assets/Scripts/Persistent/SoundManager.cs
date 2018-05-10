@@ -57,8 +57,8 @@ public class SoundManager : MonoBehaviour {
 		AudioClip intro;
 		AudioClip loop;
 	
-		intro = Resources.Load (name + "-intro") as AudioClip;
-		loop = Resources.Load (name + "-loop") as AudioClip;
+		intro = Resources.Load ("Sounds/" + name + "-intro", typeof(AudioClip)) as AudioClip;
+		loop = Resources.Load ("Sounds/" + name + "-loop", typeof(AudioClip)) as AudioClip;
 
 		if ((intro != null) && (loop != null)) {
 			coroutine = PlayMusic (intro, loop);
@@ -87,7 +87,7 @@ public class SoundManager : MonoBehaviour {
 	}
 
 	public void PlaySound (string name) {
-		AudioClip sound = Resources.Load (name) as AudioClip;
+		AudioClip sound = Resources.Load ("Sounds/" + name, typeof(AudioClip)) as AudioClip;
 
 		//randomize pitch?
 		sfxSource.pitch = 1f + ((float)random.NextDouble() - 0.5f)/5;
