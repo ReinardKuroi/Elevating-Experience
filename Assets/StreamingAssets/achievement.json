@@ -238,7 +238,7 @@
             "triggerName": "Score",
             "triggerValue": 1000,
             "unlocks": "none",
-            "description": "It’s hard to understand nothing, but the universe is full of it."
+            "description": "It's hard to understand nothing, but the universe is full of it."
         },
         {
             "achievementName": "Raising Steam II",
@@ -246,7 +246,7 @@
             "triggerName": "Score",
             "triggerValue": 5000,
             "unlocks": "none",
-            "description": "We’ve learned by our mistakes. They can learn by theirs."
+            "description": "We've learned by our mistakes. They can learn by theirs."
         },
         {
             "achievementName": "Raising Steam III",

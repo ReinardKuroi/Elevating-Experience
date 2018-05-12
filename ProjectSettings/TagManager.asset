@@ -13,7 +13,7 @@ TagManager:
   - UI
   - 
   - 
-  - ParticleSource
+  - Transition
   - 
   - 
   - 
@@ -38,6 +38,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Transition
+    uniqueID: 4179685229
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

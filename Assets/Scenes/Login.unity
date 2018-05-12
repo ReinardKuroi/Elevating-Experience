@@ -148,7 +148,7 @@ RectTransform:
   - {fileID: 1228190662}
   - {fileID: 1218145451}
   m_Father: {fileID: 1196894993}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -593,7 +593,6 @@ GameObject:
   m_Component:
   - component: {fileID: 637325275}
   - component: {fileID: 637325273}
-  - component: {fileID: 637325274}
   - component: {fileID: 637325272}
   m_Layer: 0
   m_Name: LoginScreen
@@ -627,12 +626,6 @@ MonoBehaviour:
   welcomeText: {fileID: 893339424}
   continueButton: {fileID: 1612434431}
   loginButton: {fileID: 1449651599}
---- !u!222 &637325274
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 637325271}
 --- !u!224 &637325275
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1464,8 +1457,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1020311267}
   - component: {fileID: 1020311270}
-  - component: {fileID: 1020311269}
   - component: {fileID: 1020311268}
+  - component: {fileID: 1020311269}
   m_Layer: 0
   m_Name: NewMenu
   m_TagString: Untagged
@@ -1520,7 +1513,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1020311266}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1980459831, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 6d7c735d50daee444b44366736fd7afb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_UiScaleMode: 1
@@ -1541,8 +1534,8 @@ Canvas:
   m_GameObject: {fileID: 1020311266}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_RenderMode: 1
+  m_Camera: {fileID: 1984425635}
   m_PlaneDistance: 100
   m_PixelPerfect: 1
   m_ReceivesEvents: 1
@@ -1562,8 +1555,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1196894993}
   - component: {fileID: 1196894996}
-  - component: {fileID: 1196894995}
   - component: {fileID: 1196894994}
+  - component: {fileID: 1196894995}
   m_Layer: 0
   m_Name: WelcomeMenu
   m_TagString: Untagged
@@ -1582,8 +1575,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 1630646408}
-  - {fileID: 893339423}
   - {fileID: 23809119}
+  - {fileID: 893339423}
   m_Father: {fileID: 637325275}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1616,7 +1609,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1196894992}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1980459831, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 6d7c735d50daee444b44366736fd7afb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_UiScaleMode: 1
@@ -1637,8 +1630,8 @@ Canvas:
   m_GameObject: {fileID: 1196894992}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_RenderMode: 1
+  m_Camera: {fileID: 1984425635}
   m_PlaneDistance: 100
   m_PixelPerfect: 1
   m_ReceivesEvents: 1
@@ -3566,8 +3559,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1907295956}
   - component: {fileID: 1907295959}
-  - component: {fileID: 1907295958}
   - component: {fileID: 1907295957}
+  - component: {fileID: 1907295958}
   m_Layer: 0
   m_Name: LoginMenu
   m_TagString: Untagged
@@ -3622,7 +3615,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1907295955}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1980459831, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 6d7c735d50daee444b44366736fd7afb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_UiScaleMode: 1
@@ -3643,8 +3636,8 @@ Canvas:
   m_GameObject: {fileID: 1907295955}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_RenderMode: 1
+  m_Camera: {fileID: 1984425635}
   m_PlaneDistance: 100
   m_PixelPerfect: 1
   m_ReceivesEvents: 1
@@ -3666,6 +3659,7 @@ GameObject:
   - component: {fileID: 1984425635}
   - component: {fileID: 1984425634}
   - component: {fileID: 1984425633}
+  - component: {fileID: 1984425637}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -3717,7 +3711,7 @@ Camera:
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
-  m_AllowMSAA: 1
+  m_AllowMSAA: 0
   m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
   m_OcclusionCulling: 1
@@ -3736,6 +3730,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1984425637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1984425632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65b08215b9318ba4ab6bb7790ea92fd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetAspect: {x: 1, y: 2}
 --- !u!1 &1991172347
 GameObject:
   m_ObjectHideFlags: 0

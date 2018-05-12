@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using GooglePlayGames;
 
 public class GameManager : MonoBehaviour {
 
@@ -12,6 +13,7 @@ public class GameManager : MonoBehaviour {
 
 	private InputManager inputManager;
 	private Subject achievementObserver;
+	private Resolution _res;
 
 	//Singleton
 	public static GameManager Instance { get; private set; }
@@ -29,6 +31,8 @@ public class GameManager : MonoBehaviour {
 		if (achievementObserver == null) {
 			achievementObserver = new Subject ();
 		}
+		_res = new Resolution (Screen.width, Screen.height);
+		Debug.Log (_res.height + " X " + _res.width);
 	}
 
 	public int Score {
@@ -187,6 +191,16 @@ public class GameManager : MonoBehaviour {
 			achievementObserver.Notify ();
 			GlobalData.Instance.ActivePlayerData.scoreData.Find(item => item.levelName == GlobalData.Instance.ActiveLevelData.levelName).playTime += Time.deltaTime;
 		}
+		Resolution res = new Resolution (Screen.width, Screen.height);
+		if (res != _res) {
+			Debug.Log ("Resolution changed");
+			foreach (Camera camera in GameObject.FindObjectsOfType<Camera> ()) {
+				GameObject g =	camera.gameObject;
+				FixedAspect script = g.GetComponent<FixedAspect> ();
+				script.UpdateCrop ();
+			}
+			_res = res;
+		}
 	}
 
 	private class Achievement : Observer {
@@ -202,6 +216,25 @@ public class GameManager : MonoBehaviour {
 
 		public override void OnNotify () {
 			achievementCheck (achievementData);
+		}
+	}
+
+	private struct Resolution {
+		public int width;
+		public int height;
+		public Resolution (int width, int height) {
+			this.width = width;
+			this.height = height;
+		}
+		public static bool operator ==(Resolution r, Resolution _r) {
+			if ((r.width == _r.width) && (r.height == _r.height))
+				return true;
+			else return false;
+		}
+		public static bool operator !=(Resolution r, Resolution _r) {
+			if ((r.width == _r.width) && (r.height == _r.height))
+				return false;
+			else return true;
 		}
 	}
 }
