@@ -1,4 +1,4 @@
-Assets/AssemblyInfo.cs
+﻿Assets/AssemblyInfo.cs
 Assets/GooglePlayGames/BasicApi/Achievement.cs
 Assets/GooglePlayGames/BasicApi/CommonStatusCodes.cs
 Assets/GooglePlayGames/BasicApi/CommonTypes.cs

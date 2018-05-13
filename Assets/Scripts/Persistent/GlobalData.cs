@@ -12,12 +12,12 @@ using UnityEngine;
 //Make login screen fancier : DONE
 //implement highscore system : DONE
 //Start working on achievements system : DONE
+//make loader fancier : DONE
 
-//make loader fancier
-//Modify level data to include music
-//Modify player data to include selected music
-//Add cool looking effects with wumbers on click
-//Add level intermezzo transition
+//Modify level data to include music : NOPE
+//Modify player data to include selected music : NOPE
+//Add cool looking effects with wumbers on click : NOPE
+//Add level intermezzo transition : NOPE
 
 public class GlobalData : MonoBehaviour {
 
@@ -64,16 +64,14 @@ public class GlobalData : MonoBehaviour {
 		}
 	}
 
-	//Sets bool in list unlockedLevels by index
+	//Sets bool in list unlockedLevels by name
 	//in a list of all PlayerData by index activePlayer
-	public void UnlockLevel (int index) {
-		ActivePlayerData.scoreData [index].isUnlocked = true;
-		SaveLoad.SaveToPersistent (ref allPlayerData, playerDataFilename);
-	}
 
 	public void UnlockLevel (string name) {
 		ScoreData scoreData = ActivePlayerData.scoreData.Find (item => item.levelName == name);
 		scoreData.isUnlocked = true;
+		string levelName = allLevelData.Find (item => item.levelName == name).levelShowName;
+		GameManager.Instance.PushNotification (levelName);
 		SaveLoad.SaveToPersistent (ref allPlayerData, playerDataFilename);
 	}
 
@@ -244,6 +242,7 @@ public class AchievementData {
 	public int triggerValue;
 	public string unlocks;
 	public string description;
+	public string achievementID;
 
 	AchievementData () {
 		this.achievementName = "";
@@ -252,6 +251,7 @@ public class AchievementData {
 		this.triggerValue = 0;
 		this.unlocks = "none";
 		this.description = "";
+		this.achievementID = "";
 	}
 }
 

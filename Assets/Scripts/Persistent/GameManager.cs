@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 using GooglePlayGames;
+using GooglePlayGames.BasicApi;
+using Assets.SimpleAndroidNotifications;
 
 public class GameManager : MonoBehaviour {
 
@@ -33,6 +37,16 @@ public class GameManager : MonoBehaviour {
 		}
 		_res = new Resolution (Screen.width, Screen.height);
 		Debug.Log (_res.height + " X " + _res.width);
+	}
+
+	void Start () {
+		if (Application.platform == RuntimePlatform.Android) {
+			PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder ().Build ();
+			PlayGamesPlatform.DebugLogEnabled = true;
+			PlayGamesPlatform.InitializeInstance (config);
+			PlayGamesPlatform.Activate ();
+			PlayGamesPlatform.Instance.Authenticate (SICallback, true);
+		}
 	}
 
 	public int Score {
@@ -117,6 +131,7 @@ public class GameManager : MonoBehaviour {
 	public void UnlockAchievement (AchievementData achievement) {
 		PlayerData playerData = GlobalData.Instance.ActivePlayerData;
 		playerData.unlockedAchievements.Find (item => item.achievementName == achievement.achievementName).isUnlocked = true;
+		PushNotification (achievement);
 		if (achievement.unlocks == "none") {
 			//skip
 		} else {
@@ -124,7 +139,18 @@ public class GameManager : MonoBehaviour {
 		}
 		GlobalData.Instance.ActivePlayerData = playerData;
 		GlobalData.Instance.SaveGameData ();
+		UnlockGoogleAchievement (achievement);
 		Debug.Log ("Achievement unlocked: " + achievement.achievementName);
+	}
+
+	//Push notifs
+
+	public void PushNotification (AchievementData achievement) {
+		NotificationManager.SendWithAppIcon (TimeSpan.FromSeconds (5), "Achievement Unlocked: " + achievement.achievementName, "Unlocked a new achievement! You can look at it in the Achievements menu.", Color.yellow, NotificationIcon.Star);
+	}
+
+	public void PushNotification (string name) {
+		NotificationManager.SendWithAppIcon (TimeSpan.FromSeconds (5), "Level Unlocked: " + name, "Unlocked a new level: " + name + "! You can access it from the Levels menu.", Color.white, NotificationIcon.Star);
 	}
 
 	//public actions for game state
@@ -183,6 +209,32 @@ public class GameManager : MonoBehaviour {
 		return game.CurrentState;
 	}
 
+	//GPG
+
+	public void SignIn () {
+		if (!PlayGamesPlatform.Instance.localUser.authenticated) {
+			PlayGamesPlatform.Instance.Authenticate (SICallback, false);
+		} else {
+			PlayGamesPlatform.Instance.SignOut ();
+		}
+	}
+
+	public void SICallback (bool success) {
+		if (success) {
+			Debug.Log ("Sign in successfull.");
+		} else {
+			Debug.Log ("Sign in failed.");
+		}
+	}
+		
+	void UnlockGoogleAchievement (AchievementData achievement) {
+		if (Social.localUser.authenticated) {
+			PlayGamesPlatform.Instance.ReportProgress (achievement.achievementID, 100.0f, (bool success) => {
+				Debug.Log("Achievement " + name + " unlocked: " + success);
+			});
+		}
+	}
+
 	//cycle
 
 	void Update () {
@@ -191,15 +243,18 @@ public class GameManager : MonoBehaviour {
 			achievementObserver.Notify ();
 			GlobalData.Instance.ActivePlayerData.scoreData.Find(item => item.levelName == GlobalData.Instance.ActiveLevelData.levelName).playTime += Time.deltaTime;
 		}
-		Resolution res = new Resolution (Screen.width, Screen.height);
-		if (res != _res) {
-			Debug.Log ("Resolution changed");
-			foreach (Camera camera in GameObject.FindObjectsOfType<Camera> ()) {
-				GameObject g =	camera.gameObject;
-				FixedAspect script = g.GetComponent<FixedAspect> ();
-				script.UpdateCrop ();
+		if (!(Application.platform == RuntimePlatform.Android)) {
+			Resolution res = new Resolution (Screen.width, Screen.height);
+			if (res != _res) {
+				Debug.Log ("Resolution changed");
+				foreach (Camera camera in GameObject.FindObjectsOfType<Camera> ()) {
+					GameObject g =	camera.gameObject;
+					FixedAspect script = g.GetComponent<FixedAspect> ();
+					if (script)
+						script.UpdateCrop ();
+				}
+				_res = res;
 			}
-			_res = res;
 		}
 	}
 

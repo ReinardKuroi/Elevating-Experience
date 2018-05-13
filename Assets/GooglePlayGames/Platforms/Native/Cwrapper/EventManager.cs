@@ -1,4 +1,4 @@
-// <copyright file="EventManager.cs" company="Google Inc.">
+﻿// <copyright file="EventManager.cs" company="Google Inc.">
 // Copyright (C) 2014 Google Inc.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");

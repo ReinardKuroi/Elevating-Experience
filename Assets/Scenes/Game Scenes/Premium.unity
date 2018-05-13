@@ -453,9 +453,9 @@ Camera:
   m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.19462228
+    x: 0
     y: 0
-    width: 0.61075544
+    width: 1
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
@@ -730,7 +730,6 @@ GameObject:
   - component: {fileID: 331285494}
   - component: {fileID: 331285492}
   - component: {fileID: 331285491}
-  - component: {fileID: 331285493}
   m_Layer: 0
   m_Name: Android Camera
   m_TagString: MainCamera
@@ -750,9 +749,9 @@ Camera:
   m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.19462228
+    x: 0
     y: 0
-    width: 0.61075544
+    width: 1
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
@@ -799,18 +798,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scanlineIntensity: 20
   scanlineWidth: 2
---- !u!114 &331285493
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 331285489}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65b08215b9318ba4ab6bb7790ea92fd3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetAspect: {x: 1, y: 2}
 --- !u!81 &331285494
 AudioListener:
   m_ObjectHideFlags: 0
@@ -1442,9 +1429,9 @@ Camera:
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.19462228
+    x: 0
     y: 0
-    width: 0.61075544
+    width: 1
     height: 1
   near clip plane: 0.3
   far clip plane: 1000

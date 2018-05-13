@@ -1,4 +1,4 @@
-// <copyright file="PlayGamesPlatform.cs" company="Google Inc.">
+﻿// <copyright file="PlayGamesPlatform.cs" company="Google Inc.">
 // Copyright (C) 2014 Google Inc. All Rights Reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
