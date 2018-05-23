@@ -1,24 +1,27 @@
 # Clicker Game
 ## Summary
-Press the button as fast as you can until the door closes. Get points for it, the faster the better. Unlock new buttons to press and doors to close. Ultimately pointless.
+Press the button as fast as you can and get points for that. Multiplier increases up to a limit. Ultimately pointless. Achievements and stuff.
 ## Gameplay
 Click on button, get points.
 Points depent on multiplier and speed.
-Multiplier increases with points, time and levels (doors).
-No lose condition. Can add timer (?)
+Multiplier increases with points.
+No lose condition.
+Fancy music and psychedelic artstyle.
+## Meta
+No particular goal, it's more of an experience ranther than a game. Artstyle mix between vaporwave, steampunk and neon. All textures are photocollages. Music is CC-4 and fits pretty well. Sound effect recorded and edited at home.
 ## Done
 * Button
 * Click detection
 * Score observer
 * Rudimentary UI
-## To-do
 * Sound
 * Music
 * Advanced scoring
 * Level switch animation
 * Menu
 * Score saving and record system
-* Effects for pressing and stuff
 * 3D models for everything
 * Textures for everything
 * Android testing and deploy 
+## To-do
+* DONE!
