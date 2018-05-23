@@ -1,4 +1,4 @@
-# Clicker Game
+# Elevating Experience: The Game
 ## Summary
 Press the button as fast as you can and get points for that. Multiplier increases up to a limit. Ultimately pointless. Achievements and stuff.
 ## Gameplay
