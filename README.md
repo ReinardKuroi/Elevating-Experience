@@ -8,9 +8,11 @@ Multiplier increases with points.
 No lose condition.
 Fancy music and psychedelic artstyle.
 ## Meta
-No particular goal, it's more of an experience ranther than a game. Artstyle mix between vaporwave, steampunk and neon. All textures are photocollages. Music is CC-4 and fits pretty well. Sound effect recorded and edited at home.
-
+No particular goal, it's more of an experience rather than a game. Artstyle mix between vaporwave, steampunk and neon. All textures are photocollages. Music is CC-4 and fits pretty well. Sound effect recorded and edited at home.
+## Links
 https://play.google.com/store/apps/details?id=com.Kurokitsukami.ElevatingExperience
+
+https://kurokitsukami.itch.io/elevating-experience
 ## Done
 * Button
 * Click detection
